@@ -1,0 +1,18 @@
+extern const GeoLayout bounceShroom_geo[];
+extern Lights1 bounceShroom_f3d_material_lights;
+extern Lights1 bounceShroom_f3d_material_001_layer1_lights;
+extern u8 bounceShroom_Texture0205_RGB_i8[];
+extern u8 bounceShroom_GALE01_bd08f82b_9_i8[];
+extern Vtx bounceShroom_Bone_mesh_layer_1_vtx_0[12];
+extern Gfx bounceShroom_Bone_mesh_layer_1_tri_0[];
+extern Vtx bounceShroom_Bone_002_mesh_layer_1_vtx_0[55];
+extern Gfx bounceShroom_Bone_002_mesh_layer_1_tri_0[];
+extern Vtx bounceShroom_Bone_002_mesh_layer_1_vtx_1[11];
+extern Gfx bounceShroom_Bone_002_mesh_layer_1_tri_1[];
+extern Gfx mat_bounceShroom_f3d_material[];
+extern Gfx mat_revert_bounceShroom_f3d_material[];
+extern Gfx mat_bounceShroom_f3d_material_001_layer1[];
+extern Gfx mat_revert_bounceShroom_f3d_material_001_layer1[];
+extern Gfx bounceShroom_Bone_mesh_layer_1[];
+extern Gfx bounceShroom_Bone_002_mesh_layer_1[];
+extern Gfx bounceShroom_material_revert_render_settings[];

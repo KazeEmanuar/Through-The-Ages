@@ -1,0 +1,17 @@
+extern const GeoLayout bonefish_geo[];
+extern Lights1 bonefish_f3d_material_001_lights;
+extern Lights1 bonefish_f3d_material_002_lights;
+extern u8 bonefish__1_ci4[];
+extern u8 bonefish__1_ci4_pal_rgba16[];
+extern u8 bonefish_Unbenannt_ia4[];
+extern Vtx bonefish_000_offset_001_mesh_layer_4_vtx_0[19];
+extern Gfx bonefish_000_offset_001_mesh_layer_4_tri_0[];
+extern Vtx bonefish_000_offset_002_mesh_layer_4_vtx_0[4];
+extern Gfx bonefish_000_offset_002_mesh_layer_4_tri_0[];
+extern Gfx mat_bonefish_f3d_material_001[];
+extern Gfx mat_revert_bonefish_f3d_material_001[];
+extern Gfx mat_bonefish_f3d_material_002[];
+extern Gfx mat_revert_bonefish_f3d_material_002[];
+extern Gfx bonefish_000_offset_001_mesh_layer_4[];
+extern Gfx bonefish_000_offset_002_mesh_layer_4[];
+extern Gfx bonefish_material_revert_render_settings[];

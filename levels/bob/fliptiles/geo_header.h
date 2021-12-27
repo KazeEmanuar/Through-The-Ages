@@ -1,0 +1,31 @@
+extern const GeoLayout fliptiles_Armature_002[];
+extern const GeoLayout fliptiles_Armature_003[];
+extern const GeoLayout fliptiles_Armature_004[];
+extern const GeoLayout fliptiles_geo[];
+extern Vtx fliptiles_Bone_001_mesh_vtx_0[8];
+extern Gfx fliptiles_Bone_001_mesh_tri_0[];
+extern Vtx fliptiles_Bone_001_mesh_vtx_1[16];
+extern Gfx fliptiles_Bone_001_mesh_tri_1[];
+extern Vtx fliptiles_Bone_bonie_mesh_vtx_0[4];
+extern Gfx fliptiles_Bone_bonie_mesh_tri_0[];
+extern Vtx fliptiles_Bone_bonie_mesh_vtx_1[16];
+extern Gfx fliptiles_Bone_bonie_mesh_tri_1[];
+extern Vtx fliptiles_Bone_bonie_mesh_vtx_2[4];
+extern Gfx fliptiles_Bone_bonie_mesh_tri_2[];
+extern Vtx fliptiles_Bone_boneface_mesh_vtx_0[4];
+extern Gfx fliptiles_Bone_boneface_mesh_tri_0[];
+extern Vtx fliptiles_Bone_boneface_mesh_vtx_1[16];
+extern Gfx fliptiles_Bone_boneface_mesh_tri_1[];
+extern Vtx fliptiles_Bone_boneface_mesh_vtx_2[4];
+extern Gfx fliptiles_Bone_boneface_mesh_tri_2[];
+extern Vtx fliptiles_Bone_boneboy_mesh_vtx_0[8];
+extern Gfx fliptiles_Bone_boneboy_mesh_tri_0[];
+extern Vtx fliptiles_Bone_boneboy_mesh_vtx_1[16];
+extern Gfx fliptiles_Bone_boneboy_mesh_tri_1[];
+
+extern Gfx fliptiles_Bone_001_mesh[];
+extern Gfx fliptiles_Bone_bonie_mesh[];
+extern Gfx fliptiles_Bone_boneface_mesh[];
+extern Gfx fliptiles_Bone_boneboy_mesh[];
+extern Gfx fliptiles_material_revert_render_settings[];
+

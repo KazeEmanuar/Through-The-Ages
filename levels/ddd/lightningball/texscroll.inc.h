@@ -1,0 +1,5 @@
+extern void scroll_lightningball_Bone_mesh_layer_5_vtx_0();
+extern void scroll_lightningball_Bone_001_mesh_layer_5_vtx_0();
+extern void scroll_lightningball_Bone_002_mesh_layer_5_vtx_0();
+extern void scroll_lightningball_Bone_003_mesh_layer_5_vtx_0();
+extern void scroll_ddd_level_geo_lightningball();

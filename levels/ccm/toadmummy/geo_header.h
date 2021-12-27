@@ -1,0 +1,30 @@
+extern const GeoLayout toadmummy_geo[];
+extern Vtx toadmummy_body_mesh_vtx_0[46];
+extern Gfx toadmummy_body_mesh_tri_0[];
+extern Vtx toadmummy_arm_L_mesh_vtx_0[42];
+extern Gfx toadmummy_arm_L_mesh_tri_0[];
+extern Vtx toadmummy_bandageHand_mesh_vtx_0[4];
+extern Gfx toadmummy_bandageHand_mesh_tri_0[];
+extern Vtx toadmummy_arm_R_mesh_vtx_0[41];
+extern Gfx toadmummy_arm_R_mesh_tri_0[];
+extern Vtx toadmummy_head_mesh_vtx_0[89];
+extern Gfx toadmummy_head_mesh_tri_0[];
+extern Vtx toadmummy_head_mesh_vtx_1[11];
+extern Gfx toadmummy_head_mesh_tri_1[];
+extern Vtx toadmummy_bandageHead_mesh_vtx_0[4];
+extern Gfx toadmummy_bandageHead_mesh_tri_0[];
+extern Vtx toadmummy_foot_L_mesh_vtx_0[28];
+extern Gfx toadmummy_foot_L_mesh_tri_0[];
+extern Vtx toadmummy_foot_R_mesh_vtx_0[28];
+extern Gfx toadmummy_foot_R_mesh_tri_0[];
+
+extern Gfx toadmummy_body_mesh[];
+extern Gfx toadmummy_arm_L_mesh[];
+extern Gfx toadmummy_bandageHand_mesh[];
+extern Gfx toadmummy_arm_R_mesh[];
+extern Gfx toadmummy_head_mesh[];
+extern Gfx toadmummy_bandageHead_mesh[];
+extern Gfx toadmummy_foot_L_mesh[];
+extern Gfx toadmummy_foot_R_mesh[];
+extern Gfx toadmummy_material_revert_render_settings[];
+

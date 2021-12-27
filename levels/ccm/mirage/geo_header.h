@@ -1,0 +1,31 @@
+extern const GeoLayout mirage_geo[];
+extern Vtx mirage_mirage_mesh_vtx_0[103];
+extern Gfx mirage_mirage_mesh_tri_0[];
+extern Vtx mirage_mirage_mesh_vtx_1[208];
+extern Gfx mirage_mirage_mesh_tri_1[];
+extern Vtx mirage_mirage_mesh_vtx_2[77];
+extern Gfx mirage_mirage_mesh_tri_2[];
+extern Vtx mirage_mirage_mesh_vtx_3[22];
+extern Gfx mirage_mirage_mesh_tri_3[];
+extern Vtx mirage_mirage_mesh_vtx_4[22];
+extern Gfx mirage_mirage_mesh_tri_4[];
+extern Vtx mirage_mirage_mesh_vtx_5[48];
+extern Gfx mirage_mirage_mesh_tri_5[];
+extern Vtx mirage_mirage_mesh_vtx_6[184];
+extern Gfx mirage_mirage_mesh_tri_6[];
+extern Vtx mirage_mirage_mesh_vtx_7[12];
+extern Gfx mirage_mirage_mesh_tri_7[];
+extern Vtx mirage_mirage_mesh_vtx_8[38];
+extern Gfx mirage_mirage_mesh_tri_8[];
+extern Vtx mirage_mirage_mesh_vtx_9[21];
+extern Gfx mirage_mirage_mesh_tri_9[];
+extern Vtx mirage_mirage_mesh_vtx_10[105];
+extern Gfx mirage_mirage_mesh_tri_10[];
+extern Vtx mirage_mirage_mesh_vtx_11[6];
+extern Gfx mirage_mirage_mesh_tri_11[];
+extern Vtx mirage_mirage_mesh_vtx_12[4];
+extern Gfx mirage_mirage_mesh_tri_12[];
+
+extern Gfx mirage_mirage_mesh[];
+extern Gfx mirage_material_revert_render_settings[];
+

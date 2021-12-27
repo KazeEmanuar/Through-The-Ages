@@ -1,0 +1,10 @@
+extern const GeoLayout totempole_geo[];
+extern Lights1 totempole_f3d_material_lights;
+extern u8 totempole_eyes3_ci4[];
+extern u8 totempole_eyes3_ci4_pal_rgba16[];
+extern Vtx totempole_Cube_mesh_layer_1_vtx_0[13];
+extern Gfx totempole_Cube_mesh_layer_1_tri_0[];
+extern Gfx mat_totempole_f3d_material[];
+extern Gfx mat_revert_totempole_f3d_material[];
+extern Gfx totempole_Cube_mesh_layer_1[];
+extern Gfx totempole_material_revert_render_settings[];

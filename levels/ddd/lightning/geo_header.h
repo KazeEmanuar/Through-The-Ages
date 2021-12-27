@@ -1,0 +1,10 @@
+extern const GeoLayout lightning_geo[];
+extern Lights1 lightning_f3d_material_lights;
+extern u8 lightning__1200px_Tampa_Bay_Lightning_2011_svg_ia8[];
+extern Vtx lightning_Plane_mesh_layer_4_vtx_cull[8];
+extern Vtx lightning_Plane_mesh_layer_4_vtx_0[4];
+extern Gfx lightning_Plane_mesh_layer_4_tri_0[];
+extern Gfx mat_lightning_f3d_material[];
+extern Gfx mat_revert_lightning_f3d_material[];
+extern Gfx lightning_Plane_mesh_layer_4[];
+extern Gfx lightning_material_revert_render_settings[];

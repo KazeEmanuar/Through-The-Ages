@@ -1,0 +1,13 @@
+extern Lights1 shoe2Wing_f3d_material_lights;
+extern Lights1 shoe2Wing_f3d_material_001_layer1_lights;
+extern u8 shoe2Wing_GrdRCruiseShipHane_ci4[];
+extern u8 shoe2Wing_GrdRCruiseShipHane_ci4_pal_rgba16[];
+extern Vtx shoe2Wing_a3_mesh_vtx_cull[8];
+extern Vtx shoe2Wing_a3_mesh_vtx_0[46];
+extern Gfx shoe2Wing_a3_mesh_tri_0[];
+extern Vtx shoe2Wing_a3_mesh_vtx_1[8];
+extern Gfx shoe2Wing_a3_mesh_tri_1[];
+extern Gfx mat_shoe2Wing_f3d_material[];
+extern Gfx mat_shoe2Wing_f3d_material_001_layer1[];
+extern Gfx mat_revert_shoe2Wing_f3d_material_001_layer1[];
+extern Gfx shoe2Wing_a3_mesh[];

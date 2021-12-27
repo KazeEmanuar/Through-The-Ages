@@ -1,0 +1,30 @@
+extern const GeoLayout pirate_geo[];
+extern Vtx pirate_body_mesh_vtx_0[73];
+extern Gfx pirate_body_mesh_tri_0[];
+extern Vtx pirate_arm_L_mesh_vtx_0[15];
+extern Gfx pirate_arm_L_mesh_tri_0[];
+extern Vtx pirate_Hand_L_mesh_vtx_0[28];
+extern Gfx pirate_Hand_L_mesh_tri_0[];
+extern Vtx pirate_arm_R_mesh_vtx_0[15];
+extern Gfx pirate_arm_R_mesh_tri_0[];
+extern Vtx pirate_Hand_R_mesh_vtx_0[28];
+extern Gfx pirate_Hand_R_mesh_tri_0[];
+extern Vtx pirate_foot_L_mesh_vtx_0[22];
+extern Gfx pirate_foot_L_mesh_tri_0[];
+extern Vtx pirate_foot_R_mesh_vtx_0[22];
+extern Gfx pirate_foot_R_mesh_tri_0[];
+extern Vtx pirate_head_mesh_vtx_0[21];
+extern Gfx pirate_head_mesh_tri_0[];
+extern Vtx pirate_head_mesh_vtx_1[57];
+extern Gfx pirate_head_mesh_tri_1[];
+
+extern Gfx pirate_body_mesh[];
+extern Gfx pirate_arm_L_mesh[];
+extern Gfx pirate_Hand_L_mesh[];
+extern Gfx pirate_arm_R_mesh[];
+extern Gfx pirate_Hand_R_mesh[];
+extern Gfx pirate_foot_L_mesh[];
+extern Gfx pirate_foot_R_mesh[];
+extern Gfx pirate_head_mesh[];
+extern Gfx pirate_material_revert_render_settings[];
+

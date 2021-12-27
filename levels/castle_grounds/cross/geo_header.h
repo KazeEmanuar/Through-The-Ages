@@ -1,0 +1,11 @@
+extern const GeoLayout cross_geo[];
+extern Lights1 cross_sm64_material_002_lights;
+extern u8 cross_x_marks_the_spot_ci4[];
+extern u8 cross_x_marks_the_spot_ci4_pal_rgba16[];
+extern Vtx cross_Plane_mesh_vtx_cull[8];
+extern Vtx cross_Plane_mesh_vtx_0[4];
+extern Gfx cross_Plane_mesh_tri_0[];
+extern Gfx mat_cross_sm64_material_002[];
+extern Gfx mat_revert_cross_sm64_material_002[];
+extern Gfx cross_Plane_mesh[];
+extern Gfx cross_material_revert_render_settings[];

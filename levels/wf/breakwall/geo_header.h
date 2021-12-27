@@ -1,0 +1,10 @@
+extern const GeoLayout breakwall_geo[];
+extern Lights1 breakwall_wood_v4_002_lights;
+extern u8 breakwall__0x4D00_ci4[];
+extern u8 breakwall__0x4D00_ci4_pal_rgba16[];
+extern Vtx breakwall_cageRoom_004_mesh_layer_1_vtx_0[4];
+extern Gfx breakwall_cageRoom_004_mesh_layer_1_tri_0[];
+extern Gfx mat_breakwall_wood_v4_002[];
+extern Gfx mat_revert_breakwall_wood_v4_002[];
+extern Gfx breakwall_cageRoom_004_mesh_layer_1[];
+extern Gfx breakwall_material_revert_render_settings[];

@@ -1,0 +1,34 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "streamed",
+    "envelopes": {
+        "envelope0": [
+            [6, 32700],
+            [6,32700],
+            [32700,29430],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0A_JAW"
+        },
+        "inst1": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0B_AllstarL"
+        } ,
+        "inst2": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0C_AllstarR"
+        } 
+    },
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2"
+    ]
+}

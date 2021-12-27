@@ -1,0 +1,82 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "streamed",
+    "envelopes": {
+        "envelope0": [
+            [6, 32700],
+            [6,32700],
+            [32700,29430],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "00_eldorado"
+        },
+        "inst1": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "01_babylon"
+        },
+        "inst2": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "02_egypt"
+        },
+        "inst3": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "03_greek"
+        },
+        "inst4": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "04_china"
+        },
+        "inst5": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "05_tiki"
+        },
+        "inst6": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "06_leagues"
+        } ,
+        "inst7": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "07_DBZ"
+        }  ,
+        "inst8": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "08_ship"
+        }   ,
+        "inst9": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "09_olymp"
+        }    ,
+        "instA": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0A_JAW"
+        } 
+    },
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2",
+        "inst3",
+        "inst4",
+        "inst5",
+        "inst6",
+        "inst7",
+        "inst8",
+        "inst9",
+        "instA"
+    ]
+}

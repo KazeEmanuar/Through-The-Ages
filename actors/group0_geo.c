@@ -1,0 +1,35 @@
+#include <ultra64.h>
+#include "sm64.h"
+#include "geo_commands.h"
+
+#include "make_const_nonconst.h"
+
+#include "common1.h"
+#include "group0.h"
+
+#include "bubble/geo.inc.c"
+#include "walk_smoke/geo.inc.c"
+#include "burn_smoke/geo.inc.c"
+#include "stomp_smoke/geo.inc.c"
+#include "water_wave/geo.inc.c"
+#include "sparkle/geo.inc.c"
+#include "water_splash/geo.inc.c"
+#include "sparkle_animation/geo.inc.c"
+#include "mario/geo.inc.c"
+
+#include "staryu/geo.inc.c"
+#include "staryufountain/geo.inc.c"
+#include "haunter/geo.inc.c"
+#include "magnemite/geo.inc.c"
+#include "weezing/geo.inc.c"
+#include "articuno/geo.inc.c"
+#include "icebeam/geo.inc.c"
+#include "tangela/geo.inc.c"
+#include "tangelaattack/geo.inc.c"
+#include "onix/geo.inc.c"
+#include "primeape/geo.inc.c"
+#include "golem/geo.inc.c"
+#include "gyarados/geo.inc.c"
+#include "hypno/geo.inc.c"
+
+#include "screw/geo.inc.c"

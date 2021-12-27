@@ -1,0 +1,5 @@
+#include "anim_IDLE.inc.c"
+#include "anim_WALKIDLE.inc.c"
+#include "anim_FLYING.inc.c"
+#include "anim_BULLETS.inc.c"
+#include "anim_DAMAGED.inc.c"

@@ -1,0 +1,93 @@
+{
+    "date": "1996-03-19",
+    "sample_bank": "instruments",
+    "envelopes": {
+        "envelope0": [
+            [2, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope1": [
+            [6, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope2": [
+            [6, 32700],
+            [298, 0],
+            [1, 0],
+            "hang"
+        ],
+        "envelope3": [
+            [2, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ],
+        "envelope4": [
+            [2, 32700],
+            [1, 32700],
+            [32700, 29430],
+            "hang"
+        ]
+    },
+    "instruments": {
+        "inst0": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "48"
+        },
+        "inst1": {
+            "release_rate": 15,
+            "normal_range_lo": 27,
+            "normal_range_hi": 46,
+            "envelope": "envelope1",
+            "sound_lo": "23",
+            "sound": "24",
+            "sound_hi": "25"
+        },
+        "inst2": {
+            "release_rate": 208,
+            "envelope": "envelope0",
+            "sound": "1A"
+        },
+        "inst3": {
+            "release_rate": 10,
+            "envelope": "envelope2",
+            "sound": "26"
+        },
+        "inst4": {
+            "release_rate": 10,
+            "envelope": "envelope3",
+            "sound": "20"
+        },
+        "inst5": {
+            "release_rate": 10,
+            "envelope": "envelope3",
+            "sound": "06",
+			"tuning": 0.3
+        },
+        "inst6": {
+            "release_rate": 10,
+            "envelope": "envelope3",
+            "sound": "08"
+        },
+        "inst7": {
+            "release_rate": 10,
+            "envelope": "envelope4",
+            "sound": "11"
+        }
+    },
+    "instrument_list": [
+        "inst0",
+        "inst1",
+        "inst2",
+        "inst3",
+        "inst4",
+        "inst5",
+        "inst6",
+        "inst7"
+    ]
+}

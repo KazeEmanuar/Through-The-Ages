@@ -1,0 +1,6 @@
+#include "levels/wdw/area_1/geo.inc.c"
+#include "levels/wdw/area_2/geo.inc.c"
+#include "levels/wdw/area_3/geo.inc.c"
+#include "levels/wdw/area_4/geo.inc.c"
+#include "levels/wdw/area_5/geo.inc.c"
+#include "levels/wdw/area_6/geo.inc.c"

@@ -1,0 +1,10 @@
+extern const GeoLayout flower_geo[];
+extern Lights1 flower_sm64_material_001_lights;
+extern u8 flower_texture_ci4[];
+extern u8 flower_texture_ci4_pal_rgba16[];
+extern Vtx flower_Plane_mesh_vtx_0[50];
+extern Gfx flower_Plane_mesh_tri_0[];
+extern Gfx mat_flower_sm64_material_001[];
+extern Gfx mat_revert_flower_sm64_material_001[];
+extern Gfx flower_Plane_mesh[];
+extern Gfx flower_material_revert_render_settings[];
