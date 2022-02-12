@@ -1585,6 +1585,6 @@ const Collision ssl_area_2_collision[] = {
 	COL_TRI(659, 650, 663),
 	COL_TRI_STOP(),
 	COL_WATER_BOX_INIT(1),
-	COL_WATER_BOX(0x00, -16789, -21067, 19207, 13196, -352),
+	COL_WATER_BOX(0x00, -16789, -26052, 19207, 9944, -356),
 	COL_END()
 };

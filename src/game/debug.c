@@ -589,7 +589,7 @@ void try_print_debug_mario_level_info(void) {
         *l = backupHat3;
     }
 
-    if (shoeTimer) {
+    if (shoeTimer && (gCurrLevelNum == LEVEL_DDD)) {
         *shoe1replace = shoe1;
         *(shoe1replace + 1) = back;
         *shoe2replace = shoe2;
@@ -624,11 +624,12 @@ void try_print_debug_mario_level_info(void) {
     if (gMarioState->floor && gMarioState->floor->type == SURFACE_TRAPDOOR) {
         if (((gMarioState->pos[1] + gMarioState->vel[1]) - gMarioState->floorHeight) < 20.f) {
             if (!(gMarioState->action & ACT_FLAG_INTANGIBLE)) {
-                gMarioState->vel[1] = -1.25f * gMarioState->vel[1] + 8.f;
+                gMarioState->vel[1] = -.85f * gMarioState->vel[1] + 40.f;
                 gMarioState->action = ACT_TRIPLE_JUMP;
                 gMarioState->marioObj->header.gfx.unk38.animFrame = 0;
                 play_sound(SOUND_MARIO_YAHOO_WAHA_YIPPEE + ((gAudioRandom % 5) << 16),
                            gMarioState->marioObj->header.gfx.cameraToObject);
+                           spawn_object(gCurrentObject, 0, bhvMistCircParticleSpawner);
             }
         }
     }

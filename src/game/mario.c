@@ -597,6 +597,9 @@ u32 mario_floor_is_slippery(struct MarioState *m) {
     switch (mario_get_floor_class(m)) {
         case SURFACE_VERY_SLIPPERY:
             normY = 0.9848077f; //~cos(10 deg)
+            if (gCurrLevelNum == LEVEL_LLL) {
+                normY = 0.9948077f;
+            }
             break;
 
         case SURFACE_SLIPPERY:
@@ -674,7 +677,7 @@ s32 mario_floor_is_steep(struct MarioState *m) {
                 break;
 
             case SURFACE_NOT_SLIPPERY:
-                normY = 0.8660254f; //~cos(30 deg)
+                normY = 0.f; //~cos(30 deg)
                 break;
         }
 
@@ -1165,7 +1168,6 @@ s32 check_common_hold_action_exits(struct MarioState *m) {
  * Transitions Mario from a submerged action to a walking action.
  */
 s32 transition_submerged_to_walking(struct MarioState *m) {
-    
 
     vec3s_set(m->angleVel, 0, 0, 0);
 
@@ -1308,7 +1310,7 @@ void update_mario_joystick_inputs(struct MarioState *m) {
         m->intendedMag = mag / 8.0f;
     }
 
-     if (m->intendedMag > 0.0f) {
+    if (m->intendedMag > 0.0f) {
         if (gLakituState.mode != CAM_MODE_NEWCAM)
             m->intendedYaw = atan2s(-controller->stickY, controller->stickX) + m->area->camera->yaw;
         else
@@ -1436,7 +1438,7 @@ void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
     s16 camPreset;
 
     if ((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) {
-        heightBelowWater = (f32)(m->waterLevel - 80) - m->pos[1];
+        heightBelowWater = (f32) (m->waterLevel - 80) - m->pos[1];
         camPreset = m->area->camera->mode;
 
         if ((m->action & ACT_FLAG_METAL_WATER)) {
@@ -1452,7 +1454,7 @@ void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
             // As long as Mario isn't drowning or at the top
             // of the water with his head out, spawn bubbles.
             if ((m->action & ACT_FLAG_INTANGIBLE) == 0) {
-                if ((m->pos[1] < (f32)(m->waterLevel - 160)) || (m->faceAngle[0] < -0x800)) {
+                if ((m->pos[1] < (f32) (m->waterLevel - 160)) || (m->faceAngle[0] < -0x800)) {
                     m->particleFlags |= PARTICLE_BUBBLE;
                 }
             }
@@ -1463,8 +1465,17 @@ void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
 /**
  * Both increments and decrements Mario's HP.
  */
+s16 fadeoutstarted = 0;
+f32 backupPos[3] = { 100.f, 100.f, 100.f };
+s16 backupAngle;
+s16 backupYaw;
+extern u8 newcam_centering;
+extern s16 newcam_yaw_target;
 void update_mario_health(struct MarioState *m) {
     s32 terrainIsSnow;
+    f32 normY;
+    f32 avgPos[3];
+    s16 i;
 
     if (m->health >= 0x100) {
         // When already healing or hurting Mario, Mario's HP is not changed any more here.
@@ -1518,6 +1529,62 @@ void update_mario_health(struct MarioState *m) {
         } else {
             gRumblePakTimer = 0;
 #endif
+        }
+    }
+#define SURFACETYPE(surf) (surf->type)
+    if (!fadeoutstarted) {
+        if (m->floor) {
+            switch (mario_get_floor_class(m)) {
+                case SURFACE_CLASS_VERY_SLIPPERY:
+                    normY = 0.99f; //~cos(10 deg)
+                    break;
+                case SURFACE_CLASS_SLIPPERY:
+                    normY = 0.9396926f; //~cos(20 deg)
+                    break;
+                default:
+                    normY = 0.7880108f; //~cos(38 deg)
+                    break;
+                case SURFACE_CLASS_NOT_SLIPPERY:
+                    normY = 0.0f;
+                    break;
+            }
+            if (m->action & ACT_FLAG_PAUSE_EXIT) {
+                if (m->floorHeight == m->pos[1]) {
+                    if (m->floor->normal.y > normY) {
+                        if ((SURFACETYPE(m->floor) != 0x23) && (SURFACETYPE(m->floor) != 0x0A)) {
+                            if (!m->floor->object) {
+                                for (i = 0; i < 3; i++) {
+                                    avgPos[i] = (m->floor->vertex1[i] + m->floor->vertex2[i]
+                                                 + m->floor->vertex3[i])
+                                                * 0.333333333333333333333f;
+                                }
+                                backupAngle = m->faceAngle[1];
+                                vec3f_copy(backupPos, avgPos);
+                                backupYaw = newcam_yaw;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        fadeoutstarted++;
+        if (fadeoutstarted == 12) {
+            vec3f_copy(m->pos, backupPos);
+            m->pos[1] += 150.f;
+            m->vel[1] = 0;
+            m->forwardVel = 0;
+            m->floorHeight = find_floor(m->pos[0], m->pos[1], m->pos[2], &m->floor);
+            m->faceAngle[1] = backupAngle;
+            m->quicksandDepth = 0;
+            drop_and_set_mario_action(m, ACT_FREEFALL, 0);
+            play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 0x0A, 0, 0, 0);
+            newcam_centering = 1;
+            newcam_yaw = backupYaw;
+            newcam_yaw_target = backupYaw;
+            m->hurtCounter += 4;
+        } else if (fadeoutstarted == 14) {
+            fadeoutstarted = 0;
         }
     }
 }
@@ -1908,7 +1975,6 @@ void init_mario_from_save_file(void) {
         save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
     gMarioState->numKeys = 0;
 
-    gMarioState->numLives = 4;
     gMarioState->health = 0x880;
 
     gMarioState->prevNumStarsForDialog = gMarioState->numStars;

@@ -3,9 +3,9 @@
 const GeoLayout lll_area_5_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(5, -6416, -1629, -6930, lll_dl_Cube_002_mesh_layer_5),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 488, 594, -1014, lll_dl_Cube_003_mesh),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 488, 594, -1014, lll_dl_Cube_042_mesh),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -6416, -1629, -6930, lll_dl_Cube_002_mesh_layer_5),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_ALPHA, 488, 594, -1014, 90, 0, -90, lll_dl_Cube_003_mesh),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, 488, 594, -1014, 90, 0, -90, lll_dl_Cube_042_mesh),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -33,7 +33,7 @@ const GeoLayout lll_area_5[] = {
 		GEO_CLOSE_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, lll_dl_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, lll_dl_material_revert_render_settings),
-		GEO_DISPLAY_LIST(5, lll_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, lll_dl_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

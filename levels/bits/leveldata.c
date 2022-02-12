@@ -56,3 +56,18 @@
 #include "levels/bits/areas/1/30/collision.inc.c"
 #include "levels/bits/areas/1/31/collision.inc.c"
 #include "levels/bits/areas/1/32/collision.inc.c"
+
+#include "levels/bits/leveldata.inc.c"
+
+#include "levels/bits/toadlawyertw/model.inc.c"
+#include "levels/bits/toadlawyertw/anims/data.inc.c"
+#include "levels/bits/toadlawyertw/anims/table.inc.c"
+#include "levels/bits/courtDK/model.inc.c"
+#include "levels/bits/courtDK/anims/data.inc.c"
+#include "levels/bits/courtDK/anims/table.inc.c"
+#include "levels/bits/wariocourt/model.inc.c"
+#include "levels/bits/wariocourt/anims/data.inc.c"
+#include "levels/bits/wariocourt/anims/table.inc.c"
+#include "levels/bits/waluigi/anims/data.inc.c"
+#include "levels/bits/waluigi/anims/table.inc.c"
+#include "levels/bits/waluigi/model.inc.c"

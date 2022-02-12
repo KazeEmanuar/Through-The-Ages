@@ -659,3 +659,20 @@ Gfx *geo_mirror_mario_backface_culling(s32 callContext, struct GraphNode *node, 
     }
     return gfx;
 }
+
+Gfx *geo_prim_from_opacity(s32 callContext, struct GraphNode *b, Mat4 *mtx) {
+    Gfx *gfx = NULL;
+    Gfx *sp3C, *sp38;
+    struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
+    struct Object *obj = (struct Object *) gCurGraphNodeObject;
+    if (callContext == GEO_CONTEXT_RENDER) {
+        sp38 = alloc_display_list(sizeof(Gfx) * 2);
+        sp3C = sp38;
+        gDPSetPrimColor(sp3C++, 0, 0, 0, 0, 0, obj->oOpacity);
+        gSPEndDisplayList(sp3C);
+        asGenerated->fnNode.node.flags =
+            (asGenerated->fnNode.node.flags & 0xFF) | (LAYER_TRANSPARENT << 8);
+        return sp38;
+    }
+    return gfx;
+}

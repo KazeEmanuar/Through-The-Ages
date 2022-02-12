@@ -90,43 +90,43 @@
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0F"
+            "sound": "0F_OKAY"
         },
         "inst16": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "10"
+            "sound": "10_toad_whoa"
         },
         "inst17": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "11"
+            "sound": "11_toad_yeah"
         },
         "inst18": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "12"
+            "sound": "12_walu_owie"
         },
         "inst19": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "13"
+            "sound": "13_walu_haha"
         },
         "inst20": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "14"
+            "sound": "14_wario_hurt"
         },
         "inst21": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "15"
+            "sound": "15_wario_laugh"
         },
         "inst22": {
             "ifdef": ["VERSION_US", "VERSION_EU"],

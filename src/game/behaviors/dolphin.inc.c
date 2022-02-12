@@ -276,8 +276,8 @@ void jetskiCode(void) {
             x = o->oPosX;
             y = o->oPosY;
             z = o->oPosZ;
-            o->oVelX += sins(gMarioState->intendedYaw) * gMarioState->intendedMag / 64.f;
-            o->oVelZ += coss(gMarioState->intendedYaw) * gMarioState->intendedMag / 64.f;
+            o->oVelX += sins(gMarioState->intendedYaw) * gMarioState->intendedMag / 16.f;
+            o->oVelZ += coss(gMarioState->intendedYaw) * gMarioState->intendedMag / 16.f;
             // get forward angle from X and Z component
             o->oForwardVel = sqrtf(o->oVelX * o->oVelX + o->oVelZ * o->oVelZ);
             if (o->oForwardVel > 0.1f) {
@@ -297,7 +297,7 @@ void jetskiCode(void) {
                     o->oForwardVel = 0.f;
                 }
             }
-            o->oForwardVel *= 0.998f;
+            o->oForwardVel *= 0.98f;
             cur_obj_compute_vel_xz();
             gMarioState->pos[0] = o->oPosX;
             gMarioState->pos[1] = o->oPosY + 100.f;
@@ -691,7 +691,10 @@ struct itemEntry itemList[] = {
     { 3, "Open Cannon" },
     { 10, "Unlock Wing Cap" },
     { 5, "Unlock Staryu" },
+    { 5, "Unlock Weezing" },
+    { 5, "Unlock Tangela" },
     { 5, "Unlock Haunter" },
+    { 5, "Unlock Onix" },
     { 5, "Unlock Primeape" },
     { 5, "Unlock Golem" },
     { 5, "Unlock Articuno" },
@@ -726,43 +729,57 @@ void renderAllItems(u8 a) {
     }
 }
 u16 pokedialog;
+extern int spawnID;
 u32 getPokeID(u16 selection) {
+    spawnID = selection - 2;
     switch (selection) {
         case 2:
             pokedialog = 159;
             return 1 << 0;
             break;
         case 3:
-            pokedialog = 162;
-            return 1 << 3;
-
+            pokedialog = 160;
+            return 1 << 1;
             break;
         case 4:
+            pokedialog = 161;
+            return 1 << 2;
+            break;
+        case 5:
+            pokedialog = 162;
+            return 1 << 3;
+            break;
+        case 6:
+            pokedialog = 163;
+            return 1 << 4;
+            break;
+
+        case 7:
             pokedialog = 164;
             return 1 << 5;
 
             break;
-        case 5:
+        case 8:
             pokedialog = 165;
             return 1 << 6;
 
             break;
-        case 6:
+        case 9:
             pokedialog = 170;
             return 1 << 7;
 
             break;
-        case 7:
+        case 10:
             pokedialog = 171;
             return 1 << 8;
 
             break;
-        case 8:
+        case 11:
             pokedialog = 168;
             return 1 << 9;
 
             break;
-        case 9:
+        case 12:
             pokedialog = 172;
             return 1 << 10;
             break;
@@ -835,7 +852,7 @@ void render_menu() {
                     if (!gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[2]) {
                         gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[2] = 1;
                         cannonClosed = cur_obj_nearest_object_with_behavior(bhvCannonClosed);
-                        cutscene = cutscene_object(CUTSCENE_PREPARE_CANNON, cannonClosed);
+                        // cutscene = cutscene_object(CUTSCENE_PREPARE_CANNON, cannonClosed);
                         rendershop = 0;
                         gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[1] += 3;
                         play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
@@ -865,7 +882,7 @@ void render_menu() {
                         play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
                     }
                     break;
-                case 10:
+                case 13:
                     if (!gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[0]) {
                         play_sound(SOUND_MENU_CAMERA_BUZZ, gDefaultSoundArgs);
                     } else {
@@ -1035,8 +1052,8 @@ extern Gfx ccm_dl_Wtaerhigh_mesh[];
 extern Gfx ccm_dl_water_mesh[];
 void killwater(void) {
     int i;
-    Gfx *a = segmented_to_virtual(ccm_dl_wata_mesh);
-    a[0].words.w0 = 0xdf000000;
+    Gfx *a /*= segmented_to_virtual(ccm_dl_wata_mesh)*/;
+    // a[0].words.w0 = 0xdf000000;
     a = segmented_to_virtual(ccm_dl_Wtaerhigh_mesh);
     a[0].words.w0 = 0xdf000000;
     a = segmented_to_virtual(ccm_dl_water_mesh);
@@ -1159,33 +1176,7 @@ extern Gfx mat_mirage_roofOrnament_003_v2_v2[];
 extern Gfx mat_mirage_sm64_material_006[];
 extern Gfx mat_mirage_sm64_material_007[];
 void setTransparency(int t) {
-    int i = 0xFFFFFF00 + t;
-    Gfx *a = segmented_to_virtual(mat_mirage_floorSide_001_v2_v2);
-    a[0x13].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_ground_001_v2_v2);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_stone_001_v2_v2);
-    a[0x13].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_triangularStone_001_v2_v2);
-    a[0x12].words.w1 = i;
-    // a = segmented_to_virtual(mat_mirage_roofOrnament_002_v2_v2);
-    // a[0x13].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_007);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_005);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_014_v2_v2);
-    a[0x13].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_002);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_003);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_004);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_roofOrnament_003_v2_v2);
-    a[0x12].words.w1 = i;
-    a = segmented_to_virtual(mat_mirage_sm64_material_006);
-    a[0x12].words.w1 = i;
+    o->oOpacity = t;
 }
 
 void toadmummy(void) {
@@ -1605,7 +1596,7 @@ void pharaohcode(void) {
             goalrot += o->oSubAction * 0x80 - 0x40;
             if (o->oTimer > 127 + o->oHealth * 128) {
                 o->oAction = 5;
-                cur_obj_play_sound_2(SOUND_OBJ_KING_WHOMP_DEATH);
+                cur_obj_play_sound_2(SOUND_OBJ_UNKNOWN6);
             }
             // swing left/right
             break;
@@ -1977,87 +1968,57 @@ void wayyyy(void) {
             sTimerRunning = 0;
             // play_sound(SOUND_GENERAL2_RIGHT_ANSWER, gDefaultSoundArgs);
             play_music(SEQ_PLAYER_LEVEL, SEQ_EVENT_RACE, 0);
+            // kill jetski
+            if (cur_obj_nearest_object_with_behavior(bhvJetski2)) {
+                spawn_object(cur_obj_nearest_object_with_behavior(bhvJetski2), 0,
+                             bhvMistCircParticleSpawner);
+                cur_obj_nearest_object_with_behavior(bhvJetski2)->activeFlags = 0;
+                gMarioState->action = ACT_DIVE;
+                gMarioState->vel[1] = 35.f;
+                gMarioState->forwardVel = -15.f;
+            }
         }
     }
 }
 
-
-
 // 6x96 I4 sheet of animframes
 u8 animFrames[6 * 3 * 32] = {
-	0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 
-	0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x00, 
-	0x00, 0x00, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 
-	0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 
-	0x11, 0x00, 0x00, 0x00, 0x02, 0x22, 0x22, 0x02, 
-	0x22, 0x22, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 
-	0x02, 0x22, 0x22, 0x00, 0x00, 0x00, 0x03, 0x33, 
-	0x33, 0x03, 0x33, 0x33, 0x03, 0x33, 0x33, 0x03, 
-	0x33, 0x33, 0x03, 0x33, 0x33, 0x00, 0x00, 0x00, 
-	0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 0x04, 0x44, 
-	0x44, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 0x00, 
-	0x00, 0x00, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 
-	0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x05, 0x55, 
-	0x55, 0x00, 0x00, 0x00, 0x06, 0x66, 0x66, 0x06, 
-	0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 
-	0x06, 0x66, 0x66, 0x00, 0x00, 0x00, 0x07, 0x77, 
-	0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x07, 
-	0x77, 0x77, 0x07, 0x77, 0x77, 0x00, 0x00, 0x00, 
-	0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 
-	0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x00, 
-	0x00, 0x00, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 
-	0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x09, 0x99, 
-	0x99, 0x00, 0x00, 0x00, 0x0b, 0xbb, 0xbb, 0x0b, 
-	0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 
-	0x0b, 0xbb, 0xbb, 0x00, 0x00, 0x00, 0x0c, 0xcc, 
-	0xcc, 0x0c, 0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x0c, 
-	0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x00, 0x00, 0x00, 
-	0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 
-	0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x00, 
-	0x00, 0x00, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 
-	0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x0e, 0xee, 
-	0xee, 0x00, 0x00, 0x00, 0x0f, 0xff, 0xff, 0x0f, 
-	0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 
-	0x0f, 0xff, 0xff, 0x00, 0x00, 0x00, 0x0f, 0xff, 
-	0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 
-	0xff, 0xff, 0x0f, 0xff, 0xff, 0x00, 0x00, 0x00, 
-	0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 
-	0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x00, 
-	0x00, 0x00, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 
-	0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x0e, 0xee, 
-	0xee, 0x00, 0x00, 0x00, 0x0d, 0xdd, 0xdd, 0x0d, 
-	0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 
-	0x0d, 0xdd, 0xdd, 0x00, 0x00, 0x00, 0x0c, 0xcc, 
-	0xcc, 0x0c, 0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x0c, 
-	0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x00, 0x00, 0x00, 
-	0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 
-	0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x00, 
-	0x00, 0x00, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 
-	0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x09, 0x99, 
-	0x99, 0x00, 0x00, 0x00, 0x08, 0x88, 0x88, 0x08, 
-	0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 
-	0x08, 0x88, 0x88, 0x00, 0x00, 0x00, 0x07, 0x77, 
-	0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x07, 
-	0x77, 0x77, 0x07, 0x77, 0x77, 0x00, 0x00, 0x00, 
-	0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 
-	0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x00, 
-	0x00, 0x00, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 
-	0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x05, 0x55, 
-	0x55, 0x00, 0x00, 0x00, 0x04, 0x44, 0x44, 0x04, 
-	0x44, 0x44, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 
-	0x04, 0x44, 0x44, 0x00, 0x00, 0x00, 0x03, 0x33, 
-	0x33, 0x03, 0x33, 0x33, 0x03, 0x33, 0x33, 0x03, 
-	0x33, 0x33, 0x03, 0x33, 0x33, 0x00, 0x00, 0x00, 
-	0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 0x02, 0x22, 
-	0x22, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 0x00, 
-	0x00, 0x00, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 
-	0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 
-	0x11, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-	
+    0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x00,
+    0x00, 0x00, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11,
+    0x11, 0x00, 0x00, 0x00, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22,
+    0x02, 0x22, 0x22, 0x00, 0x00, 0x00, 0x03, 0x33, 0x33, 0x03, 0x33, 0x33, 0x03, 0x33, 0x33, 0x03,
+    0x33, 0x33, 0x03, 0x33, 0x33, 0x00, 0x00, 0x00, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 0x04, 0x44,
+    0x44, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 0x00, 0x00, 0x00, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55,
+    0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x00, 0x00, 0x00, 0x06, 0x66, 0x66, 0x06,
+    0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x00, 0x00, 0x00, 0x07, 0x77,
+    0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x00, 0x00, 0x00,
+    0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x00,
+    0x00, 0x00, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x09, 0x99,
+    0x99, 0x00, 0x00, 0x00, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb,
+    0x0b, 0xbb, 0xbb, 0x00, 0x00, 0x00, 0x0c, 0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x0c,
+    0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x00, 0x00, 0x00, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd,
+    0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x00, 0x00, 0x00, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee,
+    0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x00, 0x00, 0x00, 0x0f, 0xff, 0xff, 0x0f,
+    0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x00, 0x00, 0x00, 0x0f, 0xff,
+    0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x00, 0x00, 0x00,
+    0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x0f, 0xff, 0xff, 0x00,
+    0x00, 0x00, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x0e, 0xee, 0xee, 0x0e, 0xee,
+    0xee, 0x00, 0x00, 0x00, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd, 0x0d, 0xdd, 0xdd,
+    0x0d, 0xdd, 0xdd, 0x00, 0x00, 0x00, 0x0c, 0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x0c,
+    0xcc, 0xcc, 0x0c, 0xcc, 0xcc, 0x00, 0x00, 0x00, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb,
+    0xbb, 0x0b, 0xbb, 0xbb, 0x0b, 0xbb, 0xbb, 0x00, 0x00, 0x00, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99,
+    0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x09, 0x99, 0x99, 0x00, 0x00, 0x00, 0x08, 0x88, 0x88, 0x08,
+    0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x08, 0x88, 0x88, 0x00, 0x00, 0x00, 0x07, 0x77,
+    0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x07, 0x77, 0x77, 0x00, 0x00, 0x00,
+    0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x06, 0x66, 0x66, 0x00,
+    0x00, 0x00, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x05, 0x55, 0x55, 0x05, 0x55,
+    0x55, 0x00, 0x00, 0x00, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44, 0x04, 0x44, 0x44,
+    0x04, 0x44, 0x44, 0x00, 0x00, 0x00, 0x03, 0x33, 0x33, 0x03, 0x33, 0x33, 0x03, 0x33, 0x33, 0x03,
+    0x33, 0x33, 0x03, 0x33, 0x33, 0x00, 0x00, 0x00, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 0x02, 0x22,
+    0x22, 0x02, 0x22, 0x22, 0x02, 0x22, 0x22, 0x00, 0x00, 0x00, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11,
+    0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x01, 0x11, 0x11, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
 };
 #define STARCOUNTMAX 16
@@ -2096,9 +2057,7 @@ void generateNightSky(u8 *texture) {
     }
 }
 
-
-
-
+extern u8 bitfs_dl_Unbenannt_i4[];
 extern u8 bitdw_dl_Unbenannt_i4[];
 extern Gfx mat_hmc_dl_TIKIWATER_layer7[];
 extern Vtx hmc_dl_Tikiwatwat_mesh_layer_7_vtx_0[825];
@@ -2142,10 +2101,24 @@ void textureanim(void) {
             }
             break;
         case 1:
-            generateNightSky(nightSky);
+            if (gCurrLevelNum == LEVEL_BITDW) {
+                generateNightSky(nightSky);
+            } else {
+                nightSky = segmented_to_virtual(bitfs_dl_Unbenannt_i4);
+                generateNightSky(nightSky);
+            }
             break;
     }
 }
+
+// bhvExplosion
+void bombthing(void) {
+    if (cur_obj_dist_to_nearest_object_with_behavior(bhvExplosion) < 700.f) {
+        create_sound_spawner(SOUND_GENERAL_WALL_EXPLOSION);
+        obj_explode_and_spawn_coins(80.0f, 0);
+    }
+}
+
 #define DOWNMOVEMENT 255.f
 void warpPipeOWCode(void) {
     // bparam4: starrequirement
@@ -2164,7 +2137,7 @@ void warpPipeOWCode(void) {
 
 void toadlawyer(void) {
     s32 i;
-    if (save_file_get_total_star_count(gCurrSaveFileNum - 1, 0, 0x18) < 45) {
+    if (save_file_get_total_star_count(gCurrSaveFileNum - 1, 0, 0x18) < 50) {
         obj_mark_for_deletion(o);
         return;
     }
@@ -2183,7 +2156,10 @@ void toadlawyer(void) {
                     break;
                 case 1:
                     o->oAction = 2; // warp too
-                    level_trigger_warp(m, WARP_OP_CREDITS_END);
+                                    // level_trigger_warp(m, WARP_OP_CREDITS_END);
+                    level_trigger_warp(m, WARP_OP_WARP_FLOOR);
+                    play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x14, 0xff, 0xff, 0xff);
+                    sSourceWarpNodeId = 0xCF;
                     break;
                 case 2:
                     o->oAction = 3;
@@ -2215,7 +2191,6 @@ void tutorialGuy(void) {
             if (gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[0]) {
                 if (talkToMario(4)) {
                     o->oAction++;
-                    gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[0] = 0xff; //debug
                     pickpoke = 1;
                     blackmarketselection = 0;
                     ok = 0;
@@ -2246,17 +2221,17 @@ void tutorialGuy(void) {
             break;
         case 3:
             // show last text
-           // if (yoshiselected) {
-                if (talkToMario(5)) {
-                    o->oAction++;
-                    level_trigger_warp(m, WARP_OP_WARP_FLOOR);
-                    play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x14, 0xCf, 0xCf, 0xff);
-                    sSourceWarpNodeId = 0xC0 + yoshiselected;
-                }
-
-           /* } else {
+            // if (yoshiselected) {
+            if (talkToMario(5)) {
                 o->oAction++;
-            }*/
+                level_trigger_warp(m, WARP_OP_WARP_FLOOR);
+                play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x14, 0xCf, 0xCf, 0xff);
+                sSourceWarpNodeId = 0xC0 + yoshiselected;
+            }
+
+            /* } else {
+                 o->oAction++;
+             }*/
             break;
         case 4:
             // wait mario far
@@ -2266,4 +2241,320 @@ void tutorialGuy(void) {
             }
             break;
     }
+}
+
+struct Object *find_obj_with_bparam2(u32 bParam) {
+    uintptr_t *behaviorAddr = segmented_to_virtual(bhvCourtActor);
+    struct Object *obj;
+    struct ObjectNode *listHead;
+
+    listHead = &gObjectLists[get_object_list_from_behavior(behaviorAddr)];
+    obj = (struct Object *) listHead->next;
+
+    while (obj != (struct Object *) listHead) {
+        if (obj->behavior == behaviorAddr) {
+            if (obj->activeFlags != ACTIVE_FLAG_DEACTIVATED) {
+                if ((obj->oBehParams2ndByte) == bParam) {
+                    return obj;
+                }
+            }
+        }
+        obj = (struct Object *) obj->header.next;
+    }
+    return 0;
+}
+
+extern const struct Animation *const waluigi_anims[];
+extern const struct Animation *const courtDK_anims[];
+extern const struct Animation *const toadlawyertw_anims[];
+extern const struct Animation *const wariocourt_anims[];
+extern const struct Animation *const chain_chomp_seg6_anims_06025178[];
+extern const struct Animation *const piranha_plant_seg6_anims_0601C31C[];
+extern const struct Animation *const whomp_seg6_anims_06020A04[];
+void *animDatas[] = { toadlawyertw_anims, courtDK_anims, wariocourt_anims, waluigi_anims,
+                      chain_chomp_seg6_anims_06025178 };
+
+extern s16 newcam_yaw_target;
+extern s16 newcam_yaw;
+extern u8 newcam_centering;
+extern u16 newcam_distance;
+extern f32 newcam_pos_target[3];
+#define DKBREGH SOUND_PEACH_MARIO
+#define TOADWHOA SOUND_PEACH_POWER_OF_THE_STARS
+#define TOADYEAH SOUND_PEACH_THANKS_TO_YOU
+#define WALUOWIE SOUND_PEACH_THANK_YOU_MARIO
+#define WALUHAHA SOUND_PEACH_SOMETHING_SPECIAL
+#define WARIOHURT SOUND_PEACH_BAKE_A_CAKE
+#define WARIOLAUGH SOUND_PEACH_FOR_MARIO
+struct CourtCut {
+    u16 dialogID;
+    u16 animID;
+    s8 rightAnswer; //-1 for non question dialogs, play puzzle solved jingle or marios WOOOAOAAAAWWW
+                    // sound depending on wether right or wrong
+    u32 soundbits;
+    u8 characterID; // 0,1,2,3 for the other actors, 255 for mario
+    u8 extradelay;  // 0,1,2,3 for the other actors, 255 for mario
+};
+struct CourtCut introScene[] = {
+    { 173, 0, -1, DKBREGH, 1, 0 },
+    { 174, 0, -1, WARIOLAUGH, 2, 0 },
+    { 175, 0, -1, WALUHAHA, 3, 0 },
+    { 176, 0, -1, TOADYEAH, 0, 0 },
+    { 177, MARIO_ANIM_CREDITS_WAVING, -1, SOUND_MARIO_MAMA_MIA, 255, 0 },
+    { 178, 0, -1, DKBREGH, 1, 0 },
+    { 179, 0, -1, TOADYEAH, 0, 0 },
+    { 180, MARIO_ANIM_CREDITS_PEACE_SIGN, -1, SOUND_MARIO_YAHOO, 255, 0 },
+    { 181, 0, -1, DKBREGH, 1, 0 },
+    { 182, 0, -1, WARIOHURT, 2, 0 },
+    { 183, 0, -1, WALUHAHA, 3, 0 },
+    { 184, MARIO_ANIM_SOFT_BACK_KB, -1, SOUND_MARIO_OOOF, 255, 0 },
+    { 185, 0, -1, WARIOLAUGH, 2, 0 },
+    { 186, 0, 8, DKBREGH, 1, 0 },
+    { 187, 0, -1, DKBREGH, 1, 35 },
+    { 188, 0, -1, SOUND_GENERAL_CHAIN_CHOMP2, 4, 0 },
+    { 189, 0, -1, WARIOHURT, 2, 0 },
+    { 190, 0, -1, SOUND_GENERAL_CHAIN_CHOMP2, 4, 0 },
+    { 191, 0, -1, WALUHAHA, 3, 0 },
+    { 177, MARIO_ANIM_SOFT_BACK_KB, -1, SOUND_MARIO_MAMA_MIA, 255, 0 },
+    { 192, 0, -1, WARIOLAUGH, 2, 0 },
+    { 193, 0, -1, SOUND_GENERAL_CHAIN_CHOMP2, 4, 0 },
+    { 195, 0, -1, DKBREGH, 1, 0 },
+    { 194, 0, -1, WARIOHURT, 2, 0 },
+    { 196, 0, -1, SOUND_GENERAL_CHAIN_CHOMP2, 4, 0 },
+    { 197, 0, -1, DKBREGH, 1, 0 },
+    { 198, 0, 2, TOADWHOA, 0, 0 },
+    { 205, 0, -1, TOADYEAH, 0, 0 },
+    { 206, MARIO_ANIM_SUMMON_STAR, -1, SOUND_MARIO_HERE_WE_GO, 255, 0 },
+    { 207, 1, -1, WARIOHURT, 2, 0 },
+    { 208, 0, -1, WALUHAHA, 3, 0 },
+    { 209, 2, -1, DKBREGH, 1, 0 },
+    { 210, 1, -1, WARIOHURT, 2, 0 },
+    { 211, 1, -1, WALUOWIE, 3, 0 },
+    { 212, MARIO_ANIM_ELECTROCUTION, -1, SOUND_MARIO_ON_FIRE, 255, 0 },
+    { 213, 0, -1, WARIOLAUGH, 2, 0 },
+    { 214, MARIO_ANIM_GROUND_BONK, -1, SOUND_MARIO_WAAAOOOW, 255, 0 },
+    { 215, 0, -1, TOADYEAH, 0, 0 },
+    { 216, 0, -1, DKBREGH, 1, 0 },
+    { 217, 0, -1, WARIOLAUGH, 2, 0 },
+    { 184, MARIO_ANIM_SOFT_BACK_KB, -1, SOUND_MARIO_OOOF, 255, 0 },
+    { 218, 2, 8, DKBREGH, 1, 0 },
+    { 221, 0, -1, DKBREGH, 1, 35 },
+    { 219, 0, -1, SOUND_OBJ2_PIRANHA_PLANT_BITE, 4, 0 },
+    { 220, 0, -1, DKBREGH, 1, 0 },
+    { 222, 0, -1, WARIOLAUGH, 2, 0 },
+    { 223, 0, -1, SOUND_OBJ2_PIRANHA_PLANT_BITE, 4, 0 },
+    { 224, 0, -1, WARIOLAUGH, 2, 0 },
+    { 225, 0, -1, SOUND_OBJ2_PIRANHA_PLANT_BITE, 4, 0 },
+    { 177, MARIO_ANIM_SOFT_BACK_KB, -1, SOUND_MARIO_MAMA_MIA, 255, 0 },
+    { 226, 0, -1, WALUHAHA, 3, 0 },
+    { 227, 2, -1, DKBREGH, 1, 0 },
+    { 228, 0, -1, TOADYEAH, 0, 0 },
+    { 229, 0, -1, SOUND_OBJ2_PIRANHA_PLANT_BITE, 4, 0 },
+    { 230, 0, 3, TOADWHOA, 0, 0 },
+    { 231, 0, -1, TOADYEAH, 0, 0 },
+    { 180, MARIO_ANIM_CREDITS_PEACE_SIGN, -1, SOUND_MARIO_YAHOO, 255, 0 },
+    { 233, 2, -1, DKBREGH, 1, 0 },
+    { 210, 1, -1, WARIOHURT, 2, 0 },
+    { 211, 1, -1, WALUOWIE, 3, 0 },
+    { 237, 0, -1, TOADYEAH, 0, 0 },
+    { 238, 0, -1, DKBREGH, 1, 0 },
+    { 239, 0, -1, WARIOLAUGH, 2, 0 },
+    { 240, 0, -1, WALUHAHA, 3, 0 },
+    { 241, 0, 8, DKBREGH, 1, 0 },
+    { 242, 0, -1, DKBREGH, 1, 35 },
+    { 243, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 245, 0, -1, WARIOLAUGH, 2, 0 },
+    { 244, 0, -1, DKBREGH, 1, 0 },
+    { 246, 0, -1, WARIOLAUGH, 2, 0 },
+    { 247, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 248, 0, -1, WARIOLAUGH, 2, 0 },
+    { 249, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 248, 0, -1, WARIOLAUGH, 2, 0 },
+    { 249, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 250, 0, -1, WARIOHURT, 2, 0 },
+    { 251, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 252, 1, -1, WARIOHURT, 2, 0 },
+    { 253, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 177, MARIO_ANIM_SOFT_BACK_KB, -1, SOUND_MARIO_MAMA_MIA, 255, 0 },
+    { 254, 1, -1, WARIOHURT, 2, 0 },
+    { 212, MARIO_ANIM_ELECTROCUTION, -1, SOUND_MARIO_ON_FIRE, 255, 0 },
+    { 255, 0, -1, DKBREGH, 1, 0 },
+    { 256, 1, -1, WARIOHURT, 2, 0 },
+    { 257, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 258, 0, -1, WARIOLAUGH, 2, 0 },
+    { 259, 0, -1, DKBREGH, 1, 0 },
+    { 260, 0, 4, TOADWHOA, 0, 0 },
+    { 261, 0, -1, TOADYEAH, 0, 0 },
+    { 180, MARIO_ANIM_CREDITS_PEACE_SIGN, -1, SOUND_MARIO_YAHOO, 255, 0 },
+    { 262, 2, -1, DKBREGH, 1, 0 },
+    { 263, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 264, 2, -1, DKBREGH, 1, 0 },
+    { 254, 1, -1, WARIOHURT, 2, 0 },
+    { 206, MARIO_ANIM_SUMMON_STAR, -1, SOUND_MARIO_HERE_WE_GO, 255, 0 },
+    { 269, 1, -1, WALUOWIE, 3, 0 },
+    { 270, 2, -1, DKBREGH, 1, 0 },
+    { 254, 1, -1, WARIOHURT, 2, 0 },
+    { 271, 0, -1, TOADYEAH, 0, 0 },
+    { 272, 2, -1, DKBREGH, 1, 0 },
+    { 273, 1, -1, WARIOHURT, 2, 0 },
+    { 274, 2, 10, WALUOWIE, 3, 0 },
+
+    { 198, 2, -1, SOUND_MARIO_YAHOO_WAHA_YIPPEE, 3, 255 },
+
+    // failstate 3
+    { 265, 0, -1, TOADYEAH, 0, 0 },
+    { 266, 2, -1, DKBREGH, 1, 0 },
+    { 267, 0, -1, SOUND_OBJ2_WHOMP_SOUND_SHORT, 4, 0 },
+    { 268, 0, 9, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 255 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    // failstate 2
+    { 232, 0, -1, TOADYEAH, 0, 0 },
+    { 200, MARIO_ANIM_MISSING_CAP, -1, SOUND_MARIO_HAHA, 255, 0 },
+    { 234, 0, -1, WALUOWIE, 3, 0 },
+    { 235, 0, -1, DKBREGH, 1, 0 },
+    { 236, 0, 9, TOADWHOA, 0, 0 },
+    { 204, 0, -1, TOADWHOA, 0, 255 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    // failstate 1
+    { 199, 0, -1, TOADYEAH, 0, 0 },
+    { 200, MARIO_ANIM_MISSING_CAP, -1, SOUND_MARIO_HAHA, 255, 0 },
+    { 201, 0, -1, WALUOWIE, 3, 0 },
+    { 202, 0, -1, DKBREGH, 1, 0 },
+    { 203, 0, -1, DKBREGH, 1, 0 },
+    { 204, 0, 9, TOADWHOA, 0, 0 },
+    { 204, 0, 9, TOADWHOA, 0, 255 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+    { 198, 0, -1, TOADWHOA, 0, 0 },
+};
+u16 sceneLength = sizeof(introScene) / sizeof(struct CourtCut);
+extern s16 gDialogID;
+extern s16 newcam_pitch;
+extern s8 gLastDialogResponse;
+extern s8 gDialogBoxState;
+extern s8 gDialogBoxType;
+extern s8 gDialogLineNum;
+#define WAITTIME 20
+void courtActor(void) {
+    struct Object *focus;
+    o->oAnimations = animDatas[o->oBehParams2ndByte];
+    if (!o->oTimer) {
+        gMarioState->actionState = MARIO_ANIM_FIRST_PERSON;
+        o->oOpacity = 0;
+        cur_obj_init_animation(0);
+        o->oSubAction = 0;
+    } else {
+        cur_obj_init_animation(o->oOpacity);
+        if (o->oBehParams2ndByte == 3 && o->oOpacity == 2) {
+            o->oBubbaUnkFC++;
+            if (o->oBubbaUnkFC == 60) {
+                spawn_default_star(gMarioState->pos[0], gMarioState->pos[1] + 100.f,
+                                   gMarioState->pos[2]);
+                gMarioState->action = ACT_IDLE;
+            }
+        }
+    }
+    if (!o->oBehParams2ndByte) {
+        // control scene;
+        /*  print_text_fmt_int(20, 20, "%d", gDialogBoxState);
+          print_text_fmt_int(20, 40, "%d", WAITTIME + introScene[o->oSubAction].extradelay);
+          print_text_fmt_int(20, 60, "%d", o->oTimer);
+        print_text_fmt_int(20, 80, "%d", gDialogLineNum);*/
+        if (gDialogBoxState == 0) {
+            if (o->oTimer > (WAITTIME + introScene[o->oSubAction].extradelay)) {
+                if (!o->unused1) {
+                    o->unused1 = 1;
+                    gDialogBoxType = 0;
+                    gDialogID = introScene[o->oSubAction].dialogID;
+                    if (introScene[o->oSubAction].soundbits) {
+                        play_sound(introScene[o->oSubAction].soundbits, gDefaultSoundArgs);
+                    }
+                    if ((introScene[o->oSubAction].rightAnswer == 3)
+                        || (introScene[o->oSubAction].rightAnswer == 2)
+                        || (introScene[o->oSubAction].rightAnswer == 4)) {
+                        gLastDialogResponse = 1;
+                    } else {
+                    }
+                }
+            } else if ((introScene[o->oSubAction - 1].rightAnswer == 8)
+                       && (o->oTimer == (WAITTIME - 14 + introScene[o->oSubAction].extradelay))) {
+                play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 14, 255, 255, 255);
+                if (o->oSubAction < 25) {
+                    find_obj_with_bparam2(4)->header.gfx.sharedChild =
+                        gLoadedGraphNodes[MODEL_CHAIN_CHOMP];
+                    animDatas[4] = chain_chomp_seg6_anims_06025178;
+                    find_obj_with_bparam2(4)->oGraphYOffset += 50.f;
+                    obj_scale(find_obj_with_bparam2(4), .7f);
+                } else if (o->oSubAction < 55) {
+                    find_obj_with_bparam2(4)->header.gfx.sharedChild =
+                        gLoadedGraphNodes[MODEL_PIRANHA_PLANT];
+                    animDatas[4] = piranha_plant_seg6_anims_0601C31C;
+                    find_obj_with_bparam2(4)->oGraphYOffset -= 50.f;
+                } else if (o->oSubAction < 100) {
+                    find_obj_with_bparam2(4)->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_WHOMP];
+                    animDatas[4] = whomp_seg6_anims_06020A04;
+                }
+            } else if (introScene[o->oSubAction - 1].rightAnswer == 9) {
+                level_trigger_warp(m, WARP_OP_DEATH);
+            }
+        } else if (gDialogBoxState == 3) {
+            if (o->unused1) {
+                if (introScene[o->oSubAction].rightAnswer == 8) {
+                    play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 14, 255, 255, 255);
+                }
+                o->unused1 = 0;
+                o->oTimer = 1;
+                if (introScene[o->oSubAction].rightAnswer == 2) {
+                    if (gDialogLineNum == 2) {
+                        play_sound(SOUND_GENERAL2_RIGHT_ANSWER, gDefaultSoundArgs);
+                        o->oSubAction++;
+                    } else {
+                        play_sound(SOUND_MENU_LET_GO_MARIO_FACE, gDefaultSoundArgs);
+                        o->oSubAction = sceneLength - 10;
+                    }
+                } else if (introScene[o->oSubAction].rightAnswer == 3) {
+                    if (gDialogLineNum == 1) {
+                        play_sound(SOUND_GENERAL2_RIGHT_ANSWER, gDefaultSoundArgs);
+                        o->oSubAction++;
+                    } else {
+                        play_sound(SOUND_MENU_LET_GO_MARIO_FACE, gDefaultSoundArgs);
+                        o->oSubAction = sceneLength - 20;
+                    }
+                } else if (introScene[o->oSubAction].rightAnswer == 4) {
+                    if (gDialogLineNum == 2) {
+                        play_sound(SOUND_GENERAL2_RIGHT_ANSWER, gDefaultSoundArgs);
+                        o->oSubAction++;
+                    } else {
+                        play_sound(SOUND_MENU_LET_GO_MARIO_FACE, gDefaultSoundArgs);
+                        o->oSubAction = sceneLength - 30;
+                    }
+                } else {
+                    o->oSubAction++;
+                }
+            }
+        }
+    }
+    focus = find_obj_with_bparam2(introScene[o->oSubAction].characterID);
+    if (!focus) {
+        focus = gMarioObject;
+        gMarioState->actionState = introScene[o->oSubAction].animID;
+    } else {
+        focus->oOpacity = introScene[o->oSubAction].animID;
+    }
+    newcam_pos_target[0] = focus->oPosX;
+    newcam_pos_target[1] = focus->oPosY + 150.f;
+    newcam_pos_target[2] = focus->oPosZ;
+    newcam_yaw_target = focus->oFaceAngleYaw;
+    newcam_yaw = focus->oFaceAngleYaw;
+    newcam_pitch = 0;
+    newcam_centering = 1;
+    newcam_distance = 350;
 }

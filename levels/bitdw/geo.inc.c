@@ -1,2 +1,6 @@
 #include "levels/bitdw/area_1/geo.inc.c"
 #include "levels/bitdw/area_2/geo.inc.c"
+#include "levels/bitdw/area_3/geo.inc.c"
+#include "levels/bitdw/area_4/geo.inc.c"
+#include "levels/bitdw/area_5/geo.inc.c"
+#include "levels/bitdw/area_6/geo.inc.c"

@@ -1,3 +1,10 @@
+void scroll_sts_mat_bob_dl_f3d_material_layer1() {
+	Gfx *mat = segmented_to_virtual(mat_bob_dl_f3d_material_layer1);
+	shift_s_down(mat, 20, PACK_TILESIZE(0, 1));
+	shift_s(mat, 35, PACK_TILESIZE(0, 1));
+	shift_t(mat, 35, PACK_TILESIZE(0, 1));
+};
+
 void scroll_bob_dl_ZPlane_002_mesh_vtx_0() {
 	int i = 0;
 	int count = 25;
@@ -18,8 +25,8 @@ void scroll_bob_dl_ZPlane_002_mesh_vtx_0() {
 		vertices[i].n.tc[1] += deltaY;
 	}
 	currentY += deltaY;
-
 }
+
 void scroll_bob_dl_ZPlane_004_mesh_vtx_0() {
 	int i = 0;
 	int count = 8;
@@ -40,8 +47,8 @@ void scroll_bob_dl_ZPlane_004_mesh_vtx_0() {
 		vertices[i].n.tc[1] += deltaY;
 	}
 	currentY += deltaY;
-
 }
+
 void scroll_bob_dl_ZZPlane_003_mesh_vtx_0() {
 	int i = 0;
 	int count = 10;
@@ -62,9 +69,10 @@ void scroll_bob_dl_ZZPlane_003_mesh_vtx_0() {
 		vertices[i].n.tc[1] += deltaY;
 	}
 	currentY += deltaY;
-
 }
+
 void scroll_bob() {
+	scroll_sts_mat_bob_dl_f3d_material_layer1();
 	scroll_bob_dl_ZPlane_002_mesh_vtx_0();
 	scroll_bob_dl_ZPlane_004_mesh_vtx_0();
 	scroll_bob_dl_ZZPlane_003_mesh_vtx_0();

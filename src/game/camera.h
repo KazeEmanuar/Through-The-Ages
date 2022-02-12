@@ -759,7 +759,7 @@ s32 cutscene_event(CameraEvent event, struct Camera * c, s32 start, s32 end);
 s32 cutscene_spawn_obj(u32 obj, s16 frame);
 void set_fov_shake(s32 amplitude, s32 decay, s32 shakeSpeed);
 extern void stop_transitional_movement(void) ;
-s32 look_down_slopes(s32 camYaw);
+s16 look_down_slopes(s32 camYaw);
 void set_fov_function(s32 func);
 void cutscene_set_fov_shake_preset(s32 preset);
 void set_fov_shake_from_point_preset(s32 preset, f32 posX, f32 posY, f32 posZ);

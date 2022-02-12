@@ -9,4 +9,3 @@ const Trajectory bbh_area_1_spline_kooparacepath[] = {
 	TRAJECTORY_POS( 7, 601, -305, 3099),
 	TRAJECTORY_END(),
 };
-

@@ -45,3 +45,10 @@
 #include "levels/bits/areas/1/31/geo.inc.c"
 #include "levels/bits/areas/1/32/geo.inc.c"
 #include "levels/bits/areas/1/geo.inc.c"
+
+#include "levels/bits/geo.inc.c"
+
+#include "levels/bits/toadlawyertw/geo.inc.c"
+#include "levels/bits/courtDK/geo.inc.c"
+#include "levels/bits/wariocourt/geo.inc.c"
+#include "levels/bits/waluigi/geo.inc.c"

@@ -52,7 +52,10 @@ enum SeqId {
     SEQ_LEVEL_OLYMP,        // 0x2D
     SEQ_EVENT_JAW,        // 0x2E
     SEQ_LEVEL_OW,        // 0x2F
-    SEQ_LEVEL_SECRET,        // 0x2F
+    SEQ_LEVEL_SECRET,        // 0x30
+    SEQ_LEVEL_COURT,        // 0x31
+    SEQ_LEVEL_ATLANTIS,        // 0x31
+    SEQ_LEVEL_SURREAL,        // 0x33
     SEQ_COUNT
 };
 

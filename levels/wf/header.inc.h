@@ -341,7 +341,7 @@ extern Vtx wf_dl_cageRoom_mesh_layer_1_vtx_34[216];
 extern Gfx wf_dl_cageRoom_mesh_layer_1_tri_34[];
 extern Vtx wf_dl_cageRoom_mesh_layer_1_vtx_35[60];
 extern Gfx wf_dl_cageRoom_mesh_layer_1_tri_35[];
-extern Vtx wf_dl_cageRoom_mesh_layer_4_vtx_0[183];
+extern Vtx wf_dl_cageRoom_mesh_layer_4_vtx_0[180];
 extern Gfx wf_dl_cageRoom_mesh_layer_4_tri_0[];
 extern Vtx wf_dl_cageRoom_mesh_layer_4_vtx_1[20];
 extern Gfx wf_dl_cageRoom_mesh_layer_4_tri_1[];

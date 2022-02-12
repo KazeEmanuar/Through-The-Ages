@@ -248,10 +248,10 @@ u8 sDialogSpeaker[] = {
     /*11*/ _,     _,     _,     _,     GRUNT, GRUNT, KBOMB, GRUNT, GRUNT, _,
     /*12*/ _,     _,     _,     _,     _,     _,     _,     _,     KBOMB, _,
     /*13*/ _,     _,     TUXIE, _,     _,     _,     _,     _,     _,     _,
-    /*14*/ _,     _,     _,     _,     _,     _,     _,     _,     _,     _,
+    /*14*/ _,     _,     GRUNT,     _,     _,     _,     _,     _,     _,     _,
     /*15*/ WIGLR, WIGLR, WIGLR, _,     _,     _,     _,     _,     _,     _,
     /*16*/ _,     YOSHI, _,     _,     _,     _,     _,     _,     WIGLR, _,
-    /*17*/ _, _, _
+    /*17*/ UKIKI, _, DIFF, _, _, _, _, _
 };
 #undef _
 STATIC_ASSERT(ARRAY_COUNT(sDialogSpeaker) == DIALOG_COUNT, "change this array if you are adding dialogs");
@@ -452,9 +452,12 @@ u8 sBackgroundMusicDefaultVolume[] = {
     75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
     75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
     75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
-    127,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
+    75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
     75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
     127, //SEQ_LEVEL_SECRET
+    127, //SEQ_LEVEL_SECRET
+    75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
+    75,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
 };
 
 STATIC_ASSERT(ARRAY_COUNT(sBackgroundMusicDefaultVolume) == SEQ_COUNT,
@@ -2163,14 +2166,17 @@ void func_80320A4C(u8 bankIndex, u8 arg1) {
     D_80363808[bankIndex] = arg1;
 }
 
-void play_dialog_sound(u8 dialogID) {
+void play_dialog_sound(u16 dialogID) {
     u8 speaker;
 
     if (dialogID >= 170) {
         dialogID = 0;
     }
-
+    if (dialogID < 175){
     speaker = sDialogSpeaker[dialogID];
+    } else {
+        speaker = 0xff;
+    }
     if (speaker != 0xff) {
         play_sound(sDialogSpeakerVoice[speaker], gDefaultSoundArgs);
         /*if (speaker == 2) // SOUND_OBJ_BOWSER_INTRO_LAUGH

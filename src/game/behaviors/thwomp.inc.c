@@ -67,6 +67,11 @@ void bhv_grindel_thwomp_loop(void) {
         o->oFaceAngleYaw = o->oMoveAngleYaw + 0x4000;
     }
     cur_obj_call_action_function(sGrindelThwompActions);
+    if (cur_obj_dist_to_nearest_object_with_behavior(bhvExplosion) < 750.f) {
+        create_sound_spawner(SOUND_GENERAL_WALL_EXPLOSION);
+        o->oNumLootCoins = 2;
+        obj_explode_and_spawn_coins(80.0f, 2);
+    }
 }
 
 // bhvExplosion

@@ -532,7 +532,7 @@ void render_radar() {
 #define BALLMIDY 57
 #define BALLSCALE (30.f / BALLRANGE)
 extern s16 newcam_yaw;
-#define CAMYAW (-newcam_yaw + 0x4000)
+#define CAMYAW (newcam_yaw)
 extern void print_text_fmt_int(s32 x, s32 y, const char *str, s32 n);
 void render_ball() {
     f32 x, z;
@@ -584,13 +584,13 @@ u8 ballHeld = 0;
 void dragonballpickup(void) {
     if (!o->oOpacity) {
         o->oOpacity = 1;
-        initClip(&o->oBobombBuddyPosXCopy, o);
+       // initClip(&o->oBobombBuddyPosXCopy, o);
     }
     switch (o->oHeldState) {
         case HELD_FREE:
             ballHeld = 0;
             // Apply standard physics
-            clipObject(&o->oBobombBuddyPosXCopy, o);
+           // clipObject(&o->oBobombBuddyPosXCopy, o);
             object_step();
             break;
 
@@ -603,7 +603,7 @@ void dragonballpickup(void) {
                 level_set_transition(-1, NULL);
                 create_dialog_box(130);
             }
-            initClip(&o->oBobombBuddyPosXCopy, o);
+        //    initClip(&o->oBobombBuddyPosXCopy, o);
             break;
 
         case HELD_THROWN:
@@ -614,7 +614,7 @@ void dragonballpickup(void) {
 
             o->oForwardVel = 40.0;
             o->oVelY = 20.0;
-            clipObject(&o->oBobombBuddyPosXCopy, o);
+        //    clipObject(&o->oBobombBuddyPosXCopy, o);
             break;
 
         case HELD_DROPPED:
@@ -628,7 +628,7 @@ void dragonballpickup(void) {
 
             o->oForwardVel = 0;
             o->oVelY = 0;
-            clipObject(&o->oBobombBuddyPosXCopy, o);
+       //     clipObject(&o->oBobombBuddyPosXCopy, o);
             break;
     }
     o->oFaceAnglePitch += o->oForwardVel * 100 - o->oVelY * 100;

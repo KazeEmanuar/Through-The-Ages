@@ -3,9 +3,9 @@
 const GeoLayout ssl_area_3_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(1, -2887, 1825, 210, ssl_dl_Plane_007_mesh_layer_1),
+		GEO_TRANSLATE_ROTATE_WITH_DL(LAYER_OPAQUE, -2887, 1825, 210, 0, 90, 0, ssl_dl_Plane_007_mesh_layer_1),
 		GEO_OPEN_NODE(),
-			GEO_DISPLAY_LIST(4, ssl_dl_Plane_007_mesh_layer_4),
+			GEO_DISPLAY_LIST(LAYER_ALPHA, ssl_dl_Plane_007_mesh_layer_4),
 		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
@@ -32,8 +32,8 @@ const GeoLayout ssl_area_3[] = {
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(4, ssl_dl_material_revert_render_settings),
-		GEO_DISPLAY_LIST(1, ssl_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, ssl_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_ALPHA, ssl_dl_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

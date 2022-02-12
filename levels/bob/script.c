@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/bob/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_bob_entry[] = {
 	INIT_LEVEL(),
@@ -39,11 +45,16 @@ const LevelScript level_bob_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x38, rockforchase_geo), 
 	LOAD_MODEL_FROM_GEO(0x39, quetzl_geo), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, bob_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_BOB, 0x03, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xE1, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xD1, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 0, 644, -10068, 0, 0, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(MODEL_NONE, 8425, 3352, -9540, 0, -180, 0, 0x000C0000, bhvAirborneWarp),
 		OBJECT(0, -6625, 900, 6589, 0, -180, 0, 0x00950000, bhvPoleGrabbing),
@@ -89,7 +100,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(MODEL_STAR, -24, 4937, -23, 0, -180, 0, 0x00000000, bhvStar),
 		OBJECT(MODEL_BREAKABLE_BOX, 5796, 881, -689, 0, 0, 0, 0x00000000, bhvHiddenObject),
 		OBJECT(0, 4346, 2241, 1677, 0, 90, 0, 0x00000000, bhvCoinFormation),
-		OBJECT(0, -4445, 2916, 4474, 0, 0, 0, 0x00170000, bhvCoinFormation),
+		OBJECT(0, -4445, 2916, 4474, 0, 0, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, 6750, 1752, -8643, 0, 0, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, -5389, 2269, 5389, 0, 90, 0, 0x000a0000, bhvCoinFormation),
 		OBJECT(0, 4117, 1706, 4169, 0, 90, 0, 0x00020000, bhvCoinFormation),
@@ -102,7 +113,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(0, -573, 2154, 3946, 0, 90, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, -55, 900, 6629, 0, 90, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, -3146, 1526, 5390, 0, 90, 0, 0x00000000, bhvCoinFormation),
-		OBJECT(MODEL_RED_COIN, 5659, 900, 1596, 0, -180, 0, 0x00110000, bhvCoinFormation),
+		OBJECT(0, 5659, 900, 1596, 0, -180, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, 4841, 900, -6596, 0, 90, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, -1356, 6157, -1353, 0, 0, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, 1367, 6157, -1334, 0, 0, 0, 0x00110000, bhvCoinFormation),
@@ -110,6 +121,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(0, -1321, 6157, 1323, 0, 0, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, -3944, 2974, -3622, 0, 0, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(MODEL_RED_COIN, 2077, 981, 6373, 0, -180, 0, 0x00110000, bhvCoinFormation),
+		OBJECT(MODEL_EXCLAMATION_BOX, -4346, 3244, -4403, 0, 0, 0, 0x00000000, bhvExclamationBox),
 		OBJECT(MODEL_NONE, 8385, 1553, -8549, 0, 0, 0, 0x000c0000, bhvWarp),
 		OBJECT(MODEL_NONE, 8395, 3059, -8183, 0, -180, 0, 0x400D0000, bhvWarp),
 		OBJECT(0x16, -5231, 51, 4700, 0, -90, 0, 0x000B0000, bhvWarpPipe),
@@ -118,10 +130,14 @@ const LevelScript level_bob_entry[] = {
 		MACRO_OBJECTS(bob_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_ELDORADO),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(2, bob_area_2),
-		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0C, WARP_NO_CHECKPOINT),
+		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0C, WARP_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe1, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd1, WARP_NO_CHECKPOINT),
 		OBJECT(0x16, -2941, 2591, -1355, 0, 90, 0, 0x000a0000, bhvWarpPipe),
 		OBJECT(0x37, -1614, 2538, -998, 0, 90, 0, 0x00000000, bhvFliptile),
 		OBJECT(0x37, -1614, 2538, -1692, 180, -90, 0, 0x00000000, bhvFliptile),
@@ -158,11 +174,15 @@ const LevelScript level_bob_entry[] = {
 		MACRO_OBJECTS(bob_area_2_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_UNDERGROUND),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(3, bob_area_3),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_BOB, 0x01, 0x0B, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe1, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd1, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 9098, 3244, -17, 0, -90, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(0x38, 10282, 3273, -12, 0, -90, 0, 0x00000000, bhvRockChase),
 		OBJECT(MODEL_STAR, -9335, -1377, -1170, 0, -180, 0, 0x02000000, bhvStar),
@@ -171,6 +191,8 @@ const LevelScript level_bob_entry[] = {
 		MACRO_OBJECTS(bob_area_3_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_ROCK_CHASE),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),

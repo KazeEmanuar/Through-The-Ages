@@ -20,6 +20,13 @@
 #pragma intrinsic(sqrtf)
 
 void tikiflying(void) {
+    if (gCurrAreaIndex == 3){
+        o->header.gfx.scale[0] = 1.75f;
+        o->header.gfx.scale[2] = 1.75f;
+    } else {
+        o->header.gfx.scale[0] = 1.25f;
+        o->header.gfx.scale[2] = 1.25f;
+    }
     switch (o->oBehParams2ndByte) {
         case 0:
             if (lateral_dist_between_objects(o, gMarioState->marioObj) > 500.f) {
@@ -157,6 +164,9 @@ void easterhead(void) {
             if (talkToMarioNoRotation(o->oBehParams & 0xFF)) {
                 o->oSubAction = 1;
                 o->oTimer = 0;
+            } else {
+    load_object_collision_model();
+                return;
             }
         }
     } else {
@@ -339,7 +349,7 @@ void totemBoss(void) {
                     gMarioState->forwardVel = -40.f;
                     o->oObjPointer1 = spawn_object(o, MODEL_STAR, bhvStar);
                     o->oObjPointer1->oPosY += 1300.f;
-                    o->oObjPointer1->oBehParams = 0x00030000;
+                    o->oObjPointer1->oBehParams = 0x03000000;
                     spawn_object(o, 0, bhvTenCoinsSpawn);
                 }
             }
@@ -374,7 +384,7 @@ void totemBoss(void) {
                 find_totem((o->oOpacity + 3) % 25)->oOpacity = 1800.f;
                 find_totem((o->oOpacity + 4) % 25)->oOpacity = 2150.f;
             }
-            if (o->oTimer > 700 - (o->oHealth * 100)) {
+            if (o->oTimer > 0x20000000) {
                 find_totem(o->oOpacity)->oOpacity = 0.f;
                 find_totem((o->oOpacity + 1) % 25)->oOpacity = 0.f;
                 find_totem((o->oOpacity + 2) % 25)->oOpacity = 0.f;
@@ -401,11 +411,11 @@ void totemBosshead(void) {
             break;
         case 1:
 // fly to position
-#define floatDist 1500.f
+#define floatDist 1750.f
             goalAngle = atan2s(gMarioState->pos[2], gMarioState->pos[0]) + o->oBehParams2ndByte * 0x200;
             o->oHomeX = sins(goalAngle) * floatDist;
             o->oHomeZ = coss(goalAngle) * floatDist;
-            o->oHomeY = gMarioState->pos[1] + 250.f;
+            o->oHomeY = gMarioState->pos[1] + 450.f;
             if (o->oHomeY < -1650.f) {
                 o->oHomeY = -1650.f;
             }

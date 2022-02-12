@@ -64,6 +64,7 @@ void bhv_spawned_star_loop(void) {
                 set_home_to_mario();
             else
                 set_y_home_to_pos();
+    o->oHomeY = gMarioObject->oPosY + 250.f;
             o->oMoveAngleYaw = cur_obj_angle_to_home();
             o->oVelY = 50.0f;
             o->oGravity = -4.0f;
@@ -113,6 +114,7 @@ void bhv_spawned_star_loop(void) {
 void bhv_spawn_star_no_level_exit(u32 sp20) {
     struct Object *sp1C = spawn_object(o, MODEL_STAR, bhvSpawnedStarNoLevelExit);
     sp1C->oBehParams = sp20 << 24;
+    sp1C->oBehParams2ndByte = 1;
     sp1C->oInteractionSubtype = INT_SUBTYPE_NO_EXIT;
     obj_set_angle(sp1C, 0, 0, 0);
 }

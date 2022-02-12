@@ -105,7 +105,7 @@ void luigiChariot(void) {
                     }
 
                     o->oForwardVel = approach_f32(o->oForwardVel,
-                                                  7.5f * (coss(targetAngle - o->oMoveAngleYaw) + 1.0f)
+                                                  5.5f * (coss(targetAngle - o->oMoveAngleYaw) + 1.0f)
                                                       * (coss(targetPitch - o->oFaceAnglePitch) + 1.0f),
                                                   0.2f, 1.f);
                 } else {
@@ -447,14 +447,18 @@ void medusacode(void) {
             }
             break;
         case 1:
-            if (gMarioState->pos[0] > 1800.f) {
-                if (gMarioState->pos[1] > -1.f) {
-                    if (abs_angle_diff(gMarioState->faceAngle[1], o->oFaceAngleYaw) > 0x5000) {
-                        if (cur_obj_nearest_object_with_behavior(bhvStar)) {
-                            o->oAction = 2;
-                            gMarioState->action = 0;
-                            play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
-                            o->oOpacity = gMarioState->marioObj->header.gfx.unk38.animFrame;
+            if (o->oTimer > 32) {
+                if (gMarioState->pos[0] > 1800.f) {
+                    if (gMarioState->pos[1] > -1.f) {
+                        if (abs_angle_diff(gMarioState->faceAngle[1], o->oFaceAngleYaw) > 0x5000) {
+                            if (cur_obj_nearest_object_with_behavior(bhvStar)) {
+                                o->oAction = 2;
+                                o->oDamageOrCoinValue = gMarioState->action;
+                                gMarioState->action = 0;
+                                play_sound(SOUND_MARIO_WAAAOOOW,
+                                           m->marioObj->header.gfx.cameraToObject);
+                                o->oOpacity = gMarioState->marioObj->header.gfx.unk38.animFrame;
+                            }
                         }
                     }
                 }
@@ -467,6 +471,10 @@ void medusacode(void) {
             gMarioState->health -= 0x10;
             if (gMarioState->health < 0x100) {
                 level_trigger_warp(m, WARP_OP_WARP_FLOOR);
+            }
+            if (o->oTimer > 32) {
+                o->oAction = 1;
+                gMarioState->action = o->oDamageOrCoinValue;
             }
             break;
     }
@@ -571,9 +579,9 @@ void bacchus(void) {
             break;
         case 1:
             // talk to mario
-            if (talkToMarioNoRotation(warioText[gCurrActNum])) {
+            if (talkToMarioNoRotation(warioText[gCurrActNum - 1])) {
                 o->oAction++;
-                if (gCurrActNum < 5) {
+                if ((gCurrActNum < 5)) {
                     gateOpen = 1;
                 }
             }
@@ -638,12 +646,12 @@ void zeusCodeBoss(void) {
             o->oPosX = approach_f32_asymptotic(o->oPosX, gMarioState->pos[0], 0.02f);
             if (!((o->header.gfx.unk38.animFrame < 60) || (o->header.gfx.unk38.animFrame > 140))) {
                 if (o->oPosX < gMarioState->pos[0] + ZOFF * o->header.gfx.scale[0]) {
-                    o->oVelX += 1.f + o->oHealth*2.f;
+                    o->oVelX += 1.f + o->oHealth * 2.f;
                 }
             } else {
                 // gMarioState->pos[0] - ZOFF * o->header.gfx.scale[0]
                 if (o->oPosX > gMarioState->pos[0] - ZOFF * o->header.gfx.scale[0]) {
-                    o->oVelX -= 1.f + o->oHealth*2.f;
+                    o->oVelX -= 1.f + o->oHealth * 2.f;
                 }
             }
             o->oVelX = approach_f32_asymptotic(o->oVelX, 0, 0.01f);
@@ -698,7 +706,7 @@ void zeusCodeBoss(void) {
                         create_sound_spawner(SOUND_OBJ_KING_WHOMP_DEATH);
                         spawn_mist_particles_variable(0, 0, 200.0f);
                         spawn_triangle_break_particles(20, 138, 3.0f, 4);
-                    cur_obj_shake_screen(SHAKE_POS_SMALL);
+                        cur_obj_shake_screen(SHAKE_POS_SMALL);
                     }
                 }
             }
@@ -747,7 +755,7 @@ void zeusCodeBoss(void) {
 
 void zeusLighting(void) {
     o->header.gfx.unk38.animFrame++;
-            cur_obj_play_sound_1(SOUND_AIR_AMP_BUZZ);
+    cur_obj_play_sound_1(SOUND_AIR_AMP_BUZZ);
     if (!o->oTimer) {
         o->oAngleVelPitch = (random_u16() & 0x1fff) - 0x1000;
         o->oAngleVelYaw = (random_u16() & 0x1fff) - 0x1000;

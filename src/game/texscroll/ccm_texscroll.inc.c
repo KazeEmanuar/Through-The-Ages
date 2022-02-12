@@ -1,7 +1,6 @@
 #include "levels/ccm/header.h"
 #include "levels/ccm/texscroll.inc.c"
 #include "levels/ccm/bigblarrgg/texscroll.inc.c"
-#include "levels/ccm/mirage/texscroll.inc.c"
 #include "levels/ccm/toadmummy/texscroll.inc.c"
 #include "levels/ccm/cleopeach/texscroll.inc.c"
 #include "levels/ccm/butler/texscroll.inc.c"
@@ -13,8 +12,7 @@ void scroll_textures_ccm() {
 
 	scroll_ccm_level_geo_bigblarrgg();
 
-	scroll_ccm_level_geo_mirage();
-
+	
 	scroll_ccm_level_geo_toadmummy();
 
 	scroll_ccm_level_geo_cleopeach();

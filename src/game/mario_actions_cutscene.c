@@ -234,17 +234,7 @@ s32 get_star_collection_dialog(struct MarioState *m) {
     s32 i;
     s32 dialogID = 0;
     s32 numStarsRequired;
-
-    for (i = 0; i < 6; i++) {
-        numStarsRequired = sStarsNeededForDialog[i];
-        if (m->prevNumStarsForDialog < numStarsRequired && m->numStars >= numStarsRequired) {
-            dialogID = i + DIALOG_141;
-            break;
-        }
-    }
-
-    m->prevNumStarsForDialog = m->numStars;
-    return dialogID;
+    return 0;
 }
 
 // save menu handler
@@ -538,56 +528,12 @@ s32 act_reading_sign(struct MarioState *m) {
 
 // debug free move action
 s32 act_debug_free_move(struct MarioState *m) {
-    struct Surface *surf;
-    f32 floorHeight;
-    Vec3f pos;
-    f32 speed;
-    u32 action;
-
-    // integer immediates, generates convert instructions for some reason
-    speed = gPlayer1Controller->buttonDown & B_BUTTON ? 4 : 1;
-    if (gPlayer1Controller->buttonDown & L_TRIG) {
-        speed = 0.01f;
+    m->controller->buttonDown &= 0xF000;
+    m->controller->buttonPressed &= 0xF000;
+    if (gCurrLevelNum == LEVEL_SSL){
+        m->action = ACT_WATER_IDLE;
     }
-
-    set_mario_animation(m, MARIO_ANIM_A_POSE);
-    vec3f_copy(pos, m->pos);
-
-    if (gPlayer1Controller->buttonDown & U_JPAD) {
-        pos[1] += 16.0f * speed;
-    }
-    if (gPlayer1Controller->buttonDown & D_JPAD) {
-        pos[1] -= 16.0f * speed;
-    }
-
-    if (m->intendedMag > 0) {
-        pos[0] += 32.0f * speed * sins(m->intendedYaw);
-        pos[2] += 32.0f * speed * coss(m->intendedYaw);
-    }
-
-    resolve_and_return_wall_collisions(pos, 60.0f, 50.0f);
-
-    floorHeight = find_floor(pos[0], pos[1], pos[2], &surf);
-    if (surf != NULL) {
-        if (pos[1] < floorHeight) {
-            pos[1] = floorHeight;
-        }
-        vec3f_copy(m->pos, pos);
-    }
-
-    m->faceAngle[1] = m->intendedYaw;
-    vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
-    vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
-
-    if (gPlayer1Controller->buttonPressed == A_BUTTON) {
-        if (m->pos[1] <= m->waterLevel - 100) {
-            action = ACT_WATER_IDLE;
-        } else {
-            action = ACT_IDLE;
-        }
-        set_mario_action(m, action, 0);
-    }
-
+    set_mario_animation(m, m->actionState);
     return FALSE;
 }
 
@@ -1101,10 +1047,6 @@ s32 act_exit_land_save_dialog(struct MarioState *m) {
                 if (!(m->flags & MARIO_CAP_ON_HEAD)) {
                     m->actionState = 2; // star exit without cap
                 }
-                if (gLastCompletedCourseNum == COURSE_BITDW
-                    || gLastCompletedCourseNum == COURSE_BITFS) {
-                    m->actionState = 1; // key exit
-                }
             }
             break;
         // key exit
@@ -1173,7 +1115,6 @@ s32 act_death_exit(struct MarioState *m) {
 #ifdef VERSION_SH
         queue_rumble_data(5, 80);
 #endif
-        m->numLives--;
         // restore 7.75 units of health
         m->healCounter = 31;
     }
@@ -1189,7 +1130,6 @@ s32 act_unused_death_exit(struct MarioState *m) {
 #else
         play_sound(SOUND_MARIO_OOOF2, m->marioObj->header.gfx.cameraToObject);
 #endif
-        m->numLives--;
         // restore 7.75 units of health
         m->healCounter = 31;
     }
@@ -1208,7 +1148,6 @@ s32 act_falling_death_exit(struct MarioState *m) {
 #ifdef VERSION_SH
         queue_rumble_data(5, 80);
 #endif
-        m->numLives--;
         // restore 7.75 units of health
         m->healCounter = 31;
     }
@@ -1255,7 +1194,6 @@ s32 act_special_death_exit(struct MarioState *m) {
 #ifdef VERSION_SH
         queue_rumble_data(5, 80);
 #endif
-        m->numLives--;
         m->healCounter = 31;
     }
     // show Mario

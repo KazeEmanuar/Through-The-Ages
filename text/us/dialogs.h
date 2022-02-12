@@ -305,7 +305,7 @@ There may be a hint."))
 
 //cleopatra act 3
 DEFINE_DIALOG(DIALOG_032, 1, 4, 30, 200, _("\
-Good job restoring the Nile.\n\
+Good job saving the Nile.\n\
 My spys found there is\n\
 a fake pharaoh in\n\
 another pyramid.\n\
@@ -337,7 +337,7 @@ Cleopatra!"))
 DEFINE_DIALOG(DIALOG_036, 1, 2, 30, 200, _("\
 Did that she-devil\n\
 send you?\n\
-I do not tollerate\n\
+I do not tolerate\n\
 intruders!\n\
 Get lost!"))
 
@@ -417,9 +417,11 @@ heroic deeds that\n\
 the great ape has\n\
 accomplished!"))
 
-DEFINE_DIALOG(DIALOG_047, 1, 2, 95, 200, _("\
-Hi! I'll prepare the\n\
-cannon for you!"))
+DEFINE_DIALOG(DIALOG_047, 1, 4, 95, 200, _("\
+Hi! Sorry, I can't\n\
+open cannons.\n\
+Maybe that panther\n\
+can help you out."))
 
 //surfkoopa ask
 DEFINE_DIALOG(DIALOG_048, 1, 4, 30, 200, _("\
@@ -624,7 +626,7 @@ DEFINE_DIALOG(DIALOG_070, 1, 4, 30, 200, _("\
 I'm the elder Guy!\n\
 I protect this village.\n\
 Recently we hear voices\n\
-our of this mountain.\n\
+from this mountain.\n\
 Something seems to be\n\
 going on inside it..."))
 //easterhead guy 0
@@ -826,7 +828,9 @@ She stole my wine!\n\
 Now we can't have a party.\n\
 If you slay that snake\n\
 for me, you'll be invited!\n\
-I'll do you any favor!"))
+I'll do you any favor!\n\
+Her cave's at the back\n\
+of the Olymp."))
 
 DEFINE_DIALOG(DIALOG_092, 1, 5, 30, 200, _("\
 Pestering me again, are\n\
@@ -973,7 +977,7 @@ the tower of terror,\n\
 the Big Boo!\n\
 Ka ha ha ha..."))
 //namek elder intro
-DEFINE_DIALOG(DIALOG_109, 1, 4, 95, 200, _("\
+DEFINE_DIALOG(DIALOG_109, 1, 6, 95, 200, _("\
 You are a good guy,\n\
 I can feel it in your\n\
 energy profile.\n\
@@ -981,7 +985,17 @@ Our planet is under attack!\n\
 I sense your latent\n\
 strength.\n\
 I'll awaken it for you\n\
-Please help us!"))
+Please help us!\n\
+\n\
+\n\
+\n\
+\n\
+With your potential\n\
+unlocked,\n\
+you can press A\n\
+during a jump to fly\n\
+until your KI\n\
+is used up."))
 //namek elder elsewise
 DEFINE_DIALOG(DIALOG_110, 1, 4, 95, 200, _("\
 Our savior!\n\
@@ -1296,18 +1310,13 @@ I'm late!"))
 DEFINE_DIALOG(DIALOG_141, 1, 2, 150, 200, _("\
 Gotta go!\n\
 I'm already late!"))
-
+//thwomp
 DEFINE_DIALOG(DIALOG_142, 1, 5, 150, 200, _("\
-You've recovered three\n\
-Power Stars! Now you can\n\
-open any door with a 3\n\
-on its star.\n\
-\n\
-You can come and go from\n\
-the open courses as you\n\
-please. The enemies ahead\n\
-are even meaner, so be\n\
-careful!"))
+Hehe I'm blocking you\n\
+off, softie!\n\
+Do you have an explosive\n\
+partner?\n\
+If not, tough luck, softie!"))
 
 DEFINE_DIALOG(DIALOG_143, 1, 6, 150, 200, _("\
 You've recovered eight of\n\
@@ -1351,21 +1360,21 @@ colored blocks are really\n\
 helpful.\n\
 Hurry along, now. The\n\
 third floor is just ahead."))
-//toad thing
+//toad lawyer
 DEFINE_DIALOG(DIALOG_146, 1, 5, 150, 200, _("\
 It's really you, Mario!\n\
 I have great news!\n\
-I've lawyered the heck out\n\
-of that court and you've\n\
-got your copyright back!\n\
-Showing them your recent\n\
-exploits...\n\
-They instantly ruled in\n\
-your favor!\n\
 \n\
-Would you like to enter\n\
-your newly acquired\n\
-mansion?\n\
+\n\
+\n\
+Your recent adventures\n\
+helped me put together a\n\
+great case and we might\n\
+get your copyrights and\n\
+your mansion back!\n\
+Are you ready to\n\
+go to trial?\n\
+\n\
 \n\
 //Yes////No"))
 //dinnerbunny act1
@@ -1567,3 +1576,505 @@ Press the L button to\n\
 spawn Hypno to help\n\
 you fall asleep\n\
 and regenerate health."))
+//dkcourt
+DEFINE_DIALOG(DIALOG_173, 1, 4, 30, 200, _("\
+I am the Judge Kong\n\
+presiding the case of\n\
+Mario vs Waluigi.\n\
+\n\
+Waluigi is being\n\
+accused of having\n\
+stolen the copyrights\n\
+for Mario's adventures.\n\
+May justice prevail!"))
+
+
+DEFINE_DIALOG(DIALOG_174, 1, 4, 30, 200, _("\
+I am Attorney Wario and\n\
+will prove beyond any\n\
+doubt the innocence of\n\
+my client.\n\
+Wahahaha!"))
+
+
+DEFINE_DIALOG(DIALOG_175, 1, 2, 30, 200, _("\
+Yes innocent!\n\
+Wahehehe!"))
+
+
+DEFINE_DIALOG(DIALOG_176, 1, 4, 30, 200, _("\
+Yeeeoww!\n\
+I'm attorney Toad.\n\
+I believe I have built\n\
+a convincing case.\n\
+We will get Mario's\n\
+copyrights back today!"))
+
+
+DEFINE_DIALOG(DIALOG_177, 1, 1, 30, 200, _("\
+Mama mia!"))
+
+DEFINE_DIALOG(DIALOG_178, 1, 7, 30, 200, _("\
+Well then, introductions\n\
+out of the way, how do\n\
+you intend to prove\n\
+that Waluigi's famous\n\
+adventures were indeed\n\
+stories of Mario's\n\
+adventures?"))
+DEFINE_DIALOG(DIALOG_179, 1, 6, 30, 200, _("\
+Your honor, to prove\n\
+that Mario is the one\n\
+doing the adventuring,\n\
+this man has been\n\
+visiting places all\n\
+over the world.\n\
+He's met countless\n\
+people and their\n\
+stories show that he\n\
+is indeed a hero!"))
+DEFINE_DIALOG(DIALOG_180, 1, 1, 30, 200, _("\
+Yahoo!"))
+DEFINE_DIALOG(DIALOG_181, 1, 4, 30, 200, _("\
+I have read that in\n\
+the news!\n\
+Lots of people love\n\
+this Mario guy!"))
+DEFINE_DIALOG(DIALOG_182, 1, 4, 30, 200, _("\
+Oh no!\n\
+But your honor, even if\n\
+there are reports of\n\
+Mario being a hero,\n\
+we have witnesses\n\
+proving that Waluigi\n\
+beat all those baddies!"))
+DEFINE_DIALOG(DIALOG_183, 1, 1, 30, 200, _("\
+Loser!"))
+DEFINE_DIALOG(DIALOG_184, 1, 1, 30, 200, _("\
+Oof!"))
+DEFINE_DIALOG(DIALOG_185, 1, 4, 30, 200, _("\
+Hehe stinky!\n\
+Your honor, may I\n\
+call my first\n\
+witness?"))
+DEFINE_DIALOG(DIALOG_186, 1, 1, 30, 200, _("\
+Okay!"))
+DEFINE_DIALOG(DIALOG_187, 1, 3, 30, 200, _("\
+Witness number one,\n\
+please introduce\n\
+yourself."))
+DEFINE_DIALOG(DIALOG_188, 1, 3, 30, 200, _("\
+IM CHOMP!\n\
+I LIKE FOOD!\n\
+I EAT THE PLUMBER."))
+DEFINE_DIALOG(DIALOG_189, 1, 3, 30, 200, _("\
+The plumber?\n\
+I think you meant\n\
+to say the lanky man!\n\
+Remember what we\n\
+talked about."))
+DEFINE_DIALOG(DIALOG_190, 1, 3, 30, 200, _("\
+ERR, YES.\n\
+I EAT THE\n\
+LANKY MAN."))
+DEFINE_DIALOG(DIALOG_191, 1, 2, 30, 200, _("\
+That's a me!\n\
+Wahehehe!"))
+DEFINE_DIALOG(DIALOG_192, 1, 3, 30, 200, _("\
+Thank your for being\n\
+honest, Mister Chomp.\n\
+\n\
+Would you mind detailing\n\
+how your encounter with\n\
+the lanky man went?"))
+DEFINE_DIALOG(DIALOG_193, 1, 1, 30, 200, _("\
+I GUARD THE GATE.\n\
+THE LANKY MAN COMES.\n\
+HE STOMPS MY POLE.\n\
+I AM NOW FREE.\n\
+FAT MAN OFFERS MEAT.\n\
+I COME HERE."))
+DEFINE_DIALOG(DIALOG_194, 1, 2, 30, 200, _("\
+Oh no!\n\
+\n\
+There was no meat\n\
+involved your honor!"))
+DEFINE_DIALOG(DIALOG_195, 1, 2, 30, 200, _("\
+Someone offered you\n\
+meat to come here?"))
+DEFINE_DIALOG(DIALOG_196, 1, 2, 30, 200, _("\
+BUT FAT MAN SAID\n\
+THERE WOULD BE MEAT."))
+DEFINE_DIALOG(DIALOG_197, 1, 4, 30, 200, _("\
+Well, regardless of\n\
+who this 'FAT MAN' is,\n\
+Chomp's story seems to\n\
+supports the defense.\n\
+Mr Toad, would you like\n\
+to cross examine the\n\
+witness?"))
+DEFINE_DIALOG(DIALOG_198, 1, 5, 30, 200, _("\
+His story checks out...\n\
+Mario, are you sure it's\n\
+you that freed the\n\
+Chain Chomp?...\n\
+\n\
+I can't find a flaw.\n\
+What do you want to\n\
+ask Mr Chomp?\n\
+\n\
+\n\
+1) Isn't Waluigi too\n\
+   cowardly to free you?\n\
+2) Did the defense\n\
+   attorney offer meat?\n\
+//1)////2)"))
+DEFINE_DIALOG(DIALOG_199, 1, 3, 30, 200, _("\
+Isn't Waluigi too\n\
+cowardly to sneak\n\
+past a monster like that?"))
+DEFINE_DIALOG(DIALOG_200, 1, 1, 30, 200, _("\
+Haha!"))
+DEFINE_DIALOG(DIALOG_201, 1, 3, 30, 200, _("\
+I can't believe you\n\
+would be so rude!\n\
+\n\
+Judge Kong,\n\
+this man is\n\
+unprofessional!"))
+DEFINE_DIALOG(DIALOG_202, 1, 3, 30, 200, _("\
+Mr Toad!!\n\
+This is unbelieveable.\n\
+This is not"))
+DEFINE_DIALOG(DIALOG_203, 1, 1, 30, 200, _("\
+Okay!"))
+DEFINE_DIALOG(DIALOG_204, 1, 4, 30, 200, _("\
+Im so sorry!\n\
+Looks like we really\n\
+messed this one up,\n\
+Mario."))
+DEFINE_DIALOG(DIALOG_205, 1, 4, 30, 200, _("\
+Your honor,\n\
+Mr Chomp has clearly\n\
+been bribed with meat\n\
+by the defense attorney!\n\
+When Mr Chomp mentions\n\
+'FAT MAN', he is talking\n\
+about Wario!"))
+DEFINE_DIALOG(DIALOG_206, 1, 1, 30, 200, _("\
+Here we go!"))
+DEFINE_DIALOG(DIALOG_207, 1, 3, 30, 200, _("\
+Objection!\n\
+That is pure\n\
+speculation!"))
+DEFINE_DIALOG(DIALOG_208, 1, 2, 30, 200, _("\
+Yes stipulation!\n\
+Wahehehe!"))
+DEFINE_DIALOG(DIALOG_209, 1, 3, 30, 200, _("\
+Quiet!\n\
+Unfortunately I have to\n\
+disqualify this witness.\n\
+It is evident he's been\n\
+set up."))
+DEFINE_DIALOG(DIALOG_210, 1, 1, 30, 200, _("\
+This is rotten!"))
+DEFINE_DIALOG(DIALOG_211, 1, 1, 30, 200, _("\
+Cheaters!"))
+DEFINE_DIALOG(DIALOG_212, 1, 1, 30, 200, _("\
+Haha Hahaha HAAAAA!"))
+DEFINE_DIALOG(DIALOG_213, 1, 2, 30, 200, _("\
+Well this is not\n\
+nearly it!\n\
+We have two more\n\
+witnesses!"))
+DEFINE_DIALOG(DIALOG_214, 1, 1, 30, 200, _("\
+WOOOAAAOOOOWWWW!"))
+DEFINE_DIALOG(DIALOG_215, 1, 3, 30, 200, _("\
+Don't dispair, Mario!\n\
+We've got a solid\n\
+case!"))
+DEFINE_DIALOG(DIALOG_216, 1, 2, 30, 200, _("\
+Another witness?\n\
+Well, let's hear them."))
+DEFINE_DIALOG(DIALOG_217, 1, 1, 30, 200, _("\
+You are doomed, Mario!"))
+DEFINE_DIALOG(DIALOG_218, 1, 2, 30, 200, _("\
+Enough!\n\
+Bring the witness in."))
+DEFINE_DIALOG(DIALOG_219, 1, 2, 30, 200, _("\
+Hi!\n\
+I'm Snappy the plant."))
+DEFINE_DIALOG(DIALOG_220, 1, 3, 30, 200, _("\
+Well then Snappy,\n\
+let's start the\n\
+cross examination!\n\
+The defense may ask\n\
+questions first."))
+
+DEFINE_DIALOG(DIALOG_221, 1, 3, 30, 200, _("\
+Witness number two,\n\
+please introduce\n\
+yourself."))
+DEFINE_DIALOG(DIALOG_222, 1, 3, 30, 200, _("\
+Miss Snappy, could you\n\
+elaborate on what you\n\
+do for a living?"))
+
+DEFINE_DIALOG(DIALOG_223, 1, 4, 30, 200, _("\
+I sleep at the foot\n\
+of Whomp's Fortress.\n\
+My job is to bite any\n\
+intruders."))
+
+DEFINE_DIALOG(DIALOG_224, 1, 3, 30, 200, _("\
+So have you ever\n\
+seen Waluigi enter\n\
+the fortress?"))
+
+DEFINE_DIALOG(DIALOG_225, 1, 2, 30, 200, _("\
+Yes, I saw him with\n\
+my own two eyes!\n\
+I tried to bite him,\n\
+but he didn't come close."))
+
+DEFINE_DIALOG(DIALOG_226, 1, 1, 30, 200, _("\
+You heard her!\n\
+Loser!\n\
+Wahehehe!"))
+
+DEFINE_DIALOG(DIALOG_227, 1, 4, 30, 200, _("\
+Calm it!\n\
+Mr Toad,\n\
+do you have any\n\
+questions?"))
+
+DEFINE_DIALOG(DIALOG_228, 1, 5, 30, 200, _("\
+Yes your honor!\n\
+Miss Snappy, have\n\
+you actually seen\n\
+Waluigi do anything\n\
+in Whomp's Fortress?"))
+
+DEFINE_DIALOG(DIALOG_229, 1, 4, 30, 200, _("\
+Yes!\n\
+He ground pounded\n\
+the Whomp King and\n\
+freed the fortress!\n\
+I saw it with my\n\
+own two eyes!"))
+DEFINE_DIALOG(DIALOG_230, 1, 5, 30, 200, _("\
+Oh no!\n\
+That makes perfect\n\
+sense!\n\
+Mario, do you have any\n\
+ideas?\n\
+1) You don't even have\n\
+   eyes!\n\
+2) Waluigi smells too\n\
+   much to sneak in!\n\
+//1)////2"))
+DEFINE_DIALOG(DIALOG_231, 1, 3, 30, 200, _("\
+This witness claims\n\
+to be an eyewitness\n\
+despite not having eyes!\n\
+This is highly suspicious!"))
+DEFINE_DIALOG(DIALOG_232, 1, 3, 30, 200, _("\
+This doesn't check out!\n\
+Waluigi's smell would\n\
+have alerted everyone!\n\
+There is no way\n\
+he managed to sneak in!"))
+DEFINE_DIALOG(DIALOG_233, 1, 3, 30, 200, _("\
+Wow you are right!\n\
+This witness is clearly\n\
+unreliable!\n\
+I am sorry, but I\n\
+will have to disqualify\n\
+this witness as well."))
+DEFINE_DIALOG(DIALOG_234, 1, 2, 30, 200, _("\
+How rude!\n\
+My hubris hurts!"))
+DEFINE_DIALOG(DIALOG_235, 1, 3, 30, 200, _("\
+Mr Toad!\n\
+Please stay on topic.\n\
+Insults won't help."))
+DEFINE_DIALOG(DIALOG_236, 1, 2, 30, 200, _("\
+I really fricked this\n\
+on up, Mario!\n\
+So sorry!"))
+DEFINE_DIALOG(DIALOG_237, 1, 3, 30, 200, _("\
+Great job, Mario!\n\
+Their defense is\n\
+crumbling!"))
+DEFINE_DIALOG(DIALOG_238, 1, 3, 30, 200, _("\
+Now then, defense,\n\
+do you have a witness\n\
+that actually has eyes?"))
+DEFINE_DIALOG(DIALOG_239, 1, 3, 30, 200, _("\
+Of course,\n\
+your honor!\n\
+\n\
+And I guarantee it's\n\
+a good one!\n\
+Wahahaha"))
+DEFINE_DIALOG(DIALOG_240, 1, 2, 30, 200, _("\
+It's a good one!\n\
+Wahehehe!"))
+DEFINE_DIALOG(DIALOG_241, 1, 3, 30, 200, _("\
+This will be our last\n\
+witness!\n\
+Bring him in."))
+DEFINE_DIALOG(DIALOG_242, 1, 3, 30, 200, _("\
+Witness number three,\n\
+please introduce\n\
+yourself."))
+DEFINE_DIALOG(DIALOG_243, 1, 1, 30, 200, _("\
+I'm Whomp."))
+DEFINE_DIALOG(DIALOG_244, 1, 2, 30, 200, _("\
+Okay!"))
+DEFINE_DIALOG(DIALOG_245, 1, 2, 30, 200, _("\
+Your honor, may I\n\
+ask my first question?"))
+DEFINE_DIALOG(DIALOG_246, 1, 3, 30, 200, _("\
+Mr Whomp,\n\
+have you ever met\n\
+the defendant?"))
+DEFINE_DIALOG(DIALOG_247, 1, 1, 30, 200, _("\
+Yes."))
+DEFINE_DIALOG(DIALOG_248, 1, 1, 30, 200, _("\
+Can you elaborate?"))
+DEFINE_DIALOG(DIALOG_249, 1, 1, 30, 200, _("\
+Yes."))
+DEFINE_DIALOG(DIALOG_250, 1, 1, 30, 200, _("\
+Will you do it?"))
+DEFINE_DIALOG(DIALOG_251, 1, 1, 30, 200, _("\
+Yes."))
+DEFINE_DIALOG(DIALOG_252, 1, 1, 30, 200, _("\
+When?!"))
+DEFINE_DIALOG(DIALOG_253, 1, 1, 30, 200, _("\
+I don't know."))
+DEFINE_DIALOG(DIALOG_254, 1, 1, 30, 200, _("\
+This is rotten!"))
+DEFINE_DIALOG(DIALOG_255, 1, 4, 30, 200, _("\
+Defendant Wario, it seems\n\
+you will have to be\n\
+more specific with\n\
+your questions."))
+DEFINE_DIALOG(DIALOG_256, 1, 4, 30, 200, _("\
+.....\n\
+..........\n\
+......\n\
+..\n\
+Alright then...\n\
+Please detail everything\n\
+you know about Waluigi."))
+DEFINE_DIALOG(DIALOG_257, 1, 5, 30, 200, _("\
+He's a lanky man.\n\
+He smells really bad.\n\
+He is my friend.\n\
+He came to the fortress.\n\
+He has a foul mouth.\n\
+He is very tall.\n\
+I jumped 5 feet high\n\
+and crushed him.\n\
+Wario beat the king."))
+DEFINE_DIALOG(DIALOG_258, 1, 2, 30, 200, _("\
+There you have it!\n\
+Waluigi was the one!"))
+DEFINE_DIALOG(DIALOG_259, 1, 3, 30, 200, _("\
+Very convincing evidence!\n\
+It seems Waluigi\n\
+really was the hero.\n\
+That is unless\n\
+Mr Toad can punch a\n\
+hole in this story!"))
+DEFINE_DIALOG(DIALOG_260, 1, 5, 30, 200, _("\
+This seems lost!\n\
+I'm pooped.\n\
+Mario, did you notice\n\
+anything wrong in\n\
+Mr Whomp's story?\n\
+1) Whomps can't\n\
+   jump 5 feet high!\n\
+2) Impossible, Waluigi is\n\
+   taller than 5 feet!\n\
+//1)////2)"))
+DEFINE_DIALOG(DIALOG_261, 1, 5, 30, 200, _("\
+There is an inconsistency\n\
+in that story!\n\
+He claims to jump 5 feet,\n\
+but Waluigi is way taller\n\
+than that!\n\
+My client is that short!\n\
+He was talking about\n\
+Mario!"))
+DEFINE_DIALOG(DIALOG_262, 1, 2, 30, 200, _("\
+Okay! Good catch!\n\
+\n\
+Mr Whomp, can you\n\
+explain that?"))
+DEFINE_DIALOG(DIALOG_263, 1, 1, 30, 200, _("\
+No."))
+DEFINE_DIALOG(DIALOG_264, 1, 4, 30, 200, _("\
+... I think I'm\n\
+going to have to\n\
+disqualify this\n\
+witness as well.\n\
+I'm inclined to\n\
+side with Mario."))
+DEFINE_DIALOG(DIALOG_265, 1, 3, 30, 200, _("\
+That is impossible,\n\
+Whomps can't jump\n\
+5 feet high!\n\
+They are way too\n\
+heavy!"))
+DEFINE_DIALOG(DIALOG_266, 1, 3, 30, 200, _("\
+Is that true?\n\
+Mr Whomp, can you\n\
+jump 5 feet high?"))
+DEFINE_DIALOG(DIALOG_267, 1, 1, 30, 200, _("\
+Yes."))
+DEFINE_DIALOG(DIALOG_268, 1, 3, 30, 200, _("\
+That's a bummer.\n\
+We really messed this\n\
+one up, Mario!"))
+DEFINE_DIALOG(DIALOG_269, 1, 2, 30, 200, _("\
+No no no!\n\
+This is unfair!"))
+DEFINE_DIALOG(DIALOG_270, 1, 4, 30, 200, _("\
+Mr Waluigi, please\n\
+stay professional.\n\
+If you do not have\n\
+any further witnesses,\n\
+I will have to give\n\
+this case to Mario."))
+DEFINE_DIALOG(DIALOG_271, 1, 2, 30, 200, _("\
+Great job, Mario!\n\
+You could be a lawyer!\n\
+I think we won this\n\
+case!"))
+DEFINE_DIALOG(DIALOG_272, 1, 5, 30, 200, _("\
+Okay!\n\
+It seems the defense\n\
+has nothing else to\n\
+bring to the table.\n\
+\n\
+It is clear that\n\
+Mario is the hero.\n\
+\n\
+\n\
+\n\
+I hereby declare that\n\
+Mario shall receive his\n\
+copyrights back and\n\
+Waluigi will pay 1 Star\n\
+in reperations.\n\
+Please hand it over now."))
+DEFINE_DIALOG(DIALOG_273, 1, 1, 30, 200, _("\
+Oh no!"))
+DEFINE_DIALOG(DIALOG_274, 1, 2, 30, 200, _("\
+Owch!\n\
+Not fair!"))
+
+
+

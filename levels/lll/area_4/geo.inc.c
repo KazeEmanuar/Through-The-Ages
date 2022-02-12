@@ -4,7 +4,7 @@ const GeoLayout lll_area_4_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 1689, 1057, -5874, lll_dl_Cube_012_mesh),
-		GEO_TRANSLATE_NODE_WITH_DL(5, 1689, 1057, -5874, lll_dl_Cube_013_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 1689, 1057, -5874, lll_dl_Cube_013_mesh_layer_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -31,7 +31,7 @@ const GeoLayout lll_area_4[] = {
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, lll_dl_material_revert_render_settings),
-		GEO_DISPLAY_LIST(5, lll_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, lll_dl_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

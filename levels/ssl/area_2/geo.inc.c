@@ -3,11 +3,11 @@
 const GeoLayout ssl_area_2_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(1, ssl_dl_Circle_001_mesh_layer_1),
-		GEO_DISPLAY_LIST(1, ssl_dl_Circle_006_mesh_layer_1),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, ssl_dl_Circle_001_mesh_layer_1),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, ssl_dl_Circle_006_mesh_layer_1),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, ssl_dl_Circle_006_mesh),
-		GEO_TRANSLATE_NODE_WITH_DL(5, 587, -353, 1505, ssl_dl_Plane_mesh_layer_5),
-		GEO_TRANSLATE_NODE_WITH_DL(4, -3505, -2077, -12150, ssl_dl_Plane_005_mesh_layer_4),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 587, -353, 1505, ssl_dl_Plane_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, -3505, -2077, -12150, ssl_dl_Plane_005_mesh_layer_4),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -33,10 +33,9 @@ const GeoLayout ssl_area_2[] = {
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(4, ssl_dl_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, ssl_dl_material_revert_render_settings),
-		GEO_DISPLAY_LIST(5, ssl_dl_material_revert_render_settings),
-		GEO_DISPLAY_LIST(1, ssl_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_ALPHA, ssl_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, ssl_dl_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

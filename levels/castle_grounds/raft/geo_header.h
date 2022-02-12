@@ -1,11 +1,24 @@
 extern const GeoLayout raft_geo[];
+extern Lights0 raft_mast_lights;
+extern Lights0 raft_logs_lights;
+extern Lights0 raft_flag_lights;
+extern u8 raft_tempImgEd0309_ci8[];
+extern u8 raft_tempImgEd0309_ci8_pal_rgba16[];
+extern u8 raft_BigTreeWoodC_ci8[];
+extern u8 raft_BigTreeWoodC_ci8_pal_rgba16[];
+extern u8 raft_flag_ci8[];
+extern u8 raft_flag_ci8_pal_rgba16[];
 extern Vtx raft_Cube_mesh_vtx_0[40];
 extern Gfx raft_Cube_mesh_tri_0[];
 extern Vtx raft_Cube_mesh_vtx_1[8];
 extern Gfx raft_Cube_mesh_tri_1[];
-extern Vtx raft_Cube_mesh_vtx_2[8];
+extern Vtx raft_Cube_mesh_vtx_2[10];
 extern Gfx raft_Cube_mesh_tri_2[];
-
+extern Gfx mat_raft_mast[];
+extern Gfx mat_revert_raft_mast[];
+extern Gfx mat_raft_logs[];
+extern Gfx mat_revert_raft_logs[];
+extern Gfx mat_raft_flag[];
+extern Gfx mat_revert_raft_flag[];
 extern Gfx raft_Cube_mesh[];
 extern Gfx raft_material_revert_render_settings[];
-

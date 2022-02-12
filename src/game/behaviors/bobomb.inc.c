@@ -328,9 +328,9 @@ void bobomb_buddy_cannon_dialog(s16 dialogFirstText, s16 dialogSecondText) {
             break;
 
         case BOBOMB_BUDDY_CANNON_OPENING:
-            cannonClosed = cur_obj_nearest_object_with_behavior(bhvCannonClosed);
+         /*   cannonClosed = cur_obj_nearest_object_with_behavior(bhvCannonClosed);
             cutscene = cutscene_object(CUTSCENE_PREPARE_CANNON, cannonClosed);
-            if (cutscene == -1)
+            if (cutscene == -1)*/
                 o->oBobombBuddyCannonStatus = BOBOMB_BUDDY_CANNON_OPENED;
             break;
 

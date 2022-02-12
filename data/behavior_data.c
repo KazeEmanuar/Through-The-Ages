@@ -1120,6 +1120,7 @@ const BehaviorScript bhvGrindel[] = {
 };
 
 extern void bhv_thwomp_explosive(void);
+extern void bhv_thwomp_talk(void);
 const BehaviorScript bhvThwomp2[] = { //explodable
     BEGIN(OBJ_LIST_SURFACE),
     LOAD_COLLISION_DATA(thwomp_seg5_collision_0500B92C),
@@ -1130,6 +1131,7 @@ const BehaviorScript bhvThwomp2[] = { //explodable
     SCALE(/*Unused*/ 0, /*Field*/ 140),
     SET_FLOAT(oDrawingDistance, 32000),
     BEGIN_LOOP(),
+        CALL_NATIVE(bhv_thwomp_talk),
         CALL_NATIVE(bhv_thwomp_explosive),
         CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
@@ -1296,6 +1298,7 @@ const BehaviorScript bhvWaterMist2[] = {
     SET_HOME(),
     SET_INT(oFaceAnglePitch, 0xC000),
     SCALE(/*Unused*/ 0, /*Field*/ 2100),
+    BILLBOARD(),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_water_mist_2_loop),
     END_LOOP(),
@@ -1823,10 +1826,10 @@ const BehaviorScript bhvBlockade[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     LOAD_COLLISION_DATA(metal_box_seg8_collision_08024C28),
     SET_FLOAT(oCollisionDistance, 2000),
-    SET_FLOAT(oDrawingDistance, 32000),
     SCALE(0, 500),
     BEGIN_LOOP(),
         CALL_NATIVE(load_object_collision_model),
+    SET_FLOAT(oDrawingDistance, 32000),
     END_LOOP(),
 };
 
@@ -6376,6 +6379,7 @@ const BehaviorScript bhvPokemon[] = {
 };
 
 const BehaviorScript bhvRoamingPokemon[] ={
+    DEACTIVATE(),
     BEGIN(OBJ_LIST_GENACTOR),
     SET_INT(oIntangibleTimer, 0),
     SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 50, /*Gravity*/ 0, /*Bounciness*/ 0, /*Drag strength*/ 0, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
@@ -7582,7 +7586,7 @@ const BehaviorScript bhvDBZStar[] = {
 extern void dragonballpickup(void);
 const BehaviorScript bhvDragonBallCarry[] = {
     BEGIN(OBJ_LIST_GENACTOR),
-    OR_INT(oFlags, (OBJ_FLAG_HOLDABLE | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    OR_INT(oFlags, (OBJ_FLAG_HOLDABLE | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_ACTIVE_FROM_AFAR)),
     SET_HITBOX(/*Radius*/ 50, /*Height*/ 100),
     SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 40, /*Gravity*/ 400, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
     SET_FLOAT(oGraphYOffset, 45),
@@ -7919,7 +7923,6 @@ const BehaviorScript bhvTreasureDoor[] = { //explodable
     BEGIN(OBJ_LIST_SURFACE),
     LOAD_COLLISION_DATA(treasuredoor_collision),
     OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-    SCALE(/*Unused*/ 0, /*Field*/ 140),
     SET_FLOAT(oDrawingDistance, 32000),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_thwomp_explosive),
@@ -7940,5 +7943,30 @@ const BehaviorScript bhvTutorialGuy[] = {
     BEGIN_LOOP(),
         SET_INT(oIntangibleTimer, 0),
         CALL_NATIVE(tutorialGuy),
+    END_LOOP(),
+};
+
+void bombthing(void);
+const BehaviorScript bhvGolemBlock[] = { //explodable
+    BEGIN(OBJ_LIST_SURFACE),
+    LOAD_COLLISION_DATA(blockgolem_collision),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_FLOAT(oDrawingDistance, 32000),
+    ADD_FLOAT(oPosY, 250),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bombthing),
+        CALL_NATIVE(load_object_collision_model),
+    SET_FLOAT(oCollisionDistance, 7000),
+    END_LOOP(),
+};
+
+
+extern void courtActor(void);
+const BehaviorScript bhvCourtActor[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, toadlawyer_anims),
+    BEGIN_LOOP(),
+        CALL_NATIVE(courtActor),
     END_LOOP(),
 };

@@ -561,7 +561,7 @@ struct Object *find_Queen(u32 bParam) {
     }
     return 0;
 }
-
+extern struct Object *spawn_star(struct Object *sp30, f32 sp34, f32 sp38, f32 sp3C);
 void thwomptoad(void) {
     struct Object *sp1C;
     // if all thwomps are nearby, despawn and give star to its position
@@ -570,6 +570,7 @@ void thwomptoad(void) {
         if (o->oHealth == 100) {
             sp1C = spawn_star(o, o->oPosX, o->oPosY + 200.f, o->oPosZ);
             sp1C->oBehParams = 0x01000000;
+            obj_mark_for_deletion(o);
         }
     } else {
         if (!find_Queen(1)) {

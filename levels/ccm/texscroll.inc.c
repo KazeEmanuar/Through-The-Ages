@@ -20,34 +20,10 @@ void scroll_ccm_dl_sands_007_mesh_vtx_0() {
 	currentX += deltaX;
 }
 
-void scroll_ccm_dl_wata_mesh_vtx_0() {
-	int i = 0;
-	int count = 48;
-	int width = 64 * 0x20;
-	int height = 64 * 0x20;
-
-	static int currentX = 0;
-	int deltaX;
-	static int currentY = 0;
-	int deltaY;
-	Vtx *vertices = segmented_to_virtual(ccm_dl_wata_mesh_vtx_0);
-
-	deltaX = (int)(5.0 * 0x20 * random_float() * random_sign()) % width;
-	deltaY = (int)(-8.0 * 0x20) % height;
-
-	if (absi(currentX) > width) {
-		deltaX -= (int)(absi(currentX) / width) * width * signum_positive(deltaX);
-	}
-	if (absi(currentY) > height) {
-		deltaY -= (int)(absi(currentY) / height) * height * signum_positive(deltaY);
-	}
-
-	for (i = 0; i < count; i++) {
-		vertices[i].n.tc[0] += deltaX;
-		vertices[i].n.tc[1] += deltaY;
-	}
-	currentX += deltaX;	currentY += deltaY;
-}
+void scroll_sts_mat_ccm_dl_sm64_material_003_v2() {
+	Gfx *mat = segmented_to_virtual(mat_ccm_dl_sm64_material_003_v2);
+	shift_t_down(mat, 18, PACK_TILESIZE(0, 7));
+};
 
 void scroll_ccm_dl_Wtaerhigh_mesh_vtx_0() {
 	int i = 0;
@@ -73,6 +49,6 @@ void scroll_ccm_dl_Wtaerhigh_mesh_vtx_0() {
 
 void scroll_ccm() {
 	scroll_ccm_dl_sands_007_mesh_vtx_0();
-	scroll_ccm_dl_wata_mesh_vtx_0();
+	scroll_sts_mat_ccm_dl_sm64_material_003_v2();
 	scroll_ccm_dl_Wtaerhigh_mesh_vtx_0();
 }

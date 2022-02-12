@@ -26,6 +26,7 @@
 #include "src/game/texscroll/sl_texscroll.inc.c"
 #include "src/game/texscroll/wdw_texscroll.inc.c"
 #include "src/game/texscroll/bitdw_texscroll.inc.c"
+#include "src/game/texscroll/bitfs_texscroll.inc.c"
 void scroll_textures() {
 	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_castle_grounds_segment_7SegmentRomStart)) {
 		scroll_textures_castle_grounds();
@@ -77,6 +78,10 @@ void scroll_textures() {
 
 	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_bitdw_segment_7SegmentRomStart)) {
 		scroll_textures_bitdw();
+	}
+
+	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_bitfs_segment_7SegmentRomStart)) {
+		scroll_textures_bitfs();
 	}
 
 }

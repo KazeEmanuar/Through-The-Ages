@@ -89,4 +89,23 @@ extern const Collision bits_seg7_collision_0701B734[];
 // script
 extern const LevelScript level_bits_entry[];
 
+
+#include "levels/bits/header.inc.h"
+
+#include "levels/bits/toadlawyertw/geo_header.h"
+
+#include "levels/bits/toadlawyertw/anim_header.h"
+
+#include "levels/bits/courtDK/geo_header.h"
+
+#include "levels/bits/courtDK/anim_header.h"
+
+#include "levels/bits/wariocourt/geo_header.h"
+
+#include "levels/bits/wariocourt/anim_header.h"
+
+#include "levels/bits/waluigi/anim_header.h"
+
+#include "levels/bits/waluigi/geo_header.h"
+
 #endif

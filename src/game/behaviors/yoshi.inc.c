@@ -141,7 +141,6 @@ void yoshi_give_present_loop(void) {
 
     if ((sp1C & 0x03) == 0) {
         play_sound(SOUND_MENU_YOSHI_GAIN_LIVES, gDefaultSoundArgs);
-        gMarioState->numLives++;
     }
 }
 

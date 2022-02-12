@@ -2390,12 +2390,6 @@ static struct Object *spawn_star_with_no_lvl_exit(s32 sp20, s32 sp24) {
     return sp1C;
 }
 
-// old unused initializer for 2d star spawn behavior.
-// uses behavior parameters not used in the current sparkle code.
-void spawn_base_star_with_no_lvl_exit(void) {
-    spawn_star_with_no_lvl_exit(0, 0);
-}
-
 s32 bit_shift_left(s32 a0) {
     return D_8032F0A4[a0];
 }

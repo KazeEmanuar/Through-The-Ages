@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/ssl/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_ssl_entry[] = {
 	INIT_LEVEL(),
@@ -40,6 +46,9 @@ const LevelScript level_ssl_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x3B, spidercrab_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_CASTLE_CASTLE_DOOR, castle_door_geo), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, ssl_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_BOB, 0x03, 0x0A, WARP_NO_CHECKPOINT),
@@ -56,6 +65,8 @@ const LevelScript level_ssl_entry[] = {
 		WARP_NODE(0x3c, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x3d, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x3e, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe8, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd8, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -13305, 273, 14774, 0, 0, 0, 0x000a0000, bhvSwimmingWarp),
 		OBJECT(MODEL_STAR, -15236, -5623, -10627, 0, 0, 0, 0x00000000, bhvStar),
 		OBJECT(MODEL_STAR, 13005, 2563, -2971, 0, 0, 0, 0x02000000, bhvStar),
@@ -125,14 +136,14 @@ const LevelScript level_ssl_entry[] = {
 		OBJECT(0, 19990, -527, 8681, 0, -111, 0, 0x00020000, bhvCoinFormation),
 		OBJECT(0, -4279, 1729, 17799, 0, -111, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, -24, 1305, 19734, 0, -111, 0, 0x00000000, bhvCoinFormation),
-		OBJECT(0, 23249, 585, -3095, 0, 28, 0, 0x00000000, bhvCoinFormation),
+		OBJECT(0, 22201, 584, -2465, 0, 28, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, 15236, -826, 10870, 0, -111, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, -14664, -1592, 6663, 0, -111, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, 11800, -2389, 3954, 0, -111, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, -9060, 774, -11804, 0, -111, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, -17066, -3149, 900, 0, -111, 0, 0x00020000, bhvCoinFormation),
 		OBJECT(0, 20417, -306, 12293, 0, -111, 0, 0x00100000, bhvCoinFormation),
-		OBJECT(0, 25255, 755, 3856, 0, -111, 0, 0x00110000, bhvCoinFormation),
+		OBJECT(0, 25255, 545, 3856, 0, -111, 0, 0x00110000, bhvCoinFormation),
 		OBJECT(0, -3615, 1047, 2578, 0, -111, 0, 0x00020000, bhvCoinFormation),
 		OBJECT(0, -2841, 587, -8622, 0, -111, 0, 0x00020000, bhvCoinFormation),
 		OBJECT(0, -19332, -1726, 2530, 0, 7, 0, 0x00000000, bhvCoinFormation),
@@ -166,6 +177,8 @@ const LevelScript level_ssl_entry[] = {
 		MACRO_OBJECTS(ssl_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_LEAGUES),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(2, ssl_area_2),
@@ -178,6 +191,8 @@ const LevelScript level_ssl_entry[] = {
 		WARP_NODE(0x2C, LEVEL_SSL, 0x01, 0x3C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x2D, LEVEL_SSL, 0x01, 0x3D, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x2E, LEVEL_SSL, 0x01, 0x3E, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe8, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_BOB, 0x01, 0xd8, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -6471, -508, 785, 0, 102, 0, 0x000B0000, bhvSwimmingWarp),
 		OBJECT(MODEL_NONE, -6571, -700, 5520, 0, 75, 0, 0x000C0000, bhvSwimmingWarp),
 		OBJECT(MODEL_NONE, 9506, -1229, 487, 0, -100, 0, 0x000D0000, bhvSwimmingWarp),
@@ -208,7 +223,7 @@ const LevelScript level_ssl_entry[] = {
 		OBJECT(0, -7532, -1560, 1552, 0, 0, 0, 0x702B0000, bhvWarp),
 		OBJECT(0, -7552, -1060, 587, 0, 0, 0, 0x702B0000, bhvWarp),
 		OBJECT(0, -7532, -1060, 1552, 0, 0, 0, 0x702B0000, bhvWarp),
-		OBJECT(0, 944, 8, -2347, 0, 0, 0, 0x702D0000, bhvHiddenRedCoinStar),
+		OBJECT(0, 944, 8, -2347, 0, 0, 0, (4 << 24), bhvHiddenRedCoinStar),
 		OBJECT(MODEL_RED_COIN, -5824, -3411, -7880, 0, 0, 0, 0x702D0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, -9474, -2478, -13009, 0, 0, 0, 0x702D0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, -5715, -3314, -12725, 0, 0, 0, 0x702D0000, bhvRedCoin),
@@ -221,6 +236,8 @@ const LevelScript level_ssl_entry[] = {
 		MACRO_OBJECTS(ssl_area_2_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_LEAGUES),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(3, ssl_area_3),
@@ -231,6 +248,8 @@ const LevelScript level_ssl_entry[] = {
 		WARP_NODE(0x1B, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x1C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x1D, LEVEL_BOB, 0x01, 0x1A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe8, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd8, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 7910, -14, -632, 0, -90, 0, 0x001B0000, bhvAirborneWarp),
 		OBJECT(MODEL_NONE, 7910, -14, -632, 0, -90, 0, 0x001C0000, bhvAirborneWarp),
 		OBJECT(0x36, 2477, 876, -628, 0, -90, 0, 0x00320000, bhvScrew),
@@ -249,6 +268,8 @@ const LevelScript level_ssl_entry[] = {
 		MACRO_OBJECTS(ssl_area_3_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_LEAGUES),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),

@@ -580,6 +580,6 @@ const Collision lll_area_4_collision[] = {
 	COL_TRI(217, 220, 218),
 	COL_TRI_STOP(),
 	COL_WATER_BOX_INIT(1),
-	COL_WATER_BOX(0x32, -2972, -13099, 6483, 1429, 906),
+	COL_WATER_BOX(0x32, -5509, -13099, 9019, 1429, 658),
 	COL_END()
 };

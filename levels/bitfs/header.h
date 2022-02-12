@@ -94,4 +94,11 @@ extern const Gfx bitfs_dl_lava_floor[];
 // script
 extern const LevelScript level_bitfs_entry[];
 
+
+#include "levels/bitfs/header.inc.h"
+
+#include "levels/bitfs/blockgolem/geo_header.h"
+
+#include "levels/bitfs/blockgolem/collision_header.h"
+
 #endif

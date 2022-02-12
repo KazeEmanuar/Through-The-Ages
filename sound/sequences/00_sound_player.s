@@ -2671,7 +2671,7 @@ layer_jump .layer_C4E
   chan_end
 
   .layer_F76:
-  layer_note1 39, 0x50, 127
+  layer_note1 39, 0xA0, 127
   layer_end
 
   .sound_peach_mario2:
@@ -2684,7 +2684,7 @@ layer_jump .layer_C4E
   chan_end
 
   .layer_F8A:
-  layer_note1 39, 0x50, 127
+  layer_note1 39, 0xA0, 127
   layer_end
 .endif
 

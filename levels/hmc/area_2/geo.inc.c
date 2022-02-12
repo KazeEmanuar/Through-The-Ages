@@ -3,9 +3,9 @@
 const GeoLayout hmc_area_2_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(1, -2646, 5024, -124, hmc_dl_Circle_009_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(1, -3670, 4013, 114, hmc_dl_Circle_010_mesh_layer_1),
-		GEO_TRANSLATE_NODE_WITH_DL(1, -1801, 3703, -203, hmc_dl_Circle_011_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -2646, 5024, -124, hmc_dl_Circle_009_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -3670, 4013, 114, hmc_dl_Circle_010_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, -1801, 3703, -203, hmc_dl_Circle_011_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -31,7 +31,7 @@ const GeoLayout hmc_area_2[] = {
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(1, hmc_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, hmc_dl_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

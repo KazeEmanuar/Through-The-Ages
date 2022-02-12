@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/lll/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_lll_entry[] = {
 	INIT_LEVEL(),
@@ -41,6 +47,9 @@ const LevelScript level_lll_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x3C, dragonbridge_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_CASTLE_WOODEN_DOOR, wooden_door_geo), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, lll_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_LLL, 0x02, 0x0A, WARP_NO_CHECKPOINT),
@@ -50,6 +59,8 @@ const LevelScript level_lll_entry[] = {
 		WARP_NODE(0x0F, LEVEL_LLL, 0x04, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x10, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x11, LEVEL_LLL, 0x05, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF0, LEVEL_CASTLE_GROUNDS, 0x01, 0xE7, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_CASTLE_GROUNDS, 0x01, 0xD7, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 2043, 2192, -6032, 0, -80, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(0x35, 121, -981, 9042, 0, -80, 0, 0x000a0000, bhvBouncyLamp),
 		OBJECT(0x35, 6877, 1441, -1324, 0, 171, 0, 0x000a0000, bhvBouncyLamp),
@@ -114,6 +125,19 @@ const LevelScript level_lll_entry[] = {
 		OBJECT(MODEL_THWOMP, 4164, -293, 6231, 0, -86, 0, 0x000a0000, bhvThwomp),
 		OBJECT(MODEL_THWOMP, -20629, 2364, -1943, 0, -180, 0, 0x000a0000, bhvThwomp),
 		OBJECT(MODEL_THWOMP, -17979, 3559, -2001, 0, 0, 0, 0x000a0000, bhvThwomp),
+		OBJECT(0, -19307, 1317, -1979, 0, 0, 0, 0x00020000, bhvCoinFormation),
+		OBJECT(0, -8965, 2274, -6710, 0, 0, 0, (0x11 << 16), bhvCoinFormation),
+		OBJECT(0, -15945, 2411, -12829, 0, -60, 0, (0 << 16), bhvCoinFormation),
+		OBJECT(0, -8011, 1502, -4828, 0, 0, 0, (0 << 16), bhvCoinFormation),
+		OBJECT(0, 980, 29, 3128, 0, 0, 0, (0x11 << 16), bhvCoinFormation),
+		OBJECT(0, 264, -153, 3453, 0, 0, 0, (0x11 << 16), bhvCoinFormation),
+		OBJECT(0, 854, 269, 2536, 0, 0, 0, (0x11 << 16), bhvCoinFormation),
+		OBJECT(0, -2375, -896, 8563, 0, 90, 0, (0 << 16), bhvCoinFormation),
+		OBJECT(0, -15634, 1054, -1705, 0, 80, 0, (0 << 16), bhvCoinFormation),
+		OBJECT(0, 179, -876, 10326, 0, 90, 0, (0 << 16), bhvCoinFormation),
+		OBJECT(0, 5680, 226, 3935, 0, 14, 0, (0 << 16), bhvCoinFormation),
+		OBJECT(0, -3819, 907, -2094, 0, 0, 0, (0x11 << 16), bhvCoinFormation),
+		OBJECT(0, -3946, 588, -1274, 0, 0, 0, (0x11 << 16), bhvCoinFormation),
 		OBJECT(MODEL_RED_COIN, 15105, 6773, -1834, 0, -156, 0, 0x000a0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, 14030, 2054, -1013, 0, -156, 0, 0x000a0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, 11966, 3860, -2917, 0, -156, 0, 0x000a0000, bhvRedCoin),
@@ -127,6 +151,8 @@ const LevelScript level_lll_entry[] = {
 		MACRO_OBJECTS(lll_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_CHINA),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(2, lll_area_2),
@@ -134,6 +160,8 @@ const LevelScript level_lll_entry[] = {
 		WARP_NODE(0x0B, LEVEL_LLL, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe7, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd7, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 419, 1584, 166, 0, 0, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(MODEL_CASTLE_WOODEN_DOOR, 321, 1584, -166, 0, 0, 0, 0x000B0000, bhvDoorWarp),
 		OBJECT(MODEL_CASTLE_WOODEN_DOOR, 509, 1584, -166, 0, -180, 0, 0x000B0000, bhvDoorWarp),
@@ -142,6 +170,8 @@ const LevelScript level_lll_entry[] = {
 		MACRO_OBJECTS(lll_area_2_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_CHINA),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(3, lll_area_3),
@@ -149,6 +179,8 @@ const LevelScript level_lll_entry[] = {
 		WARP_NODE(0x0B, LEVEL_LLL, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe7, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd7, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 433, 1584, 76, 0, 0, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(MODEL_CASTLE_WOODEN_DOOR, 321, 1584, -166, 0, 0, 0, 0x000B0000, bhvDoorWarp),
 		OBJECT(MODEL_CASTLE_WOODEN_DOOR, 509, 1584, -166, 0, -180, 0, 0x000B0000, bhvDoorWarp),
@@ -203,6 +235,8 @@ const LevelScript level_lll_entry[] = {
 		MACRO_OBJECTS(lll_area_3_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_CHINA),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(4, lll_area_4),
@@ -210,8 +244,10 @@ const LevelScript level_lll_entry[] = {
 		WARP_NODE(0x0B, LEVEL_LLL, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe7, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd7, WARP_NO_CHECKPOINT),
 		OBJECT(0x16, 401, 592, 851, 0, -180, 0, 0x000a0000, bhvWarpPipe),
-		OBJECT(0x3A, 1044, 956, -9169, 0, 0, 0, 0x04040404, bhvChinaBoss),
+		OBJECT(0x3A, 1044, 956, -9169, 0, 0, 0, 0x02000000, bhvChinaBoss),
 		OBJECT(0, 1169, 908, -612, 0, -180, 0, 0x00010000, bhvCoinFormation),
 		OBJECT(0, 1044, 956, -10667, 0, 90, 0, 0x00000000, bhvCoinFormation),
 		OBJECT(0, 1044, 956, -7659, 0, 90, 0, 0x00000000, bhvCoinFormation),
@@ -221,6 +257,8 @@ const LevelScript level_lll_entry[] = {
 		MACRO_OBJECTS(lll_area_4_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_UNDERGROUND),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(5, lll_area_5),
@@ -228,6 +266,8 @@ const LevelScript level_lll_entry[] = {
 		WARP_NODE(0x0B, LEVEL_LLL, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe7, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd7, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -17465, 1706, -2794, 0, 90, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(0x3C, -16580, 992, -2828, 0, 90, 0, 0x00000000, bhvDragonBridge2),
 		OBJECT(MODEL_STAR, 16614, 843, -610, 0, 0, 0, 0x05000000, bhvStar),
@@ -235,6 +275,8 @@ const LevelScript level_lll_entry[] = {
 		MACRO_OBJECTS(lll_area_5_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SLIDE),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),

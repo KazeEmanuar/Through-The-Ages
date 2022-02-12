@@ -25,23 +25,23 @@
 #include "thread6.h"
 
 #define INT_GROUND_POUND_OR_TWIRL (1 << 0) // 0x01
-#define INT_PUNCH                 (1 << 1) // 0x02
-#define INT_KICK                  (1 << 2) // 0x04
-#define INT_TRIP                  (1 << 3) // 0x08
-#define INT_SLIDE_KICK            (1 << 4) // 0x10
-#define INT_FAST_ATTACK_OR_SHELL  (1 << 5) // 0x20
-#define INT_HIT_FROM_ABOVE        (1 << 6) // 0x40
-#define INT_HIT_FROM_BELOW        (1 << 7) // 0x80
+#define INT_PUNCH (1 << 1)                 // 0x02
+#define INT_KICK (1 << 2)                  // 0x04
+#define INT_TRIP (1 << 3)                  // 0x08
+#define INT_SLIDE_KICK (1 << 4)            // 0x10
+#define INT_FAST_ATTACK_OR_SHELL (1 << 5)  // 0x20
+#define INT_HIT_FROM_ABOVE (1 << 6)        // 0x40
+#define INT_HIT_FROM_BELOW (1 << 7)        // 0x80
 
-#define INT_ATTACK_NOT_FROM_BELOW                                                 \
-    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK \
+#define INT_ATTACK_NOT_FROM_BELOW                                                                      \
+    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK                      \
      | INT_FAST_ATTACK_OR_SHELL | INT_HIT_FROM_ABOVE)
 
-#define INT_ANY_ATTACK                                                            \
-    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK \
+#define INT_ANY_ATTACK                                                                                 \
+    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK                      \
      | INT_FAST_ATTACK_OR_SHELL | INT_HIT_FROM_ABOVE | INT_HIT_FROM_BELOW)
 
-#define INT_ATTACK_NOT_WEAK_FROM_ABOVE                                                \
+#define INT_ATTACK_NOT_WEAK_FROM_ABOVE                                                                 \
     (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_HIT_FROM_BELOW)
 
 u8 sDelayInvincTimer;
@@ -82,49 +82,49 @@ struct InteractionHandler {
 };
 
 static struct InteractionHandler sInteractionHandlers[] = {
-    { INTERACT_COIN,           interact_coin },
-    { INTERACT_WATER_RING,     interact_water_ring },
-    { INTERACT_STAR_OR_KEY,    interact_star_or_key },
-    { INTERACT_BBH_ENTRANCE,   interact_bbh_entrance },
-    { INTERACT_WARP,           interact_warp },
-    { INTERACT_WARP_DOOR,      interact_warp_door },
-    { INTERACT_DOOR,           interact_door },
-    { INTERACT_CANNON_BASE,    interact_cannon_base },
-    { INTERACT_IGLOO_BARRIER,  interact_igloo_barrier },
-    { INTERACT_TORNADO,        interact_tornado },
-    { INTERACT_WHIRLPOOL,      interact_whirlpool },
-    { INTERACT_STRONG_WIND,    interact_strong_wind },
-    { INTERACT_FLAME,          interact_flame },
-    { INTERACT_SNUFIT_BULLET,  interact_snufit_bullet },
-    { INTERACT_CLAM_OR_BUBBA,  interact_clam_or_bubba },
-    { INTERACT_BULLY,          interact_bully },
-    { INTERACT_SHOCK,          interact_shock },
-    { INTERACT_BOUNCE_TOP2,    interact_bounce_top },
-    { INTERACT_MR_BLIZZARD,    interact_mr_blizzard },
+    { INTERACT_COIN, interact_coin },
+    { INTERACT_WATER_RING, interact_water_ring },
+    { INTERACT_STAR_OR_KEY, interact_star_or_key },
+    { INTERACT_BBH_ENTRANCE, interact_bbh_entrance },
+    { INTERACT_WARP, interact_warp },
+    { INTERACT_WARP_DOOR, interact_warp_door },
+    { INTERACT_DOOR, interact_door },
+    { INTERACT_CANNON_BASE, interact_cannon_base },
+    { INTERACT_IGLOO_BARRIER, interact_igloo_barrier },
+    { INTERACT_TORNADO, interact_tornado },
+    { INTERACT_WHIRLPOOL, interact_whirlpool },
+    { INTERACT_STRONG_WIND, interact_strong_wind },
+    { INTERACT_FLAME, interact_flame },
+    { INTERACT_SNUFIT_BULLET, interact_snufit_bullet },
+    { INTERACT_CLAM_OR_BUBBA, interact_clam_or_bubba },
+    { INTERACT_BULLY, interact_bully },
+    { INTERACT_SHOCK, interact_shock },
+    { INTERACT_BOUNCE_TOP2, interact_bounce_top },
+    { INTERACT_MR_BLIZZARD, interact_mr_blizzard },
     { INTERACT_HIT_FROM_BELOW, interact_hit_from_below },
-    { INTERACT_BOUNCE_TOP,     interact_bounce_top },
-    { INTERACT_DAMAGE,         interact_damage },
-    { INTERACT_POLE,           interact_pole },
-    { INTERACT_HOOT,           interact_hoot },
-    { INTERACT_BREAKABLE,      interact_breakable },
-    { INTERACT_KOOPA,          interact_bounce_top },
-    { INTERACT_KOOPA_SHELL,    interact_koopa_shell },
-    { INTERACT_UNKNOWN_08,     interact_unknown_08 },
-    { INTERACT_CAP,            interact_cap },
-    { INTERACT_GRABBABLE,      interact_grabbable },
-    { INTERACT_TEXT,           interact_text },
+    { INTERACT_BOUNCE_TOP, interact_bounce_top },
+    { INTERACT_DAMAGE, interact_damage },
+    { INTERACT_POLE, interact_pole },
+    { INTERACT_HOOT, interact_hoot },
+    { INTERACT_BREAKABLE, interact_breakable },
+    { INTERACT_KOOPA, interact_bounce_top },
+    { INTERACT_KOOPA_SHELL, interact_koopa_shell },
+    { INTERACT_UNKNOWN_08, interact_unknown_08 },
+    { INTERACT_CAP, interact_cap },
+    { INTERACT_GRABBABLE, interact_grabbable },
+    { INTERACT_TEXT, interact_text },
 };
 
 static u32 sForwardKnockbackActions[][3] = {
     { ACT_SOFT_FORWARD_GROUND_KB, ACT_FORWARD_GROUND_KB, ACT_HARD_FORWARD_GROUND_KB },
-    { ACT_FORWARD_AIR_KB,         ACT_FORWARD_AIR_KB,    ACT_HARD_FORWARD_AIR_KB },
-    { ACT_FORWARD_WATER_KB,       ACT_FORWARD_WATER_KB,  ACT_FORWARD_WATER_KB },
+    { ACT_FORWARD_AIR_KB, ACT_FORWARD_AIR_KB, ACT_HARD_FORWARD_AIR_KB },
+    { ACT_FORWARD_WATER_KB, ACT_FORWARD_WATER_KB, ACT_FORWARD_WATER_KB },
 };
 
 static u32 sBackwardKnockbackActions[][3] = {
     { ACT_SOFT_BACKWARD_GROUND_KB, ACT_BACKWARD_GROUND_KB, ACT_HARD_BACKWARD_GROUND_KB },
-    { ACT_BACKWARD_AIR_KB,         ACT_BACKWARD_AIR_KB,    ACT_HARD_BACKWARD_AIR_KB },
-    { ACT_BACKWARD_WATER_KB,       ACT_BACKWARD_WATER_KB,  ACT_BACKWARD_WATER_KB },
+    { ACT_BACKWARD_AIR_KB, ACT_BACKWARD_AIR_KB, ACT_HARD_BACKWARD_AIR_KB },
+    { ACT_BACKWARD_WATER_KB, ACT_BACKWARD_WATER_KB, ACT_BACKWARD_WATER_KB },
 };
 
 static u8 sDisplayingDoorText = FALSE;
@@ -356,10 +356,10 @@ void mario_blow_off_cap(struct MarioState *m, f32 capSpeed) {
 
         capObject->oPosY += (m->action & ACT_FLAG_SHORT_HITBOX) ? 120.0f : 180.0f;
         capObject->oForwardVel = capSpeed;
-        capObject->oMoveAngleYaw = (s16)(m->faceAngle[1] + 0x400);
+        capObject->oMoveAngleYaw = (s16) (m->faceAngle[1] + 0x400);
 
         if (m->forwardVel < 0.0f) {
-            capObject->oMoveAngleYaw = (s16)(capObject->oMoveAngleYaw + 0x8000);
+            capObject->oMoveAngleYaw = (s16) (capObject->oMoveAngleYaw + 0x8000);
         }
     }
 }
@@ -821,8 +821,8 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
         // func_802521A0
 #endif
 
-        if (grandStar) {
-            return set_mario_action(m, ACT_JUMBO_STAR_CUTSCENE, 0);
+        if (gCurrLevelNum == LEVEL_BITS) {
+            save_file_do_save(gCurrSaveFileNum - 1);
         }
 
         return set_mario_action(m, starGrabAction, noExit + 2 * grandStar);
@@ -1500,48 +1500,50 @@ u32 check_object_grab_mario(struct MarioState *m, UNUSED u32 interactType, struc
 
 u32 interact_pole(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
     s32 actionId = m->action & ACT_ID_MASK;
-    if (actionId >= 0x080 && actionId < 0x0A0) {
-        if (!(m->prevAction & ACT_FLAG_ON_POLE) || m->usedObj != o) {
+    if ((gMarioState->pos[1] + 80.f) > o->oPosY) { // polefix
+        if (actionId >= 0x080 && actionId < 0x0A0) {
+            if (!(m->prevAction & ACT_FLAG_ON_POLE) || m->usedObj != o) {
 #ifdef VERSION_SH
-            f32 velConv = m->forwardVel; // conserve the velocity.
-            struct Object *marioObj = m->marioObj;
-            u32 lowSpeed;
+                f32 velConv = m->forwardVel; // conserve the velocity.
+                struct Object *marioObj = m->marioObj;
+                u32 lowSpeed;
 #else
-            u32 lowSpeed = (m->forwardVel <= 10.0f);
-            struct Object *marioObj = m->marioObj;
+                u32 lowSpeed = (m->forwardVel <= 10.0f);
+                struct Object *marioObj = m->marioObj;
 #endif
 
-            mario_stop_riding_and_holding(m);
+                mario_stop_riding_and_holding(m);
 
 #ifdef VERSION_SH
-            lowSpeed = (velConv <= 10.0f);
+                lowSpeed = (velConv <= 10.0f);
 #endif
 
-            m->interactObj = o;
-            m->usedObj = o;
-            m->vel[1] = 0.0f;
-            m->forwardVel = 0.0f;
+                m->interactObj = o;
+                m->usedObj = o;
+                m->vel[1] = 0.0f;
+                m->forwardVel = 0.0f;
 
-            marioObj->oMarioPoleUnk108 = 0;
-            marioObj->oMarioPoleYawVel = 0;
-            marioObj->oMarioPolePos = m->pos[1] - o->oPosY;
+                marioObj->oMarioPoleUnk108 = 0;
+                marioObj->oMarioPoleYawVel = 0;
+                marioObj->oMarioPolePos = m->pos[1] - o->oPosY;
 
-            if (lowSpeed) {
-                return set_mario_action(m, ACT_GRAB_POLE_SLOW, 0);
+                if (lowSpeed) {
+                    return set_mario_action(m, ACT_GRAB_POLE_SLOW, 0);
+                }
+
+                //! @bug Using m->forwardVel here is assumed to be 0.0f due to the set from earlier.
+                //       This is fixed in the Shindou version.
+#ifdef VERSION_SH
+                marioObj->oMarioPoleYawVel = (s32) (velConv * 0x100 + 0x1000);
+#else
+                marioObj->oMarioPoleYawVel = (s32) (m->forwardVel * 0x100 + 0x1000);
+#endif
+                reset_mario_pitch(m);
+#ifdef VERSION_SH
+                queue_rumble_data(5, 80);
+#endif
+                return set_mario_action(m, ACT_GRAB_POLE_FAST, 0);
             }
-
-            //! @bug Using m->forwardVel here is assumed to be 0.0f due to the set from earlier.
-            //       This is fixed in the Shindou version.
-#ifdef VERSION_SH
-            marioObj->oMarioPoleYawVel = (s32)(velConv * 0x100 + 0x1000);
-#else
-            marioObj->oMarioPoleYawVel = (s32)(m->forwardVel * 0x100 + 0x1000);
-#endif
-            reset_mario_pitch(m);
-#ifdef VERSION_SH
-            queue_rumble_data(5, 80);
-#endif
-            return set_mario_action(m, ACT_GRAB_POLE_FAST, 0);
         }
     }
 
@@ -1691,7 +1693,7 @@ u32 mario_can_talk(struct MarioState *m, u32 arg) {
 
 u32 check_read_sign(struct MarioState *m, struct Object *o) {
     if ((m->input & READ_MASK) && mario_can_talk(m, 0) && object_facing_mario(m, o, SIGN_RANGE)) {
-        s16 facingDYaw = (s16)(o->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
+        s16 facingDYaw = (s16) (o->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
         if (facingDYaw >= -SIGN_RANGE && facingDYaw <= SIGN_RANGE) {
             f32 targetX = o->oPosX + 105.0f * sins(o->oMoveAngleYaw);
             f32 targetZ = o->oPosZ + 105.0f * coss(o->oMoveAngleYaw);
@@ -1804,12 +1806,16 @@ void mario_process_interactions(struct MarioState *m) {
         sJustTeleported = FALSE;
     }
 }
-
+extern s16 fadeoutstarted;
 void check_death_barrier(struct MarioState *m) {
     if (m->pos[1] < m->floorHeight + 2048.0f) {
-        if (level_trigger_warp(m, WARP_OP_WARP_FLOOR) == 20 && !(m->flags & MARIO_UNKNOWN_18)) {
-            play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
+        if (!fadeoutstarted){
+        fadeoutstarted = 1;
+            play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x0A, 0, 0, 0);
         }
+        /*  if (level_trigger_warp(m, WARP_OP_WARP_FLOOR) == 20 && !(m->flags & MARIO_UNKNOWN_18)) {
+              play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
+          }*/
     }
 }
 

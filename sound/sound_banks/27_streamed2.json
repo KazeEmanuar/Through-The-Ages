@@ -24,11 +24,41 @@
             "release_rate": 10,
             "envelope": "envelope0",
             "sound": "0C_AllstarR"
+        } ,
+        "inst3": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0D_Court"
+        }  ,
+        "inst4": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0E_atlantisR"
+        }  ,
+        "inst5": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "0F_atlantisL"
+        }  ,
+        "inst6": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "10_surrealL"
+        }  ,
+        "inst7": {
+            "release_rate": 10,
+            "envelope": "envelope0",
+            "sound": "11_surrealR"
         } 
     },
     "instrument_list": [
         "inst0",
         "inst1",
-        "inst2"
+        "inst2",
+        "inst3",
+        "inst4",
+        "inst5",
+        "inst6",
+        "inst7"
     ]
 }

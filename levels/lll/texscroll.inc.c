@@ -18,8 +18,8 @@ void scroll_lll_dl_Cube_002_mesh_layer_5_vtx_0() {
 		vertices[i].n.tc[0] += deltaX;
 	}
 	currentX += deltaX;
-
 }
+
 void scroll_lll_dl_Cube_002_mesh_layer_5_vtx_1() {
 	int i = 0;
 	int count = 120;
@@ -40,8 +40,8 @@ void scroll_lll_dl_Cube_002_mesh_layer_5_vtx_1() {
 		vertices[i].n.tc[0] += deltaX;
 	}
 	currentX += deltaX;
-
 }
+
 void scroll_lll() {
 	scroll_lll_dl_Cube_002_mesh_layer_5_vtx_0();
 	scroll_lll_dl_Cube_002_mesh_layer_5_vtx_1();

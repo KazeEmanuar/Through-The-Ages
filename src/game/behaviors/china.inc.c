@@ -344,7 +344,7 @@ void chinabosscode(void) {
                     if (checkMarioOOb()) {
                         o->oTimer = 0;
                     } else {
-                        if (random_u16() & 1) {
+                        if ((random_u16() % 100)< 80 - o->oHealth*15) {
                             o->oAction = 3;
                         } else {
                             o->oAction = 6;
@@ -412,8 +412,8 @@ void chinabosscode(void) {
                 if (o->oTimer > 30) {
                     o->oAction = 5;
                     o->oHealth++;
-                    if (o->oHealth == 3) {
                         create_sound_spawner(SOUND_OBJ_KING_WHOMP_DEATH);
+                    if (o->oHealth == 3) {
                         spawn_mist_particles_variable(0, 0, 200.0f);
                         spawn_triangle_break_particles(20, 138, 3.0f, 4);
                         cur_obj_shake_screen(SHAKE_POS_SMALL);
@@ -569,4 +569,24 @@ void dragonbridgecode(void) {
     load_object_collision_model();
     cur_obj_move_xz_using_fvel_and_yaw();
     o->oPosY += o->oVelY;
+}
+
+void bhv_thwomp_talk(void){
+    switch (o->oAction){
+        case 0:
+        if (o->oDistanceToMario < 500.f){
+            o->oAction = 1;
+        }
+        break;
+        case 1:
+            if (talkToMarioNoRotation(142)){
+                o->oAction = 2;
+            }
+        break;
+        case 2:
+        if (o->oDistanceToMario > 750.f){
+            o->oAction = 0;
+        }
+        break;
+    }
 }

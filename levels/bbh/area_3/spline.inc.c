@@ -15,4 +15,3 @@ const Trajectory bbh_area_3_spline_kooparacepathreal[] = {
 	TRAJECTORY_POS( 13, -2040, 0, 7798),
 	TRAJECTORY_END(),
 };
-

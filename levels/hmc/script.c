@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/hmc/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_hmc_entry[] = {
 	INIT_LEVEL(),
@@ -36,18 +42,23 @@ const LevelScript level_hmc_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x3D, boss3_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_THI_WARP_PIPE, warp_pipe_geo), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, hmc_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0B, LEVEL_HMC, 0x02, 0x0A, WARP_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_HMC, 0x03, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe6, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_BOB, 0x01, 0xd6, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 1128, 845, 82, 0, 167, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(MODEL_NONE, -969, 0, 20307, 0, 0, 0, 0x00000000, bhvTextureAnims),
 		OBJECT(0x35, 8795, 3698, -5042, 0, -151, 0, 0x00000000, bhvFlyingTiki),
 		OBJECT(0x35, 8971, 3247, -4675, 0, 0, 0, 0x00010000, bhvFlyingTiki),
 		OBJECT(0x35, -368, 845, -4456, 0, -66, 0, 0x00020030, bhvFlyingTiki),
 		OBJECT(0x35, 8214, 2844, -4651, 0, 0, 0, 0x00030000, bhvFlyingTiki),
-		OBJECT(MODEL_STAR, 8705, 4269, -4654, 0, -151, 0, 0x00000000, bhvStar),
+		OBJECT(MODEL_STAR, 8705, 4269, -4654, 0, -151, 0, (1 << 24), bhvStar),
 		OBJECT(MODEL_RED_FLAME, 6650, 2083, -4760, 0, 0, 0, 0x00030000, bhvFlame2),
 		OBJECT(MODEL_RED_FLAME, 6612, 2085, -4459, 0, 0, 0, 0x00030000, bhvFlame2),
 		OBJECT(MODEL_RED_FLAME, 2031, 2085, -5035, 0, 0, 0, 0x00030000, bhvFlame2),
@@ -147,6 +158,8 @@ const LevelScript level_hmc_entry[] = {
 		MACRO_OBJECTS(hmc_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_TIKI),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(2, hmc_area_2),
@@ -154,6 +167,8 @@ const LevelScript level_hmc_entry[] = {
 		WARP_NODE(0x0B, LEVEL_HMC, 0x04, 0x0A, WARP_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe6, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd6, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 5125, 2948, 2613, 0, -168, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(0x35, 1157, 2948, -1732, 0, -151, 0, 0x00000000, bhvFlyingTiki),
 		OBJECT(0x35, -10931, 3778, 3479, 0, -151, 0, 0x00000000, bhvFlyingTiki),
@@ -169,6 +184,8 @@ const LevelScript level_hmc_entry[] = {
 		MACRO_OBJECTS(hmc_area_2_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_HOT),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(3, hmc_area_3),
@@ -176,6 +193,8 @@ const LevelScript level_hmc_entry[] = {
 		WARP_NODE(0x0B, LEVEL_HMC, 0x01, 0x0C, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe6, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd6, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -9, -667, -1563, 0, 0, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(0x36, -777, -592, -507, 0, 164, 0, 0x00000000, bhvTikiGoomba),
 		OBJECT(0x36, 744, -120, 2365, 0, 141, 0, 0x00000000, bhvTikiGoomba),
@@ -200,6 +219,8 @@ const LevelScript level_hmc_entry[] = {
 		MACRO_OBJECTS(hmc_area_3_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_UNDERGROUND),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(4, hmc_area_4),
@@ -207,6 +228,8 @@ const LevelScript level_hmc_entry[] = {
 		WARP_NODE(0x0B, LEVEL_BOB, 0x03, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0C, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0D, LEVEL_BOB, 0x02, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf0, LEVEL_CASTLE_GROUNDS, 0x01, 0xe6, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xd6, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, 1, -1868, -1707, 0, 0, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(MODEL_NONE, 0, -1868, 0, 0, -180, 0, 0x00000000, bhvTotemBoss),
 		OBJECT(0x35, 0, -473, 1239, 0, 0, 0, 0x00000000, bhvFlyingTiki),
@@ -218,27 +241,27 @@ const LevelScript level_hmc_entry[] = {
 		OBJECT(0x3A, 2907, -4648, 1435, 0, 162, 0, 2, bhvTotemPole),
 		OBJECT(0x3A, 3195, -4648, 548, 0, 162, 0, 3, bhvTotemPole),
 		OBJECT(0x3A, 3483, -4648, -339, 0, 162, 0, 4, bhvTotemPole),
-		OBJECT(0x3A, 3771, -4648, -1225, 0, -162, 0, 5, bhvTotemPole),
+		OBJECT(0x3A, 3771, -4648, -1225, 0, -117, 0, 5, bhvTotemPole),
 		OBJECT(0x3A, 3017, -4648, -1773, 0, -126, 0, 6, bhvTotemPole),
 		OBJECT(0x3A, 2263, -4648, -2321, 0, -126, 0, 7, bhvTotemPole),
 		OBJECT(0x3A, 1509, -4648, -2869, 0, -126, 0, 8, bhvTotemPole),
 		OBJECT(0x3A, 754, -4648, -3417, 0, -126, 0, 9, bhvTotemPole),
-		OBJECT(0x3A, 0, -4648, -3965, 0, -90, 0, 10, bhvTotemPole),
+		OBJECT(0x3A, 0, -4648, -3965, 0, -45, 0, 10, bhvTotemPole),
 		OBJECT(0x3A, -754, -4648, -3417, 0, -54, 0, 11, bhvTotemPole),
 		OBJECT(0x3A, -1509, -4648, -2869, 0, -54, 0, 12, bhvTotemPole),
 		OBJECT(0x3A, -2263, -4648, -2321, 0, -54, 0, 13, bhvTotemPole),
 		OBJECT(0x3A, -3017, -4648, -1773, 0, -54, 0, 14, bhvTotemPole),
-		OBJECT(0x3A, -3771, -4648, -1225, 0, -18, 0, 15, bhvTotemPole),
+		OBJECT(0x3A, -3771, -4648, -1225, 0, 27, 0, 15, bhvTotemPole),
 		OBJECT(0x3A, -3483, -4648, -339, 0, 18, 0, 16, bhvTotemPole),
 		OBJECT(0x3A, -3195, -4648, 548, 0, 18, 0, 17, bhvTotemPole),
 		OBJECT(0x3A, -2907, -4648, 1435, 0, 18, 0, 18, bhvTotemPole),
 		OBJECT(0x3A, -2619, -4648, 2321, 0, 18, 0, 19, bhvTotemPole),
-		OBJECT(0x3A, -2331, -4648, 3208, 0, 54, 0, 20, bhvTotemPole),
+		OBJECT(0x3A, -2331, -4648, 3208, 0, 99, 0, 20, bhvTotemPole),
 		OBJECT(0x3A, -1398, -4648, 3208, 0, 90, 0, 21, bhvTotemPole),
 		OBJECT(0x3A, -466, -4648, 3208, 0, 90, 0, 22, bhvTotemPole),
 		OBJECT(0x3A, 466, -4648, 3208, 0, 90, 0, 23, bhvTotemPole),
 		OBJECT(0x3A, 1398, -4648, 3208, 0, 90, 0, 24, bhvTotemPole),
-		OBJECT(0x3A, 2331, -4648, 3208, 0, 126, 0, 0, bhvTotemPole),
+		OBJECT(0x3A, 2331, -4648, 3208, 0, 171, 0, 0, bhvTotemPole),
 		OBJECT(0x35, 364, -273, 501, 0, 36, 0, 0x00000000, bhvFlyingTiki),
 		OBJECT(0x35, 589, -273, -191, 0, 108, 0, 0x00000000, bhvFlyingTiki),
 		OBJECT(0x35, 0, -273, -620, 0, -180, 0, 0x00000000, bhvFlyingTiki),
@@ -258,6 +281,8 @@ const LevelScript level_hmc_entry[] = {
 		MACRO_OBJECTS(hmc_area_4_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_HOT),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),

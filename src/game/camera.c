@@ -117,8 +117,6 @@ void set_camera_shake_from_hit(s32 shake) {
     switch (shake) {
         // Makes the camera stop for a bit
         case SHAKE_ATTACK:
-         /*   gLakituState.focHSpeed = 0;
-            gLakituState.posHSpeed = 0;*/
             break;
 
         case SHAKE_FALL_DAMAGE:
@@ -135,8 +133,6 @@ void set_camera_shake_from_hit(s32 shake) {
             set_camera_roll_shake(0x80, 0x8, 0x4000);
             set_fov_shake(0x100, 0x30, 0x8000);
 
-          /*  gLakituState.focHSpeed = 0;
-            gLakituState.posHSpeed = 0;*/
             break;
 
         case SHAKE_MED_DAMAGE:
@@ -144,21 +140,15 @@ void set_camera_shake_from_hit(s32 shake) {
             set_camera_roll_shake(0x100, 0x10, 0x4000);
             set_fov_shake(0x180, 0x40, 0x8000);
 
-            /*gLakituState.focHSpeed = 0;
-            gLakituState.posHSpeed = 0;*/
             break;
 
         case SHAKE_LARGE_DAMAGE:
             set_camera_yaw_shake(0x180, 0x20, 0x4000);
             set_camera_roll_shake(0x200, 0x20, 0x4000);
             set_fov_shake(0x200, 0x50, 0x8000);
-         /*   gLakituState.focHSpeed = 0;
-            gLakituState.posHSpeed = 0;*/
             break;
 
         case SHAKE_HIT_FROM_BELOW:
-      /*      gLakituState.focHSpeed = 0.07;
-            gLakituState.posHSpeed = 0.07;*/
             break;
 
         case SHAKE_SHOCK:
@@ -307,7 +297,7 @@ void focus_on_mario(Vec3f focus, Vec3f pos, f32 posYOff, f32 focYOff, f32 dist, 
 /**
  * Pitch the camera down when the camera is facing down a slope
  */
-s32 look_down_slopes(s32 camYaw) {
+s16 look_down_slopes(s32 camYaw) {
     struct Surface *floor;
     f32 floorDY;
     // Default pitch
@@ -315,8 +305,8 @@ s32 look_down_slopes(s32 camYaw) {
     // x and z offsets towards the camera
     f32 xOff = sMarioCamState->pos[0] + sins(camYaw) * 40.f;
     f32 zOff = sMarioCamState->pos[2] + coss(camYaw) * 40.f;
-
-    floorDY = find_floor(xOff, sMarioCamState->pos[1], zOff, &floor) - sMarioCamState->pos[1];
+    
+    floorDY = find_floor(xOff, sMarioCamState->pos[1], zOff, &floor) - gMarioState->pos[1];
 
     if (floor != NULL) {
         if (floorDY > 0) {
@@ -518,7 +508,6 @@ void update_lakitu(struct Camera *c) {
 
         vec3f_approach_smoothly(gLakituState.curPos, newPos, gLakituState.posHSpeed, 0.f);
         vec3f_approach_smoothly(gLakituState.curFocus, newFoc, gLakituState.focHSpeed, 0.f);
-
         // Adjust Lakitu's speed back to normal
         set_or_approach_f32_asymptotic(&gLakituState.focHSpeed, 0.3f, 0.05f);
         set_or_approach_f32_asymptotic(&gLakituState.posHSpeed, 0.3f, 0.05f);
@@ -682,8 +671,8 @@ void init_camera(struct Camera *c) {
 
     gLakituState.mode = c->mode;
     gLakituState.defMode = c->defMode;
-    gLakituState.posHSpeed = 0.3f;
-    gLakituState.focHSpeed = 0.3f; // @bug set focHSpeed back-to-back
+    gLakituState.posHSpeed = 0.8f;
+    gLakituState.focHSpeed = 0.8f; // @bug set focHSpeed back-to-back
     gLakituState.roll = 0;
     gLakituState.keyDanceRoll = 0;
     gLakituState.unused = 0;
@@ -761,30 +750,13 @@ void create_camera(struct GraphNodeCamera *gc, struct AllocOnlyPool *pool) {
 void update_graph_node_camera(struct GraphNodeCamera *gc) {
 
     gc->rollScreen = gLakituState.roll;
-    if (!gMoveSpeed) {
         gc->pos[0] = gLakituState.pos[0];
         gc->pos[1] = gLakituState.pos[1];
         gc->pos[2] = gLakituState.pos[2];
         gc->focus[0] = gLakituState.focus[0];
         gc->focus[1] = gLakituState.focus[1];
         gc->focus[2] = gLakituState.focus[2];
-    } else {
-        if (gMoveSpeed == 1) {
-            gc->pos[0] = approach_pos(gc->pos[0], gLakituState.pos[0]);
-            gc->pos[1] = approach_pos(gc->pos[1], gLakituState.pos[1]);
-            gc->pos[2] = approach_pos(gc->pos[2], gLakituState.pos[2]);
-            gc->focus[0] = approach_pos(gc->focus[0], gLakituState.focus[0]);
-            gc->focus[1] = approach_pos(gc->focus[1], gLakituState.focus[1]);
-            gc->focus[2] = approach_pos(gc->focus[2], gLakituState.focus[2]);
-        } else {
-            gc->pos[0] = approach_posF(gc->pos[0], gLakituState.pos[0]);
-            gc->pos[1] = approach_posF(gc->pos[1], gLakituState.pos[1]);
-            gc->pos[2] = approach_posF(gc->pos[2], gLakituState.pos[2]);
-            gc->focus[0] = approach_posF(gc->focus[0], gLakituState.focus[0]);
-            gc->focus[1] = approach_posF(gc->focus[1], gLakituState.focus[1]);
-            gc->focus[2] = approach_posF(gc->focus[2], gLakituState.focus[2]);
-        }
-    }
+    
 
     // vec3f_copy(gc->pos, gLakituState.pos);
     // vec3f_copy(gc->focus, gLakituState.focus);
@@ -1768,18 +1740,9 @@ struct CameraTrigger sCamPSS[] = { NULL_TRIGGER };
 struct CameraTrigger sCamCastleGrounds[] = {
 	NULL_TRIGGER
 };
-struct CameraTrigger sCamBBH[] = { { -1, 5, 7996, -3853, -3414, 14667, 1000, 2303, 0xffff },
-                                   { -1, 1, 6049, -308, 1356, 3000, 3255, 2303, 0xffff },
-                                   { -1, 3, -4586, 2368, 356, 3000, 3255, 3073, 0xffff },
-                                   { -1, 6, -9535, 2368, -1649, 740, 3255, 3073, 0xffff },
-                                   { -1, 4, -4700, -3704, 4154, 6332, 3255, 2303, 0xffff },
-                                   { -1, 4, -10246, -3618, 1584, 1202, 2080, 3216, 0xffff },
-                                   { -1, 2, -8198, 1484, 325, 688, 3255, 2326, 0xffff },
-                                   { -1, 2, -3059, -3439, 368, 6217, 3255, 1573, 0xffff },
-                                   { -1, 7, -10925, 2368, -1649, 740, 3255, 3073, 0xffff },
-                                   { -1, 8, -12261, 2368, -1649, 740, 3255, 3073, 0xffff },
-                                   { -1, 9, -13622, 2368, -1649, 777, 3255, 3073, 0xffff },
-                                   NULL_TRIGGER };
+struct CameraTrigger sCamBBH[] = {
+	NULL_TRIGGER
+};
 struct CameraTrigger sCamJRB[] = {
 	NULL_TRIGGER
 };
@@ -1790,6 +1753,24 @@ struct CameraTrigger sCamHMC[] = {
 	NULL_TRIGGER
 };
 struct CameraTrigger sCamSL[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamBitFS[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamLLL[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamSSL[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamDDD[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamWDW[] = {
+	NULL_TRIGGER
+};
+struct CameraTrigger sCamBitS[] = {
 	NULL_TRIGGER
 };
 struct CameraTrigger *sCameraTriggers[LEVEL_COUNT + 1] = {
@@ -3852,14 +3833,14 @@ u8 sDanceCutsceneIndexTable[][4] = {
 u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // Unused         | Unused
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // Unused         | Unused
-	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 1, 1, 1), // BBH            | CCM
-	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // CASTLE_INSIDE  | HMC
-	ZOOMOUT_AREA_MASK(1, 1, 1, 0, 1, 1, 1, 1), // SSL            | BOB
-	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 0, 0, 0), // SL             | WDW
+	ZOOMOUT_AREA_MASK(1, 1, 1, 0, 1, 1, 1, 1), // BBH            | CCM
+	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 1, 1, 1), // CASTLE_INSIDE  | HMC
+	ZOOMOUT_AREA_MASK(1, 1, 1, 0, 1, 1, 1, 0), // SSL            | BOB
+	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 1, 1, 1), // SL             | WDW
 	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 1, 0, 0), // JRB            | THI
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // TTC            | RR
-	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 1, 0, 0), // CASTLE_GROUNDS | BITDW
-	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // VCUTM          | BITFS
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 1, 1, 1), // CASTLE_GROUNDS | BITDW
+	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 1, 1, 1), // VCUTM          | BITFS
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // SA             | BITS
 	ZOOMOUT_AREA_MASK(1, 1, 1, 0, 1, 1, 1, 0), // LLL            | DDD
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 0, 0, 0, 0), // WF             | ENDING
@@ -3939,7 +3920,7 @@ void play_cutscene(struct Camera *c) {
         CUTSCENE(CUTSCENE_READ_MESSAGE, sCutsceneReadMessage)
         CUTSCENE(CUTSCENE_RACE_DIALOG, sCutsceneDialog)
         // CUTSCENE(CUTSCENE_ENTER_PYRAMID_TOP, sCutsceneEnterPyramidTop)
-        // CUTSCENE(CUTSCENE_SSL_PYRAMID_EXPLODE, sCutscenePyramidTopExplode)
+        CUTSCENE(CUTSCENE_SSL_PYRAMID_EXPLODE, sCutsceneStarSpawn)
     }
 
 #undef CUTSCENE

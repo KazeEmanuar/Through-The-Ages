@@ -24,11 +24,9 @@ void scroll_bbh_dl_world_004_mesh_vtx_0() {
 		vertices[i].n.tc[0] += deltaX;
 		vertices[i].n.tc[1] += deltaY;
 	}
-	currentX += deltaX;
-	currentY += deltaY;
-
+	currentX += deltaX;	currentY += deltaY;
 }
+
 void scroll_bbh() {
 	scroll_bbh_dl_world_004_mesh_vtx_0();
-
 }

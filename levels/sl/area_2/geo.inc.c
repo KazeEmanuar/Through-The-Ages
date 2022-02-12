@@ -3,8 +3,8 @@
 const GeoLayout sl_area_2_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 844, -405, 332, sl_dl_Cylinder_001_mesh_layer_4),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 844, -405, 332, sl_dl_Cylinder_007_mesh_layer_1),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_ALPHA, 1613, -774, 635, sl_dl_Cylinder_001_mesh_layer_4),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_OPAQUE, 1613, -774, 635, sl_dl_Cylinder_007_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

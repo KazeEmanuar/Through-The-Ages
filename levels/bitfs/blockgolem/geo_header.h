@@ -1,0 +1,11 @@
+extern const GeoLayout blockgolem_geo[];
+extern Lights1 blockgolem_f3d_material_006_lights;
+extern u8 blockgolem_KKIIDDZZ_DAT_2348__p00_ci4[];
+extern u8 blockgolem_KKIIDDZZ_DAT_2348__p00_ci4_pal_rgba16[];
+extern Vtx blockgolem_Plane_mesh_layer_1_vtx_cull[8];
+extern Vtx blockgolem_Plane_mesh_layer_1_vtx_0[24];
+extern Gfx blockgolem_Plane_mesh_layer_1_tri_0[];
+extern Gfx mat_blockgolem_f3d_material_006[];
+extern Gfx mat_revert_blockgolem_f3d_material_006[];
+extern Gfx blockgolem_Plane_mesh_layer_1[];
+extern Gfx blockgolem_material_revert_render_settings[];

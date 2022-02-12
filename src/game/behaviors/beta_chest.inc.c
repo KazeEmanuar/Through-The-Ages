@@ -12,11 +12,13 @@
  */
 u8 chestCount = 0;
 void bhv_beta_chest_bottom_init(void) {
+    struct Object *a;
     // Set the object's model
     cur_obj_set_model(MODEL_TREASURE_CHEST_BASE);
 
     // Spawn the chest lid 97 units in the +Y direction and 77 units in the -Z direction.
-    spawn_object_relative(0, 0, 97, -77, o, MODEL_TREASURE_CHEST_LID, bhvBetaChestLid);
+    a = spawn_object_relative(0, 0, 97, -77, o, MODEL_TREASURE_CHEST_LID, bhvBetaChestLid);
+    a->oBehParams = o->oBehParams;
     chestCount=0;
 }
 

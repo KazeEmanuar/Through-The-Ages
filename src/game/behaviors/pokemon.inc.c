@@ -164,6 +164,12 @@ void pokemoncode(void) {
             break;
         case 2:
 #define tangeloffset 50.f
+            if ((o->oTimer == 0) && (o->oAction == 0)) {
+                if (!((gMarioState->pos[1] == gMarioState->floorHeight) || (gMarioState->vel[1] > 0))) {
+                    obj_mark_for_deletion(o);
+                    return;
+                }
+            }
             gMarioState->pos[0] = o->oPosX;
             gMarioState->pos[1] = o->oPosY;
             gMarioState->pos[2] = o->oPosZ;
@@ -189,7 +195,7 @@ void pokemoncode(void) {
                     x = o->oPosX + (sins(o->oMoveAngleYaw) * growth * (o->oTimer - poggers));
                     z = o->oPosZ + (coss(o->oMoveAngleYaw) * growth * (o->oTimer - poggers));
                     y = o->oPosY;
-                    if (o->oPosY < find_floor_height(o->oPosX, o->oPosY + 200.f, o->oPosZ)) {
+                    if (o->oPosY < find_floor_height(x, o->oPosY + 200.f, z)) {
                         o->oAction++;
                         o->oHomeX = (x - o->oPosX) / (o->oTimer - poggers);
                         o->oHomeZ = (z - o->oPosZ) / (o->oTimer - poggers);
@@ -205,7 +211,7 @@ void pokemoncode(void) {
                         o->oHiddenBlueCoinSwitch->oTimer = 34;
                         o->oOpacity = o->oTimer - poggers;
                     }
-                    if ((o->oPosY + 200.f) > find_ceil(o->oPosX, o->oPosY, o->oPosZ, &ceiling)) {
+                    if ((o->oPosY + 200.f) > find_ceil(x, o->oPosY, z, &ceiling)) {
                         o->oAction++;
                         o->oHomeX = (x - o->oPosX) / (o->oTimer - poggers);
                         o->oHomeZ = (z - o->oPosZ) / (o->oTimer - poggers);
@@ -337,7 +343,7 @@ void pokemoncode(void) {
             o->oIntangibleTimer = 0;
             if (o->oAction) {
                 if (o->oTimer > 70) {
-                    cur_obj_scale(0.7 + (f32)(o->oTimer - 70) / 8.0);
+                    cur_obj_scale(0.7 + (f32) (o->oTimer - 70) / 8.0);
                 }
                 if (o->oTimer > 75) {
                     obj_mark_for_deletion(o);
@@ -408,7 +414,7 @@ void pokemoncode(void) {
                     while (obj != (struct Object *) listHead) {
                         if ((obj->header.gfx.sharedChild
                              == gLoadedGraphNodes[MODEL_YELLOW_COIN_NO_SHADOW])
-                            || (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_YELLOW_COIN])) {
+                            || (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_YELLOW_COIN])|| (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_RED_COIN])) {
                             if (obj->activeFlags != ACTIVE_FLAG_DEACTIVATED && obj != o) {
                                 f32 objDist = dist_between_objects(o, obj);
                                 f32 multiplicator =
@@ -427,6 +433,8 @@ void pokemoncode(void) {
                         }
                         obj = (struct Object *) obj->header.next;
                     }
+
+
                     if ((o->header.gfx.unk38.animID == 1)) {
                         if ((o->header.gfx.unk38.animFrame > 22)) {
                             cur_obj_init_animation(magnetized);
@@ -527,6 +535,7 @@ void pokemoncode(void) {
             }
             break;
         case 10:
+            o->oGraphYOffset = -50.f;
             if (o->oAction) {
                 if ((o->oSubAction == 1) && (m->action != ACT_SLEEPING)) {
                     obj_mark_for_deletion(o);
@@ -539,7 +548,7 @@ void pokemoncode(void) {
                     if (mario_ready_to_speak()) {
                         o->oSubAction = 1;
                         m->action = ACT_SLEEPING;
-                        m->healCounter += (!(o->oTimer & 0x001f));
+                        m->healCounter += (!(o->oTimer & 0x000f));
                     }
                 }
                 rotateTowardsMario(0x600);

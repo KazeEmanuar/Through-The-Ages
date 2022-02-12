@@ -13,8 +13,14 @@
 
 #include "actors/common1.h"
 
+/* Fast64 begin persistent block [includes] */
+/* Fast64 end persistent block [includes] */
+
 #include "make_const_nonconst.h"
 #include "levels/bbh/header.h"
+
+/* Fast64 begin persistent block [scripts] */
+/* Fast64 end persistent block [scripts] */
 
 const LevelScript level_bbh_entry[] = {
 	INIT_LEVEL(),
@@ -33,6 +39,9 @@ const LevelScript level_bbh_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x35, barrel_geo), 
 	LOAD_MODEL_FROM_GEO(0x38, jetski_geo2), 
 
+	/* Fast64 begin persistent block [level commands] */
+	/* Fast64 end persistent block [level commands] */
+
 	AREA(1, bbh_area_1),
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x0b, LEVEL_BBH, 0x02, 0x0A, WARP_NO_CHECKPOINT),
@@ -44,7 +53,7 @@ const LevelScript level_bbh_entry[] = {
 		WARP_NODE(0x11, LEVEL_JRB, 0x03, 0x0E, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x12, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF0, LEVEL_CASTLE_GROUNDS, 0x01, 0xE5, WARP_NO_CHECKPOINT),
-		WARP_NODE(0xF1, LEVEL_BOB, 0x01, 0xD5, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_CASTLE_GROUNDS, 0x01, 0xD5, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x13, LEVEL_JRB, 0x04, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x14, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x1B, LEVEL_BBH, 0x03, 0x0A, WARP_NO_CHECKPOINT),
@@ -95,7 +104,7 @@ const LevelScript level_bbh_entry[] = {
 		OBJECT(MODEL_RED_COIN, 602, 2504, -4600, 0, -180, 0, 0x00000000, bhvRedCoin),
 		OBJECT(0x16, 2295, 2602, 1043, 0, -180, 0, 0x000d0000, bhvWarpPipe),
 		OBJECT(0, 2295, 2602, 886, 0, -180, 0, 0x000d0000, bhvWarpPipe),
-		OBJECT(0, -162, 0, -320, 0, -180, 0, 0x04000000, bhvHiddenRedCoinStar),
+		OBJECT(0, -162, 200, -320, 0, -180, 0, 0x04000000, bhvHiddenRedCoinStar),
 		OBJECT(MODEL_STAR, 2296, 2924, 874, 0, -180, 0, 0x03000000, bhvStar),
 		OBJECT(0x35, -4612, 27, -3859, 0, 0, 0, 0x00000000, bhvBarrelRoll),
 		OBJECT(0x35, -4743, 1434, -4001, 0, 0, 0, 0x00000000, bhvBarrelRoll),
@@ -120,6 +129,8 @@ const LevelScript level_bbh_entry[] = {
 		MACRO_OBJECTS(bbh_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_GREEK),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(2, bbh_area_2),
@@ -133,7 +144,7 @@ const LevelScript level_bbh_entry[] = {
 		WARP_NODE(0x11, LEVEL_JRB, 0x03, 0x0E, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x12, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF0, LEVEL_CASTLE_GROUNDS, 0x01, 0xE5, WARP_NO_CHECKPOINT),
-		WARP_NODE(0xF1, LEVEL_BOB, 0x01, 0xD5, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_CASTLE_GROUNDS, 0x01, 0xD5, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x13, LEVEL_JRB, 0x04, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x14, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -167, -156, 1046, 0, -180, 0, 0x000a0000, bhvAirborneWarp),
@@ -151,6 +162,8 @@ const LevelScript level_bbh_entry[] = {
 		MACRO_OBJECTS(bbh_area_2_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_UNDERGROUND),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	AREA(3, bbh_area_3),
@@ -164,12 +177,12 @@ const LevelScript level_bbh_entry[] = {
 		WARP_NODE(0x11, LEVEL_JRB, 0x03, 0x0E, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x12, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF0, LEVEL_CASTLE_GROUNDS, 0x01, 0xE5, WARP_NO_CHECKPOINT),
-		WARP_NODE(0xF1, LEVEL_BOB, 0x01, 0xD5, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xF1, LEVEL_CASTLE_GROUNDS, 0x01, 0xD5, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x13, LEVEL_JRB, 0x04, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x14, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		OBJECT(0x38, -1900, 0, 7723, 0, 90, 0, 0x00010000, bhvJetski2),
 		OBJECT(MODEL_KOOPA_WITHOUT_SHELL, -1879, 0, 7288, 0, 76, 0, 0x01020000, bhvSurfKoopa),
-		OBJECT(MODEL_NONE, -1703, 500, 7732, 0, 90, 0, 0x000a0000, bhvAirborneWarp),
+		OBJECT(MODEL_NONE, -1881, 500, 7736, 0, 90, 0, 0x000a0000, bhvAirborneWarp),
 		OBJECT(0, -622, 0, 7837, 0, 178, 0, 0x00000000, bhvWaypoint),
 		OBJECT(0, 3401, 0, -3614, 0, 178, 0, 0x00000003, bhvWaypoint),
 		OBJECT(0, 3787, 0, 6216, 0, 178, 0, 0x00000001, bhvWaypoint),
@@ -182,6 +195,8 @@ const LevelScript level_bbh_entry[] = {
 		MACRO_OBJECTS(bbh_area_3_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_LEVEL_SLIDE),
 		TERRAIN_TYPE(TERRAIN_GRASS),
+		/* Fast64 begin persistent block [area commands] */
+		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),

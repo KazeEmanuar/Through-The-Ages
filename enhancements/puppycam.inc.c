@@ -73,6 +73,10 @@ u16 storedbuttons;
 #define SLUGGISHNESS 7
 static void newcam_rotate_button(void) {
     s32 CBUTTONS = gPlayer1Controller->buttonDown & CBUTTONALLOWED;
+    if (gMarioState->action == ACT_DEBUG_FREE_MOVE) {
+        adjustTimers(-10);
+        return;
+    }
     if (newcam_hitboxes()) {
         CBUTTONS &= (L_CBUTTONS | R_CBUTTONS);
     }
@@ -216,7 +220,7 @@ static void newcam_update_values(void) { // For tilt, this just limits it so it 
         }
         waterflag = 3;
         newcam_distance_target = 850;
-    }  else {
+    } else {
         newcam_distance_target = 1500;
     }
 
@@ -352,7 +356,7 @@ static void newcam_collision(void) {
     newcam_coldist = sqrtf((newcam_pos_target[0] - hitpos[0]) * (newcam_pos_target[0] - hitpos[0])
                            + (newcam_pos_target[1] - hitpos[1]) * (newcam_pos_target[1] - hitpos[1])
                            + (newcam_pos_target[2] - hitpos[2]) * (newcam_pos_target[2] - hitpos[2]));
-    if (surf && ((surf->type & 0x000F0000) != (CAMERA_TERRAIN_GOTHROUGH << 16))
+    if ((surf && (surf->type != SURFACE_TTC_PAINTING_1))
         && (!surf->object || (surf->object->behavior != segmented_to_virtual(bhvWarpPipe)))) {
 #define maxdist 1750
         if (newcam_coldist < maxdist) {
@@ -461,7 +465,7 @@ static void newcam_position_cam(void) {
                     }
                 }
             }
-        } else  {
+        } else {
             wkHit = 0;
             if (timerbeforeminmovement > 40) {
                 if (!surfhit) { //! surfhit
@@ -486,18 +490,21 @@ static void newcam_position_cam(void) {
     newcam_update_values();
     shakeX = gLakituState.shakeMagnitude[1];
     shakeY = gLakituState.shakeMagnitude[0];
-    newcam_pos_target[0] = gMarioState->pos[0];
-    newcam_pos_target[1] =
-        gMarioState->pos[1] + newcam_extheight - 100.f * (waterflag == 5) - 100.f * (waterflag == 6);
-    newcam_pos_target[2] = gMarioState->pos[2];
-    if (foc = focus()) {
-        if (timerbeforeminmovement > 40) {
-            newcam_yaw = approach_s16_symmetric(
-                newcam_yaw, atan2s(-foc->oPosZ + newcam_pos[2], -foc->oPosX + newcam_pos[0]), 0x400);
+    if (gMarioState->action != ACT_DEBUG_FREE_MOVE) {
+        newcam_pos_target[0] = gMarioState->pos[0];
+        newcam_pos_target[1] = gMarioState->pos[1] + newcam_extheight - 100.f * (waterflag == 5)
+                               - 100.f * (waterflag == 6);
+        newcam_pos_target[2] = gMarioState->pos[2];
+        if (foc = focus()) {
+            if (timerbeforeminmovement > 40) {
+                newcam_yaw = approach_s16_symmetric(
+                    newcam_yaw, atan2s(-foc->oPosZ + newcam_pos[2], -foc->oPosX + newcam_pos[0]),
+                    0x400);
+            }
         }
     }
     newcam_floorpitch = approach_s16_symmetric(newcam_floorpitch, look_down_slopes(newcam_yaw) - 0x5b0,
-                                               0x80 * gMarioState->forwardVel / 32.f + 0x20);
+                                               0x80 * absf(gMarioState->forwardVel) / 32.f + 0x20);
     newcam_pos[0] =
         newcam_pos_target[0]
         + lengthdir_x(lengthdir_y(newcam_distance, newcam_pitch + shakeX + newcam_floorpitch),

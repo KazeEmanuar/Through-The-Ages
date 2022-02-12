@@ -90,8 +90,8 @@ s32 set_pole_position(struct MarioState *m, f32 offsetY) {
         m->pos[1] = floorHeight;
         set_mario_action(m, ACT_IDLE, 0);
         result = POLE_TOUCHED_FLOOR;
-    } else if (marioObj->oMarioPolePos < -m->usedObj->hitboxDownOffset) {
-        m->pos[1] = m->usedObj->oPosY - m->usedObj->hitboxDownOffset;
+    } else if (marioObj->oMarioPolePos < -m->usedObj->hitboxDownOffset - 80.f) { // polefix
+        m->pos[1] = m->usedObj->oPosY - m->usedObj->hitboxDownOffset - 80.f;     // polefix
         set_mario_action(m, ACT_FREEFALL, 0);
         result = POLE_FELL_OFF;
     } else if (collided) {
