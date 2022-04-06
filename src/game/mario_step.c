@@ -90,7 +90,7 @@ init_bully_collision_data(struct BullyCollisionData *data, f32 posX, f32 posZ, f
 void mario_bonk_reflection(struct MarioState *m, u32 negateSpeed) {
     if (m->wall != NULL) {
         s16 wallAngle = atan2s(m->wall->normal.z, m->wall->normal.x);
-        m->faceAngle[1] = wallAngle - (s16)(m->faceAngle[1] - wallAngle);
+        m->faceAngle[1] = wallAngle - (s16) (m->faceAngle[1] - wallAngle);
 
         play_sound((m->flags & MARIO_METAL_CAP) ? SOUND_ACTION_METAL_BONK : SOUND_ACTION_BONK,
                    m->marioObj->header.gfx.cameraToObject);
@@ -260,46 +260,51 @@ s32 stationary_ground_step(struct MarioState *m) {
 #define CLIP_Y (75.0f)
 #define WALLMAXNORMAL 0.03f
 
+extern u16 shoeTimer;
 void clip_mario(Vec3f prev_pos, Vec3f new_pos) {
-    //CuckyDev: Rewrite clip_mario
+    // CuckyDev: Rewrite clip_mario
     Vec3f unit_dir, dir;
     f32 clip_mag;
     Vec3f hit_pos;
     f32 clip;
     struct Surface *hit_surface = 0;
-    
+
     // Get direction
     unit_dir[0] = new_pos[0] - prev_pos[0];
     unit_dir[1] = new_pos[1] - prev_pos[1];
     unit_dir[2] = new_pos[2] - prev_pos[2];
     clip_mag = vec3f_length(unit_dir);
     vec3f_normalize(unit_dir);
-    
-    if (clip_mag > 0.0f)
-    {
+
+    if (clip_mag > 0.0f) {
         // Perform raycast
         dir[0] = unit_dir[0] * (clip_mag + CLIP_LENGTH);
         dir[1] = unit_dir[1] * (clip_mag + CLIP_LENGTH);
         dir[2] = unit_dir[2] * (clip_mag + CLIP_LENGTH);
-        
+
         prev_pos[1] += CLIP_Y;
         find_surface_on_ray(prev_pos, dir, &hit_surface, hit_pos);
 
         // Clip if collision was found
         if (hit_surface != NULL) {
-            if ((hit_surface)->normal.y < -WALLMAXNORMAL)
-            {
-                new_pos[0] = hit_pos[0] - unit_dir[0] * CLIP_LENGTH;
-                if ((hit_surface)->normal.y < -0.2f) //Dirty hack to prevent Mario from getting stuck on super steep ceilings
-                    new_pos[1] = hit_pos[1] - unit_dir[1] * CLIP_LENGTH  - CLIP_Y;
-                new_pos[2] = hit_pos[2] - unit_dir[2] * CLIP_LENGTH;
+            if (hit_surface->type == SURFACE_WOBBLING_WARP) {
+                if (!shoeTimer) {
+                    return;
+                }
             }
-            else
-            {
+            if ((hit_surface)->normal.y < -WALLMAXNORMAL) {
+                new_pos[0] = hit_pos[0] - unit_dir[0] * CLIP_LENGTH;
+                if ((hit_surface)->normal.y
+                    < -0.2f) // Dirty hack to prevent Mario from getting stuck on super steep ceilings
+                    new_pos[1] = hit_pos[1] - unit_dir[1] * CLIP_LENGTH - CLIP_Y;
+                new_pos[2] = hit_pos[2] - unit_dir[2] * CLIP_LENGTH;
+            } else {
                 hit_pos[0] = new_pos[0] - (hit_surface)->vertex1[0];
                 hit_pos[1] = new_pos[1] - (hit_surface)->vertex1[1] + CLIP_Y;
                 hit_pos[2] = new_pos[2] - (hit_surface)->vertex1[2];
-                clip = (hit_pos[0] * (hit_surface)->normal.x + hit_pos[1] * (hit_surface)->normal.y + hit_pos[2] * (hit_surface)->normal.z) - CLIP_LENGTH;
+                clip = (hit_pos[0] * (hit_surface)->normal.x + hit_pos[1] * (hit_surface)->normal.y
+                        + hit_pos[2] * (hit_surface)->normal.z)
+                       - CLIP_LENGTH;
                 new_pos[0] -= (hit_surface)->normal.x * clip;
                 new_pos[1] -= (hit_surface)->normal.y * clip;
                 new_pos[2] -= (hit_surface)->normal.z * clip;
@@ -352,7 +357,9 @@ static s32 perform_ground_quarter_step(struct MarioState *m, Vec3f nextPos) {
         return GROUND_STEP_HIT_WALL_STOP_QSTEPS;
     }
 
-    vec3f_set(m->pos, nextPos[0], floorHeight, nextPos[2]); //store mariopos here, but increment pointer and copy nextpos onto there before already just so the pointer works
+    vec3f_set(m->pos, nextPos[0], floorHeight,
+              nextPos[2]); // store mariopos here, but increment pointer and copy nextpos onto there
+                           // before already just so the pointer works
     m->floor = floor;
     m->floorHeight = floorHeight;
 

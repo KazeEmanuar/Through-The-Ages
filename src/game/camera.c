@@ -547,6 +547,11 @@ void update_lakitu(struct Camera *c) {
     gLakituState.defMode = c->defMode;
 }
 
+
+void play_sound_cbutton_side(void) {
+    play_sound(SOUND_MENU_CAMERA_TURN, gDefaultSoundArgs);
+}
+
 /**
  * The main camera update function.
  * Gets controller input, checks for cutscenes, handles mode changes, and moves the camera
@@ -3470,7 +3475,7 @@ BAD_RETURN(s32) cutscene_enter_cannon_raise(struct Camera *c) {
     sCutsceneVars[1].point[2] = approach_f32(sCutsceneVars[1].point[2], 400.f, 5.f, 5.f);
     sCutsceneVars[1].angle[1] += 0x40;
     sCutsceneVars[3].point[1] += 2.f;
-    c->pos[1] += sCutsceneVars[3].point[1];
+    c->pos[1] = gMarioState->pos[1] + 400.f;
 
     if ((o = sMarioCamState->usedObj) != NULL) {
         sCutsceneVars[0].point[1] = o->oPosY;
@@ -4036,12 +4041,11 @@ void zoom_fov_30(UNUSED struct MarioState *m) {
  */
 void fov_default(struct MarioState *m) {
     if ((m->action == ACT_SLEEPING) || (m->action == ACT_START_SLEEPING)) {
-        sFOVState.fov =
-            approach_f32_symmetric(sFOVState.fov, 30.f, absf((30.f - sFOVState.fov) / 30.f));
+            newcam_distance_target = 3500;
     } else {
+    }
         sFOVState.fov =
             approach_f32_symmetric(sFOVState.fov, 45.f, absf((45.f - sFOVState.fov) / 30.f));
-    }
 }
 
 //??! Literally the exact same as below

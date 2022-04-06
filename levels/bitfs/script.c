@@ -161,7 +161,7 @@ const LevelScript level_bitfs_entry[] = {
 		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF0, LEVEL_CASTLE_GROUNDS, 0x01, 0xA0, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xF1, LEVEL_CASTLE_GROUNDS, 0x01, 0xA1, WARP_NO_CHECKPOINT),
-		OBJECT(MODEL_NONE, 250, 0, 500, 0, -180, 0, (0x0A << 16), bhvSpinAirborneWarp),
+		OBJECT(MODEL_NONE, 250, 0, 750, 0, -180, 0, (0x0A << 16), bhvSpinAirborneWarp),
 		OBJECT(MODEL_NONE, 0, 0, 0, 0, 0, 0, (0x01 << 16), bhvTextureAnims),
 		OBJECT(MODEL_STAR, -500, 3400, -2750, 0, 0, 0, (0 << 24) | (0 << 16), bhvStar),
 		TERRAIN(bitfs_area_6_collision),

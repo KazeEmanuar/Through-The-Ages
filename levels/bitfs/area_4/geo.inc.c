@@ -6,7 +6,6 @@ const GeoLayout bitfs_area_4_geo[] = {
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, bitfs_dl_Circle_006_mesh_layer_1),
 		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, bitfs_dl_Plane_005_mesh_layer_5),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, bitfs_dl_Plane_006_mesh_layer_1),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, bitfs_dl_Plane_007_mesh_layer_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

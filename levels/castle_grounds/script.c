@@ -49,6 +49,7 @@ const LevelScript level_castle_grounds_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x3C, flower_geo), 
 	LOAD_MODEL_FROM_GEO(0x3D, toadlawyer_geo), 
 	LOAD_MODEL_FROM_GEO(0x3F, treasuredoor_geo), 
+	LOAD_MODEL_FROM_GEO(0x40, pipecolor_geo), 
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */

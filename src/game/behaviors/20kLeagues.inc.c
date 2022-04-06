@@ -65,7 +65,7 @@ extern struct Surface *resolve_and_return_wall_collisions(Vec3f pos, f32 offset,
 ;
 void screwcode(void) {
     f32 scale;
-    scale = (o->oBehParams2ndByte * 2 + 100.f) / 100.f;
+    scale = (o->oBehParams2ndByte * 2 + 100.f) / 50.f;
     cur_obj_scale(scale);
     if (cur_obj_is_mario_on_platform()) {
         if (coss(atan2s(gMarioObject->oPosX - o->oPosX, gMarioObject->oPosZ - o->oPosZ)
@@ -304,9 +304,9 @@ void boneMom(void) {
     targetAngle = atan2s(o->oBobombBuddyPosZCopy - o->oPosZ, o->oBobombBuddyPosXCopy - o->oPosX);
     o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, targetAngle, 0x100);
     o->oForwardVel = approach_f32(o->oForwardVel,
-                                  22.f * (coss(targetAngle - o->oMoveAngleYaw) + 1.0f)
+                                  12.f * (coss(targetAngle - o->oMoveAngleYaw) + 1.0f)
                                       * (coss(targetAngle - o->oMoveAngleYaw) + 1.0f),
-                                  2.f, 2.f);
+                                  1.f, 1.f);
     cur_obj_move_xz_using_fvel_and_yaw();
 }
 

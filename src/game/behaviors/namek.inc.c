@@ -198,7 +198,7 @@ u32 isInVision() {
     y = gMarioState->pos[1] - o->oPosY;
     pitchToMario = -atan2s(sqrtf(x * x + z * z), y);
     if (o->oDistanceToMario < 1500.f) {
-        if (abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) < 0x2400) {
+        if (abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) < 0x3400) {
             if (abs_angle_diff(o->oFaceAnglePitch, pitchToMario) < 0x1C00) {
                 return 1;
             }
@@ -310,6 +310,7 @@ void waluigitroopa(void) {
             }
             if (o->oTimer > 210) {
                 o->oAction = 3;
+                    o->oBobombBuddyRole++;
             }
             if (o->oTimer > 30) {
                 if (o->oDistanceToMario > 3800.f) {
@@ -330,12 +331,14 @@ void waluigitroopa(void) {
             o->oBobombBuddyPosZCopy = coss(randomAngle) * JUMPDIST + gMarioState->pos[2];
             o->oAction = 1;
             play_sound(DASHSOUND, gDefaultSoundArgs);
-            if (o->oBobombBuddyRole > 5) {
+            if (o->oBobombBuddyRole > 3) {
                 o->oAction = 0;
                 o->oPosX = o->oHomeX;
                 o->oPosY = o->oHomeY;
                 o->oPosZ = o->oHomeZ;
+                vec3f_copy(&o->oAngleVelPitch, &o->oPosX);
                 o->oForwardVel = 0;
+                return;
             }
             // once he flew back a certain distance, he will reposition
             // if mario is too far away, he readjusts to be in front of mario(slightly angled away)
@@ -475,8 +478,10 @@ void bulma(void) {
             // wario mario close
             cur_obj_init_animation(0);
             rotateTowardsMario(0x600);
-            if (o->oDistanceToMario < 320.f) {
-                o->oAction++;
+            if (gCurrActNum > 1) {
+                if (o->oDistanceToMario < 320.f) {
+                    o->oAction++;
+                }
             }
             break;
         case 1:
@@ -584,13 +589,13 @@ u8 ballHeld = 0;
 void dragonballpickup(void) {
     if (!o->oOpacity) {
         o->oOpacity = 1;
-       // initClip(&o->oBobombBuddyPosXCopy, o);
+        // initClip(&o->oBobombBuddyPosXCopy, o);
     }
     switch (o->oHeldState) {
         case HELD_FREE:
             ballHeld = 0;
             // Apply standard physics
-           // clipObject(&o->oBobombBuddyPosXCopy, o);
+            // clipObject(&o->oBobombBuddyPosXCopy, o);
             object_step();
             break;
 
@@ -603,7 +608,7 @@ void dragonballpickup(void) {
                 level_set_transition(-1, NULL);
                 create_dialog_box(130);
             }
-        //    initClip(&o->oBobombBuddyPosXCopy, o);
+            //    initClip(&o->oBobombBuddyPosXCopy, o);
             break;
 
         case HELD_THROWN:
@@ -614,7 +619,7 @@ void dragonballpickup(void) {
 
             o->oForwardVel = 40.0;
             o->oVelY = 20.0;
-        //    clipObject(&o->oBobombBuddyPosXCopy, o);
+            //    clipObject(&o->oBobombBuddyPosXCopy, o);
             break;
 
         case HELD_DROPPED:
@@ -628,7 +633,7 @@ void dragonballpickup(void) {
 
             o->oForwardVel = 0;
             o->oVelY = 0;
-       //     clipObject(&o->oBobombBuddyPosXCopy, o);
+            //     clipObject(&o->oBobombBuddyPosXCopy, o);
             break;
     }
     o->oFaceAnglePitch += o->oForwardVel * 100 - o->oVelY * 100;
@@ -1191,7 +1196,7 @@ void snakepathanims(void) {
     s32 i;
     s32 brightness;
     s32 alpha;
-    waterphase+=0x12;
+    waterphase += 0x12;
     if (!a[0].n.flag) {
         for (i = 0; i < 400; i++) {
             a[i].n.flag = a[i].n.ob[1] + 1;
@@ -1203,9 +1208,9 @@ void snakepathanims(void) {
         a[i].n.ob[1] =
             a[i].n.flag + sins(a[i].n.ob[2] * SCROLLSIZE + waterphase * 17) * WAVEHEIGHTMAX
             + sins((a[i].n.ob[0] + a[i].n.ob[2] / 4) * SCROLLSIZE + waterphase * 21) * WAVEHEIGHTMAX;
-        brightness = (a[i].n.ob[1] - a[0].n.flag) / (WAVEHEIGHTMAX/32);
-        a[i].v.cn[0] = 0x7F +brightness*1.5f;
-        a[i].v.cn[1] = 0x5F+ brightness;
+        brightness = (a[i].n.ob[1] - a[0].n.flag) / (WAVEHEIGHTMAX / 32);
+        a[i].v.cn[0] = 0x7F + brightness * 1.5f;
+        a[i].v.cn[1] = 0x5F + brightness;
         a[i].v.cn[2] = 0x40 + brightness * .75f;
     }
 }

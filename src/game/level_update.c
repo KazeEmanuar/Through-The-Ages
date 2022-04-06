@@ -618,6 +618,7 @@ s16 music_changed_through_warp(s16 arg) {
  * Set the current warp type and destination level/area/node.
  */
 void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 arg3) {
+    s32 currCourseNum = gLevelToCourseNumTable[(destLevel & 0x7F) - 1];
     if (destWarpNode >= WARP_NODE_CREDITS_MIN) {
         sWarpDest.type = WARP_TYPE_CHANGE_LEVEL;
     } else if (destLevel != gCurrLevelNum) {
@@ -632,6 +633,14 @@ void initiate_warp(s16 destLevel, s16 destArea, s16 destWarpNode, s32 arg3) {
     sWarpDest.areaIdx = destArea;
     sWarpDest.nodeId = destWarpNode;
     sWarpDest.arg = arg3;
+    if ((sWarpDest.levelNum == gWarpCheckpoint.levelID) && (sWarpDest.levelNum != gCurrLevelNum)) {
+        if (gWarpCheckpoint.courseNum != COURSE_NONE && gSavedCourseNum == currCourseNum
+            && gWarpCheckpoint.actNum == gCurrActNum) {
+            sWarpDest.areaIdx = gWarpCheckpoint.areaNum;
+            sWarpDest.nodeId = gWarpCheckpoint.warpNode;
+            D_8032C9E0 = TRUE;
+        }
+    }
 }
 
 // From Surface 0xD3 to 0xFC
@@ -825,7 +834,6 @@ s16 level_trigger_warp(struct MarioState *m, s32 warpOp) {
 void initiate_delayed_warp(void) {
     struct ObjectWarpNode *warpNode;
     s32 destWarpNode;
-
     if (sDelayedWarpOp != WARP_OP_NONE && --sDelayedWarpTimer == 0) {
         reset_dialog_render_state();
 

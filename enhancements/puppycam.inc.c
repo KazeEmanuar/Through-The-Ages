@@ -176,7 +176,11 @@ static void newcam_rotate_button(void) {
         newcam_yaw_target = newcam_yaw;
     }
 }
-
+void goDefaultPitch() {
+    if (timerbeforerotation > 0) {
+        newcam_pitch = approach_s16_symmetric(newcam_pitch, DEFAULTTILT, 0x40);
+    }
+}
 s32 tiltbackup = 0;
 static void newcam_update_values(void) { // For tilt, this just limits it so it doesn't go further than
                                          // 90 degrees either way. 90 degrees is actually 16384, but can
@@ -248,16 +252,19 @@ static void newcam_update_values(void) { // For tilt, this just limits it so it 
         if (timerbeforerotation > 30) {
             switch (waterflag) {
                 case 0:
+                    goDefaultPitch();
                     break;
                 case 1:
                     newcam_yaw = approach_s16_symmetric(newcam_yaw, gMarioState->faceAngle[1] + 0x8000,
                                                         (gMarioState->forwardVel * 0x6));
 
+                    goDefaultPitch();
                     break;
                 case 2:
                     newcam_yaw =
                         approach_s16_symmetric(newcam_yaw, gMarioState->faceAngle[1] + 0x8000, (0x100));
 
+                    goDefaultPitch();
                     break;
                 case 3:
 #define SWIMVEL                                                                                        \
@@ -282,14 +289,17 @@ static void newcam_update_values(void) { // For tilt, this just limits it so it 
                     newcam_yaw =
                         approach_s16_symmetric(newcam_yaw, gMarioState->faceAngle[1] + 0x8000, (0x100));
 
+                    goDefaultPitch();
                     break;
                 case 5:
                     newcam_yaw =
                         approach_s16_symmetric(newcam_yaw, gMarioState->faceAngle[1] + 0x8000, (0x100));
+                    goDefaultPitch();
                     break;
                 case 6:
                     newcam_yaw = approach_s16_symmetric(newcam_yaw, gMarioState->faceAngle[1] + 0x8000,
                                                         (gMarioState->forwardVel * 0x6));
+                    goDefaultPitch();
                     break;
                 case 7:
                     if (gMarioState->usedObj->oBehParams & 0x01) {
@@ -539,8 +549,35 @@ static void newcam_apply_values(struct Camera *c) {
 }
 
 // Main loop.
+extern s16 fadeoutstarted;
+extern s16 backupYaw;
 void newcam_loop(struct Camera *c) {
     newcam_rotate_button();
+    if (fadeoutstarted > 12) {
+        newcam_centering = 1;
+        newcam_yaw = backupYaw;
+        newcam_yaw_target = backupYaw;
+        newcam_pos[0] =
+            newcam_pos_target[0]
+            + lengthdir_x(lengthdir_y(newcam_distance, newcam_pitch + newcam_floorpitch), newcam_yaw);
+        newcam_pos[2] =
+            newcam_pos_target[2]
+            + lengthdir_y(lengthdir_y(newcam_distance, newcam_pitch + newcam_floorpitch), newcam_yaw);
+        newcam_pos[1] = newcam_pos_target[1]
+                        + lengthdir_x(newcam_distance, newcam_pitch + gLakituState.shakeMagnitude[0]
+                                                           + newcam_floorpitch);
+
+        newcam_pos[0] =
+            newcam_pos_target[0]
+            + lengthdir_x(lengthdir_y(newcam_distance, newcam_pitch + newcam_floorpitch), newcam_yaw);
+        newcam_pos[2] =
+            newcam_pos_target[2]
+            + lengthdir_y(lengthdir_y(newcam_distance, newcam_pitch + newcam_floorpitch), newcam_yaw);
+        newcam_pos[1] =
+            newcam_pos_target[1]
+            + lengthdir_x(newcam_distance,
+                          newcam_pitch + gLakituState.shakeMagnitude[0] + newcam_floorpitch);
+                          }
     newcam_position_cam();
     newcam_find_fixed();
     if (gMarioObject)

@@ -47,4 +47,6 @@ extern const Gfx ccm_seg7_dl_070221E8[];
 
 #include "levels/ccm/smallblargg/anim_header.h"
 
+#include "levels/ccm/grindl/geo_header.h"
+
 #endif

@@ -1,7 +1,7 @@
 #include "src/game/envfx_snow.h"
 
 const GeoLayout tikiguy_geo[] = {
-	GEO_NODE_START(),
+   GEO_SHADOW(SHADOW_CIRCLE_4_VERTS, 0x96, 100),
 	GEO_OPEN_NODE(),
 		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, tikiguy_Bone_mesh_layer_1),
 		GEO_OPEN_NODE(),

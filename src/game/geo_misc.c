@@ -40,7 +40,8 @@ s8 gFlyingCarpetState;
  * Create a vertex with the given parameters and insert it into `vtx` at
  * position `n`.
  *
- * Texture coordinates are s10.5 fixed-point, which means you should left-shift the actual coordinates by 5.
+ * Texture coordinates are s10.5 fixed-point, which means you should left-shift the actual coordinates
+ * by 5.
  */
 #ifndef GBI_FLOATS
 void make_vertex(Vtx *vtx, s32 n, s16 x, s16 y, s16 z, s16 tx, s16 ty, u8 r, u8 g, u8 b, u8 a) {
@@ -105,7 +106,31 @@ Gfx *geo_exec_inside_castle_light(s32 callContext, struct GraphNode *node, UNUSE
 
     return displayList;
 }
-
+extern struct AllocOnlyPool *gDisplayListHeap;
+extern Gfx wdw_dl_BACKGROUND_mesh_layer_0[];
+extern void geo_append_display_list(void *displayList, s16 layer);
+extern s16 gMatStackIndex;
+extern Mat4 gMatStack[32];
+extern Mtx *gMatStackFixed[32];
+Gfx *background_translate(s32 callContext, struct GraphNode *node, UNUSED f32 b[4][4]) {
+    Mat4 mat;
+    Vec3f translation;
+    Mtx *mtx = alloc_display_list(sizeof(*mtx));
+    if (callContext == GEO_CONTEXT_RENDER) {
+#define FARAWAYNESS .95f // the closer to 1 the further away
+        translation[0] = gLakituState.curPos[0] * FARAWAYNESS;
+        translation[1] = gLakituState.curPos[1] * FARAWAYNESS;
+        translation[2] = gLakituState.curPos[2] * FARAWAYNESS;
+        mtxf_translate(mat, translation);
+        mtxf_mul(gMatStack[gMatStackIndex + 1], mat, gMatStack[gMatStackIndex]);
+        gMatStackIndex++;
+        mtxf_to_mtx(mtx, gMatStack[gMatStackIndex]);
+        gMatStackFixed[gMatStackIndex] = mtx;
+        geo_append_display_list(wdw_dl_BACKGROUND_mesh_layer_0, 0); //DL pointer
+        gMatStackIndex--;
+    }
+    return 0;
+}
 /**
  * Update static timer variables that control the flying carpets' ripple effect.
  */

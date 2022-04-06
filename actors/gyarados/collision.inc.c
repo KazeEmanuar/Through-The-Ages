@@ -34,7 +34,7 @@ const Collision gyarados_collision[] = {
 	COL_VERTEX(14, 38, -292),
 	COL_VERTEX(-12, 24, -353),
 	COL_VERTEX(12, 24, -353),
-	COL_TRI_INIT(SURFACE_DEFAULT, 57),
+	COL_TRI_INIT(SURFACE_NOT_SLIPPERY, 57),
 	COL_TRI(0, 1, 2),
 	COL_TRI(3, 2, 4),
 	COL_TRI(5, 4, 6),

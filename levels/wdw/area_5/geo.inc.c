@@ -3,7 +3,7 @@
 const GeoLayout wdw_area_5_geo[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_FORCE, wdw_dl_Circle_029_mesh_layer_0),
+		GEO_ASM(0, background_translate),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, wdw_dl_Circle_030_mesh_layer_1),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, wdw_dl_Circle_031_mesh_layer_1),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, wdw_dl_Circle_032_mesh_layer_1),
@@ -35,7 +35,6 @@ const GeoLayout wdw_area_5[] = {
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(LAYER_FORCE, wdw_dl_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, wdw_dl_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, wdw_dl_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wdw_dl_material_revert_render_settings),

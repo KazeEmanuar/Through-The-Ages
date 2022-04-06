@@ -54,6 +54,8 @@ void grindel_thwomp_act_0(void) {
     if (o->oBehParams2ndByte + 40 < o->oTimer) {
         o->oAction = 1;
         o->oPosY += 5.0f;
+            o->oVelX = 0.f;
+            o->oVelZ = 0.f;
     } else
         o->oPosY += 10.0f;
 }

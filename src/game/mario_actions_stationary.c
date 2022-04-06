@@ -67,7 +67,7 @@ s32 check_common_hold_idle_cancels(struct MarioState *m) {
 
     if (m->heldObj->oInteractionSubtype & INT_SUBTYPE_DROP_IMMEDIATELY) {
         m->heldObj->oInteractionSubtype =
-            (s32)(m->heldObj->oInteractionSubtype & ~INT_SUBTYPE_DROP_IMMEDIATELY);
+            (s32) (m->heldObj->oInteractionSubtype & ~INT_SUBTYPE_DROP_IMMEDIATELY);
         return set_mario_action(m, ACT_PLACING_DOWN, 0);
     }
 
@@ -154,11 +154,14 @@ s32 act_idle(struct MarioState *m) {
             // and that he's gone through 10 cycles before sleeping.
             // actionTimer is used to track how many cycles have passed.
             if (++m->actionState == 3) {
-                f32 deltaYOfFloorBehindMario = m->pos[1] - find_floor_height_relative_polar(m, -0x8000, 60.0f);
-                if (deltaYOfFloorBehindMario < -24.0f || 24.0f < deltaYOfFloorBehindMario || m->floor->flags & SURFACE_FLAG_DYNAMIC) {
+                f32 deltaYOfFloorBehindMario =
+                    m->pos[1] - find_floor_height_relative_polar(m, -0x8000, 60.0f);
+                if (deltaYOfFloorBehindMario < -24.0f || 24.0f < deltaYOfFloorBehindMario
+                    || m->floor->flags & SURFACE_FLAG_DYNAMIC) {
                     m->actionState = 0;
                 } else {
-                    // If Mario hasn't turned his head 10 times yet, stay idle instead of going to sleep.
+                    // If Mario hasn't turned his head 10 times yet, stay idle instead of going to
+                    // sleep.
                     m->actionTimer++;
                     if (m->actionTimer < 10) {
                         m->actionState = 0;
@@ -261,7 +264,8 @@ s32 act_start_sleeping(struct MarioState *m) {
     stationary_ground_step(m);
     return 0;
 }
-
+u8 cloudtimer;
+struct Object *spawn_object(struct Object *parent, s32 model, const BehaviorScript *behavior);
 s32 act_sleeping(struct MarioState *m) {
     s32 sp24;
     if (m->input & INPUT_UNKNOWN_A41F /* ? */) {
@@ -275,7 +279,12 @@ s32 act_sleeping(struct MarioState *m) {
     if (m->pos[1] - find_floor_height_relative_polar(m, -0x8000, 60.0f) > 24.0f) {
         return set_mario_action(m, ACT_WAKING_UP, m->actionState);
     }
+    cloudtimer++;
+    if (cloudtimer == 20) {
 
+        spawn_object(gMarioState->marioObj, 0xFC, bhvSleepCloud);
+        cloudtimer = 0;
+    }
     m->marioBodyState->eyeState = MARIO_EYES_CLOSED;
     stationary_ground_step(m);
     switch (m->actionState) {
@@ -819,7 +828,7 @@ s32 act_shockwave_bounce(struct MarioState *m) {
     }
 
     sp1E = (m->actionTimer % 0x10) << 0xC;
-    sp18 = (f32)(((f32)(6 - m->actionTimer / 8) * 8.0f) + 4.0f);
+    sp18 = (f32) (((f32) (6 - m->actionTimer / 8) * 8.0f) + 4.0f);
     mario_set_forward_vel(m, 0);
     vec3f_set(m->vel, 0.0f, 0.0f, 0.0f);
     if (sins(sp1E) >= 0.0f) {
@@ -948,9 +957,9 @@ s32 act_long_jump_land_stop(struct MarioState *m) {
     }
 
     landing_step(m,
-                  !m->marioObj->oMarioLongJumpIsSlow ? MARIO_ANIM_CROUCH_FROM_FAST_LONGJUMP
-                                                     : MARIO_ANIM_CROUCH_FROM_SLOW_LONGJUMP,
-                  ACT_CROUCHING);
+                 !m->marioObj->oMarioLongJumpIsSlow ? MARIO_ANIM_CROUCH_FROM_FAST_LONGJUMP
+                                                    : MARIO_ANIM_CROUCH_FROM_SLOW_LONGJUMP,
+                 ACT_CROUCHING);
     return 0;
 }
 
@@ -1076,7 +1085,7 @@ s32 act_first_person(struct MarioState *m) {
         if ((m->controller->buttonPressed & (L_TRIG | Z_TRIG | A_BUTTON | B_BUTTON)) || sp1C) {
             raise_background_noise(2);
             // Go back to the last camera mode
-            
+
             set_camera_mode(m->area->camera, CAM_MODE_NEWCAM, 0x10); // last number does nothing
             return set_mario_action(m, ACT_IDLE, 0);
         }

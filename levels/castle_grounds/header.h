@@ -34,4 +34,6 @@ extern const LevelScript level_castle_grounds_entry[];
 
 #include "levels/castle_grounds/treasuredoor/collision_header.h"
 
+#include "levels/castle_grounds/pipecolor/geo_header.h"
+
 #endif

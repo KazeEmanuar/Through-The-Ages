@@ -33,8 +33,6 @@ const GeoLayout lampfire_geo[] = {
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, lampfire_material_revert_render_settings),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, lampfire_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

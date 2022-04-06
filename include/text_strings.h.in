@@ -224,6 +224,23 @@
 #define TEXT_FOR_MARIO _("...for Mario...")
 #define TEXT_FILE_MARIO_QUESTION _("Mario!")
 
+#define CRED1 _("CREDITS")
+#define CRED2 _("3D MODELLING")
+#define CRED3 _("KAZE EMANUAR")
+#define CRED4 _("PAULO BRANCHER")
+#define CRED5 _("CDIFAILS")
+#define CRED6 _("THELEGENDOFZEINA")
+#define CRED7 _("MUSIC")
+#define CRED8 _("ZEROVOLT")
+#define CRED9 _("BADUB")
+#define CRED10 _("SUPABUBBA")
+#define CRED11 _("VEXTROV")
+#define CRED12 _("DESIGNS")
+#define CRED13 _("BEN GULAK")
+#define CRED14 _("KAZE")
+#define CRED15 _("PAULO BRANCHER")
+#define CRED16 _("FUNDED BY")
+#define CRED17 _("BEN GULAK")
 #endif
 
 #ifdef VERSION_EU

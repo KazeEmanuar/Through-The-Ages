@@ -684,4 +684,5 @@ extern const BehaviorScript bhvTreasureDoor[];
 extern const BehaviorScript bhvTutorialGuy[];
 extern const BehaviorScript bhvGolemBlock[];
 extern const BehaviorScript bhvCourtActor[];
+extern const BehaviorScript bhvSleepCloud[];
 #endif // BEHAVIOR_DATA_H

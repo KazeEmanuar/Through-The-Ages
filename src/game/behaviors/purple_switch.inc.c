@@ -47,6 +47,7 @@ void bhv_purple_switch_loop(void) {
                     o->oAction++;
                     if (cur_obj_nearest_object_with_behavior(bhvWatergate)) {
                         cur_obj_nearest_object_with_behavior(bhvWatergate)->oAction = 1;
+                        o->oAction = 77;
                     }
                 } else {
                     if (o->oTimer < 360) {
@@ -79,6 +80,8 @@ void bhv_purple_switch_loop(void) {
             if (!cur_obj_is_mario_on_platform()) {
                 o->oAction = PURPLE_SWITCH_UNPRESSED;
             }
+            break;
+            case 77:
             break;
     }
 }

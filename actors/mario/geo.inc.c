@@ -1,5 +1,5 @@
 // Normal Mario Geo
-
+#define LAYER_OPAQUE 8
 // 0x170002E0
 const GeoLayout mario_geo_face_and_wings[] = {
    GEO_ASM(0, geo_mario_head_rotation),
@@ -1815,3 +1815,4 @@ const GeoLayout mario_geo[] = {
    GEO_CLOSE_NODE(),
    GEO_END(),
 };
+#define LAYER_OPAQUE 1

@@ -33,3 +33,4 @@
 #include "hypno/geo.inc.c"
 
 #include "screw/geo.inc.c"
+#include "sleepcloud/geo.inc.c"

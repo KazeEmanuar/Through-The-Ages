@@ -1186,7 +1186,7 @@ s32 set_water_plunge_action(struct MarioState *m) {
     m->forwardVel = m->forwardVel / 4.0f;
     m->vel[1] = m->vel[1] / 2.0f;
 
-    m->pos[1] = m->waterLevel - 100;
+    //m->pos[1] = m->waterLevel - 100;
 
     m->faceAngle[2] = 0;
 
@@ -1577,7 +1577,11 @@ void update_mario_health(struct MarioState *m) {
             m->floorHeight = find_floor(m->pos[0], m->pos[1], m->pos[2], &m->floor);
             m->faceAngle[1] = backupAngle;
             m->quicksandDepth = 0;
+            if (gCurrLevelNum != LEVEL_SSL){
             drop_and_set_mario_action(m, ACT_FREEFALL, 0);
+            } else {
+            drop_and_set_mario_action(m, ACT_METAL_WATER_FALL_LAND, 0);
+            }
             play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 0x0A, 0, 0, 0);
             newcam_centering = 1;
             newcam_yaw = backupYaw;
@@ -1918,6 +1922,7 @@ void init_mario(void) {
     vec3s_copy(gMarioState->faceAngle, gMarioSpawnInfo->startAngle);
     vec3s_set(gMarioState->angleVel, 0, 0, 0);
     vec3s_to_vec3f(gMarioState->pos, gMarioSpawnInfo->startPos);
+                                vec3f_copy(backupPos, gMarioState->pos);
     vec3f_set(gMarioState->vel, 0, 0, 0);
     gMarioState->floorHeight =
         find_floor(gMarioState->pos[0], gMarioState->pos[1], gMarioState->pos[2], &gMarioState->floor);

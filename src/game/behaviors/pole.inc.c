@@ -18,6 +18,9 @@ void bhv_pole_init(void) {
      */
     s32 tenthHitboxHeight = o->oBehParams >> 0x10 & 0xFFFF;
     o->hitboxHeight = tenthHitboxHeight * 10;
+    if (gCurrLevelNum == LEVEL_JRB){
+        o->hitboxRadius = 120.f;
+    }
 }
 
 /**

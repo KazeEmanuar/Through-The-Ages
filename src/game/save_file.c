@@ -596,7 +596,6 @@ u16 eu_get_language(void) {
 #endif
 
 void disable_warp_checkpoint(void) {
-    // check_warp_checkpoint() checks to see if gWarpCheckpoint.courseNum != COURSE_NONE
     gWarpCheckpoint.courseNum = COURSE_NONE;
 }
 

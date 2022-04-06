@@ -24,3 +24,4 @@
 #include "levels/castle_grounds/flower/geo.inc.c"
 #include "levels/castle_grounds/toadlawyer/geo.inc.c"
 #include "levels/castle_grounds/treasuredoor/geo.inc.c"
+#include "levels/castle_grounds/pipecolor/geo.inc.c"

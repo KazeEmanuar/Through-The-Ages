@@ -1,44 +1,44 @@
-Lights1 bulma_eyes_lights = gdSPDefLights1(
+Lights1 bulma_eyes_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_upperClothes_lights = gdSPDefLights1(
+Lights1 bulma_upperClothes_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_belt_lights = gdSPDefLights1(
+Lights1 bulma_belt_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_downerClothes_lights = gdSPDefLights1(
+Lights1 bulma_downerClothes_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_blue_lights = gdSPDefLights1(
+Lights1 bulma_blue_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_mouth_lights = gdSPDefLights1(
+Lights1 bulma_mouth_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_nose_lights = gdSPDefLights1(
+Lights1 bulma_nose_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_hair_lights = gdSPDefLights1(
+Lights1 bulma_hair_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_bandana_lights = gdSPDefLights1(
+Lights1 bulma_bandana_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_fringe_lights = gdSPDefLights1(
+Lights1 bulma_fringe_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
-Lights1 bulma_boots_lights = gdSPDefLights1(
+Lights1 bulma_boots_v4_lights = gdSPDefLights1(
 	0x7F, 0x7F, 0x7F,
 	0xFE, 0xFE, 0xFE, 0x28, 0x28, 0x28);
 
@@ -3579,35 +3579,7 @@ Gfx bulma_head_mesh_layer_1_tri_4[] = {
 	gsSPEndDisplayList(),
 };
 
-Vtx bulma_head_mesh_layer_1_vtx_5[12] = {
-	{{{1, 31, -16},0, {-131, 271},{0x6, 0x27, 0x87, 0xFF}}},
-	{{{14, 23, -12},0, {-2293, 911},{0x2D, 0x24, 0x8F, 0xFF}}},
-	{{{12, 18, -15},0, {-2104, 1909},{0x31, 0x28, 0x92, 0xFF}}},
-	{{{-1, 20, -19},0, {-108, 1978},{0x11, 0x28, 0x89, 0xFF}}},
-	{{{-9, 33, -13},0, {1193, 18},{0xC2, 0x26, 0x98, 0xFF}}},
-	{{{-11, 21, -17},0, {1193, 1977},{0xC4, 0x28, 0x97, 0xFF}}},
-	{{{-14, 20, -13},0, {1972, 1978},{0xA4, 0x25, 0xB1, 0xFF}}},
-	{{{-12, 32, -10},0, {1983, 146},{0xA2, 0x24, 0xB3, 0xFF}}},
-	{{{-18, 22, 8},0, {1825, 591},{0x86, 0x1F, 0xF2, 0xFF}}},
-	{{{-16, 31, -6},0, {4022, 2},{0x84, 0x1A, 0xF7, 0xFF}}},
-	{{{-18, 20, -9},0, {4010, 1771},{0x85, 0x1F, 0xF9, 0xFF}}},
-	{{{-20, 17, 5},0, {1829, 1756},{0x86, 0x23, 0xF7, 0xFF}}},
-};
-
-Gfx bulma_head_mesh_layer_1_tri_5[] = {
-	gsSPVertex(bulma_head_mesh_layer_1_vtx_5 + 0, 12, 0),
-	gsSP1Triangle(0, 1, 2, 0),
-	gsSP1Triangle(0, 2, 3, 0),
-	gsSP1Triangle(4, 0, 3, 0),
-	gsSP1Triangle(4, 3, 5, 0),
-	gsSP1Triangle(5, 6, 4, 0),
-	gsSP1Triangle(7, 4, 6, 0),
-	gsSP1Triangle(8, 9, 10, 0),
-	gsSP1Triangle(8, 10, 11, 0),
-	gsSPEndDisplayList(),
-};
-
-Vtx bulma_head_mesh_layer_1_vtx_6[32] = {
+Vtx bulma_head_mesh_layer_1_vtx_5[32] = {
 	{{{-11, 6, 7},0, {602, 1174},{0x63, 0xB0, 0xF7, 0xFF}}},
 	{{{-11, 8, 10},0, {359, 1506},{0x44, 0xF9, 0x6B, 0xFF}}},
 	{{{-12, 4, 7},0, {661, 1372},{0x3E, 0x93, 0xEA, 0xFF}}},
@@ -3642,8 +3614,8 @@ Vtx bulma_head_mesh_layer_1_vtx_6[32] = {
 	{{{16, 5, -9},0, {1367, 1506},{0x45, 0x9F, 0xD3, 0xFF}}},
 };
 
-Gfx bulma_head_mesh_layer_1_tri_6[] = {
-	gsSPVertex(bulma_head_mesh_layer_1_vtx_6 + 0, 16, 0),
+Gfx bulma_head_mesh_layer_1_tri_5[] = {
+	gsSPVertex(bulma_head_mesh_layer_1_vtx_5 + 0, 16, 0),
 	gsSP1Triangle(0, 1, 2, 0),
 	gsSP1Triangle(2, 1, 3, 0),
 	gsSP1Triangle(1, 4, 3, 0),
@@ -3669,7 +3641,7 @@ Gfx bulma_head_mesh_layer_1_tri_6[] = {
 	gsSP1Triangle(11, 12, 15, 0),
 	gsSP1Triangle(12, 13, 15, 0),
 	gsSP1Triangle(13, 14, 15, 0),
-	gsSPVertex(bulma_head_mesh_layer_1_vtx_6 + 16, 16, 0),
+	gsSPVertex(bulma_head_mesh_layer_1_vtx_5 + 16, 16, 0),
 	gsSP1Triangle(0, 1, 2, 0),
 	gsSP1Triangle(3, 1, 0, 0),
 	gsSP1Triangle(4, 3, 0, 0),
@@ -3695,6 +3667,34 @@ Gfx bulma_head_mesh_layer_1_tri_6[] = {
 	gsSP1Triangle(12, 15, 11, 0),
 	gsSP1Triangle(13, 15, 12, 0),
 	gsSP1Triangle(14, 15, 13, 0),
+	gsSPEndDisplayList(),
+};
+
+Vtx bulma_head_mesh_layer_4_vtx_0[12] = {
+	{{{1, 31, -16},0, {-131, 271},{0x6, 0x27, 0x87, 0xFF}}},
+	{{{14, 23, -12},0, {-2293, 911},{0x2D, 0x24, 0x8F, 0xFF}}},
+	{{{12, 18, -15},0, {-2104, 1909},{0x31, 0x28, 0x92, 0xFF}}},
+	{{{-1, 20, -19},0, {-108, 1978},{0x11, 0x28, 0x89, 0xFF}}},
+	{{{-9, 33, -13},0, {1193, 18},{0xC2, 0x26, 0x98, 0xFF}}},
+	{{{-11, 21, -17},0, {1193, 1977},{0xC4, 0x28, 0x97, 0xFF}}},
+	{{{-14, 20, -13},0, {1972, 1978},{0xA4, 0x25, 0xB1, 0xFF}}},
+	{{{-12, 32, -10},0, {1983, 146},{0xA2, 0x24, 0xB3, 0xFF}}},
+	{{{-18, 22, 8},0, {1825, 591},{0x86, 0x1F, 0xF2, 0xFF}}},
+	{{{-16, 31, -6},0, {4022, 2},{0x84, 0x1A, 0xF7, 0xFF}}},
+	{{{-18, 20, -9},0, {4010, 1771},{0x85, 0x1F, 0xF9, 0xFF}}},
+	{{{-20, 17, 5},0, {1829, 1756},{0x86, 0x23, 0xF7, 0xFF}}},
+};
+
+Gfx bulma_head_mesh_layer_4_tri_0[] = {
+	gsSPVertex(bulma_head_mesh_layer_4_vtx_0 + 0, 12, 0),
+	gsSP1Triangle(0, 1, 2, 0),
+	gsSP1Triangle(0, 2, 3, 0),
+	gsSP1Triangle(4, 0, 3, 0),
+	gsSP1Triangle(4, 3, 5, 0),
+	gsSP1Triangle(5, 6, 4, 0),
+	gsSP1Triangle(7, 4, 6, 0),
+	gsSP1Triangle(8, 9, 10, 0),
+	gsSP1Triangle(8, 10, 11, 0),
 	gsSPEndDisplayList(),
 };
 
@@ -4161,7 +4161,7 @@ Gfx bulma_foot_R_mesh_layer_1_tri_1[] = {
 };
 
 
-Gfx mat_bulma_eyes[] = {
+Gfx mat_bulma_eyes_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4180,17 +4180,17 @@ Gfx mat_bulma_eyes[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 4, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 252),
-	gsSPSetLights1(bulma_eyes_lights),
+	gsSPSetLights1(bulma_eyes_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_eyes[] = {
+Gfx mat_revert_bulma_eyes_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_upperClothes[] = {
+Gfx mat_bulma_upperClothes_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4209,17 +4209,17 @@ Gfx mat_bulma_upperClothes[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 4, 0, 0, 0, G_TX_WRAP | G_TX_MIRROR, 6, 0, G_TX_WRAP | G_TX_MIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 252),
-	gsSPSetLights1(bulma_upperClothes_lights),
+	gsSPSetLights1(bulma_upperClothes_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_upperClothes[] = {
+Gfx mat_revert_bulma_upperClothes_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_belt[] = {
+Gfx mat_bulma_belt_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4238,17 +4238,17 @@ Gfx mat_bulma_belt[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_MIRROR, 5, 0, G_TX_WRAP | G_TX_MIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bulma_belt_lights),
+	gsSPSetLights1(bulma_belt_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_belt[] = {
+Gfx mat_revert_bulma_belt_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_downerClothes[] = {
+Gfx mat_bulma_downerClothes_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4267,17 +4267,17 @@ Gfx mat_bulma_downerClothes[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 4, 0, 0, 0, G_TX_WRAP | G_TX_MIRROR, 6, 0, G_TX_WRAP | G_TX_MIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 252),
-	gsSPSetLights1(bulma_downerClothes_lights),
+	gsSPSetLights1(bulma_downerClothes_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_downerClothes[] = {
+Gfx mat_revert_bulma_downerClothes_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_blue[] = {
+Gfx mat_bulma_blue_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4296,17 +4296,17 @@ Gfx mat_bulma_blue[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 0, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
 	gsDPSetTileSize(0, 0, 0, 0, 124),
-	gsSPSetLights1(bulma_blue_lights),
+	gsSPSetLights1(bulma_blue_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_blue[] = {
+Gfx mat_revert_bulma_blue_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_mouth[] = {
+Gfx mat_bulma_mouth_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4325,17 +4325,17 @@ Gfx mat_bulma_mouth[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 4, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 252),
-	gsSPSetLights1(bulma_mouth_lights),
+	gsSPSetLights1(bulma_mouth_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_mouth[] = {
+Gfx mat_revert_bulma_mouth_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_nose[] = {
+Gfx mat_bulma_nose_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4354,17 +4354,17 @@ Gfx mat_bulma_nose[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 2, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 5, 0, G_TX_CLAMP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bulma_nose_lights),
+	gsSPSetLights1(bulma_nose_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_nose[] = {
+Gfx mat_revert_bulma_nose_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_hair[] = {
+Gfx mat_bulma_hair_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsSPClearGeometryMode(G_CULL_BACK),
@@ -4384,18 +4384,18 @@ Gfx mat_bulma_hair[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_CLAMP | G_TX_MIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bulma_hair_lights),
+	gsSPSetLights1(bulma_hair_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_hair[] = {
+Gfx mat_revert_bulma_hair_v4[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_CULL_BACK),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_bandana[] = {
+Gfx mat_bulma_bandana_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4414,17 +4414,17 @@ Gfx mat_bulma_bandana[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPSetLights1(bulma_bandana_lights),
+	gsSPSetLights1(bulma_bandana_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_bandana[] = {
+Gfx mat_revert_bulma_bandana_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_fringe[] = {
+Gfx mat_bulma_fringe_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, ENVIRONMENT, 0),
 	gsSPClearGeometryMode(G_CULL_BACK),
@@ -4444,18 +4444,18 @@ Gfx mat_bulma_fringe[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 252),
-	gsSPSetLights1(bulma_fringe_lights),
+	gsSPSetLights1(bulma_fringe_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_fringe[] = {
+Gfx mat_revert_bulma_fringe_v4[] = {
 	gsDPPipeSync(),
 	gsSPSetGeometryMode(G_CULL_BACK),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_bulma_boots[] = {
+Gfx mat_bulma_boots_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -4474,160 +4474,164 @@ Gfx mat_bulma_boots[] = {
 	gsDPPipeSync(),
 	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_4b, 4, 0, 0, 0, G_TX_CLAMP | G_TX_NOMIRROR, 6, 0, G_TX_WRAP | G_TX_MIRROR, 6, 0),
 	gsDPSetTileSize(0, 0, 0, 252, 252),
-	gsSPSetLights1(bulma_boots_lights),
+	gsSPSetLights1(bulma_boots_v4_lights),
 	gsSPEndDisplayList(),
 };
 
-Gfx mat_revert_bulma_boots[] = {
+Gfx mat_revert_bulma_boots_v4[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_chest_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_eyes),
+	gsSPDisplayList(mat_bulma_eyes_v4),
 	gsSPDisplayList(bulma_chest_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_eyes),
-	gsSPDisplayList(mat_bulma_upperClothes),
+	gsSPDisplayList(mat_revert_bulma_eyes_v4),
+	gsSPDisplayList(mat_bulma_upperClothes_v4),
 	gsSPDisplayList(bulma_chest_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bulma_upperClothes),
-	gsSPDisplayList(mat_bulma_belt),
+	gsSPDisplayList(mat_revert_bulma_upperClothes_v4),
+	gsSPDisplayList(mat_bulma_belt_v4),
 	gsSPDisplayList(bulma_chest_mesh_layer_1_tri_2),
-	gsSPDisplayList(mat_revert_bulma_belt),
-	gsSPDisplayList(mat_bulma_downerClothes),
+	gsSPDisplayList(mat_revert_bulma_belt_v4),
+	gsSPDisplayList(mat_bulma_downerClothes_v4),
 	gsSPDisplayList(bulma_chest_mesh_layer_1_tri_3),
-	gsSPDisplayList(mat_revert_bulma_downerClothes),
+	gsSPDisplayList(mat_revert_bulma_downerClothes_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_arm_L_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_arm_L_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_forearm_L_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_forearm_L_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_hand_L_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_eyes),
+	gsSPDisplayList(mat_bulma_eyes_v4),
 	gsSPDisplayList(bulma_hand_L_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_eyes),
+	gsSPDisplayList(mat_revert_bulma_eyes_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_arm_R_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_arm_R_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_forearm_R_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_forearm_R_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_hand_R_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_eyes),
+	gsSPDisplayList(mat_bulma_eyes_v4),
 	gsSPDisplayList(bulma_hand_R_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_eyes),
+	gsSPDisplayList(mat_revert_bulma_eyes_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_head_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_mouth),
+	gsSPDisplayList(mat_bulma_mouth_v4),
 	gsSPDisplayList(bulma_head_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_mouth),
-	gsSPDisplayList(mat_bulma_eyes),
+	gsSPDisplayList(mat_revert_bulma_mouth_v4),
+	gsSPDisplayList(mat_bulma_eyes_v4),
 	gsSPDisplayList(bulma_head_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bulma_eyes),
-	gsSPDisplayList(mat_bulma_nose),
+	gsSPDisplayList(mat_revert_bulma_eyes_v4),
+	gsSPDisplayList(mat_bulma_nose_v4),
 	gsSPDisplayList(bulma_head_mesh_layer_1_tri_2),
-	gsSPDisplayList(mat_revert_bulma_nose),
-	gsSPDisplayList(mat_bulma_hair),
+	gsSPDisplayList(mat_revert_bulma_nose_v4),
+	gsSPDisplayList(mat_bulma_hair_v4),
 	gsSPDisplayList(bulma_head_mesh_layer_1_tri_3),
-	gsSPDisplayList(mat_revert_bulma_hair),
-	gsSPDisplayList(mat_bulma_bandana),
+	gsSPDisplayList(mat_revert_bulma_hair_v4),
+	gsSPDisplayList(mat_bulma_bandana_v4),
 	gsSPDisplayList(bulma_head_mesh_layer_1_tri_4),
-	gsSPDisplayList(mat_revert_bulma_bandana),
-	gsSPDisplayList(mat_bulma_fringe),
+	gsSPDisplayList(mat_revert_bulma_bandana_v4),
+	gsSPDisplayList(mat_bulma_upperClothes_v4),
 	gsSPDisplayList(bulma_head_mesh_layer_1_tri_5),
-	gsSPDisplayList(mat_revert_bulma_fringe),
-	gsSPDisplayList(mat_bulma_upperClothes),
-	gsSPDisplayList(bulma_head_mesh_layer_1_tri_6),
-	gsSPDisplayList(mat_revert_bulma_upperClothes),
+	gsSPDisplayList(mat_revert_bulma_upperClothes_v4),
+	gsSPEndDisplayList(),
+};
+
+Gfx bulma_head_mesh_layer_4[] = {
+	gsSPDisplayList(mat_bulma_fringe_v4),
+	gsSPDisplayList(bulma_head_mesh_layer_4_tri_0),
+	gsSPDisplayList(mat_revert_bulma_fringe_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_thigh_L_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_thigh_L_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_shin_L_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_boots),
+	gsSPDisplayList(mat_bulma_boots_v4),
 	gsSPDisplayList(bulma_shin_L_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_boots),
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_boots_v4),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_shin_L_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_foot_L_skinned_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_boots),
+	gsSPDisplayList(mat_bulma_boots_v4),
 	gsSPDisplayList(bulma_foot_L_skinned_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_boots),
+	gsSPDisplayList(mat_revert_bulma_boots_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_foot_L_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_boots),
+	gsSPDisplayList(mat_bulma_boots_v4),
 	gsSPDisplayList(bulma_foot_L_mesh_layer_1_tri_0),
 	gsSPDisplayList(bulma_foot_L_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bulma_boots),
+	gsSPDisplayList(mat_revert_bulma_boots_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_thigh_R_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_thigh_R_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_shin_R_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_blue),
+	gsSPDisplayList(mat_bulma_blue_v4),
 	gsSPDisplayList(bulma_shin_R_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_blue),
-	gsSPDisplayList(mat_bulma_boots),
+	gsSPDisplayList(mat_revert_bulma_blue_v4),
+	gsSPDisplayList(mat_bulma_boots_v4),
 	gsSPDisplayList(bulma_shin_R_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bulma_boots),
+	gsSPDisplayList(mat_revert_bulma_boots_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_foot_R_skinned_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_boots),
+	gsSPDisplayList(mat_bulma_boots_v4),
 	gsSPDisplayList(bulma_foot_R_skinned_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_bulma_boots),
+	gsSPDisplayList(mat_revert_bulma_boots_v4),
 	gsSPEndDisplayList(),
 };
 
 Gfx bulma_foot_R_mesh_layer_1[] = {
-	gsSPDisplayList(mat_bulma_boots),
+	gsSPDisplayList(mat_bulma_boots_v4),
 	gsSPDisplayList(bulma_foot_R_mesh_layer_1_tri_0),
 	gsSPDisplayList(bulma_foot_R_mesh_layer_1_tri_1),
-	gsSPDisplayList(mat_revert_bulma_boots),
+	gsSPDisplayList(mat_revert_bulma_boots_v4),
 	gsSPEndDisplayList(),
 };
 
@@ -4637,6 +4641,7 @@ Gfx bulma_material_revert_render_settings[] = {
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 0),
+	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsSPEndDisplayList(),
 };

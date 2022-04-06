@@ -20,7 +20,7 @@
 
 //dolphin
 DEFINE_DIALOG(DIALOG_000, 1, 3, 30, 200, _("\
-You are a lifesafer!\n\
+You are a lifesaver!\n\
 I'll tell all the other\n\
 dolphins about this!"))
 
@@ -78,7 +78,7 @@ it, fair and square!"))
 
 //dolphin
 DEFINE_DIALOG(DIALOG_008, 1, 4, 30, 200, _("\
-I stranded!\n\
+I'm stranded!\n\
 Please, grab my tail\n\
 and drag me back\n\
 in the water!"))
@@ -139,10 +139,9 @@ Would you like to Save?\n\
 \n\
 //Yes////No"))
 
-DEFINE_DIALOG(DIALOG_013, 1, 5, 30, 200, _("\
+DEFINE_DIALOG(DIALOG_013, 1, 4, 30, 200, _("\
 You've collected 100\n\
-coins! Mario gains more\n\
-power from the castle.\n\
+coins!\n\
 Do you want to Save?\n\
 //Yes////No"))
 
@@ -163,8 +162,12 @@ again!\n\
 \n\
 You don't mind me\n\
 living on your porch\n\
-till I find a way of\n\
-the island, right?"))
+till I find a way off\n\
+the island, right?...\n\
+Hey, do you think there\n\
+is a secret entrance\n\
+to the inside of the\n\
+island?"))
 
 //egypt puzzle 1
 DEFINE_DIALOG(DIALOG_016, 1, 2, 30, 200, _("\
@@ -204,7 +207,7 @@ using your hops."))
 
 //egypt puzzle 3
 DEFINE_DIALOG(DIALOG_019, 1, 2, 30, 200, _("\
-Star counting sheep\n\
+Start counting sheep\n\
 and it's yours to keep."))
 
 DEFINE_DIALOG(DIALOG_020, 1, 6, 95, 150, _("\
@@ -348,10 +351,13 @@ You're no slouch, but I'm\n\
 a better sledder!\n\
 Better luck next time!"))
 //pirateguy
-DEFINE_DIALOG(DIALOG_038, 1, 3, 95, 200, _("\
+DEFINE_DIALOG(DIALOG_038, 1, 4, 95, 200, _("\
 Cozy island!\n\
-I'll be resting here until\n\
-my next treasure hunt."))
+I've heard there's\n\
+a treassure vault\n\
+hidden in here.\n\
+If only you had\n\
+explosives!"))
 
 //koopatown1 town entry
 DEFINE_DIALOG(DIALOG_039, 1, 4, 30, 200, _("\
@@ -1048,11 +1054,15 @@ Do you have a problem\n\
 with that? Just try to\n\
 pound me, wimp! Ha!"))
 //king bob omb pirate
-DEFINE_DIALOG(DIALOG_115, 1, 2, 95, 200, _("\
+DEFINE_DIALOG(DIALOG_115, 1, 4, 95, 200, _("\
 Enemy ship spotted!\n\
 Shoot the cannons!\n\
 Your loot shall be\n\
-mine!"))
+mine!\n\
+Bet he won't be\n\
+able to kick those\n\
+back at us,\n\
+harr harr!"))
 
 //king bob omb pirate
 DEFINE_DIALOG(DIALOG_116, 1, 3, 95, 200, _("\
@@ -1180,10 +1190,8 @@ dragon balls?\n\
 There was a scientist\n\
 with the same goal.\n\
 She's stuck in the\n\
-mountains.\n\
-If you can find her,\n\
-you'll find the\n\
-dragon balls surely!"))
+outer ring of mountains."))
+
 //bulma other acts
 DEFINE_DIALOG(DIALOG_127, 3, 4, 30, 200, _("\
 How's it going?\n\
@@ -1210,7 +1218,7 @@ in our enemies'\n\
 spaceship.\n\
 Once you have the last\n\
 one, you can make a\n\
-wish and safe us all!"))
+wish and save us all!"))
 //dragonball steal
 DEFINE_DIALOG(DIALOG_130, 1, 4, 30, 200, _("\
 You found the\n\
@@ -1255,7 +1263,7 @@ the whole village\n\
 while you were gone!\n\
 \n\
 Please, accept all\n\
-my energy and safe our\n\
+my energy and save our\n\
 planet!\n\
 I believe in you."))
 
@@ -1397,7 +1405,7 @@ I guard this tower!\n\
 Begone intruder!"))
 //wingo1
 DEFINE_DIALOG(DIALOG_150, 1, 3, 30, 200, _("\
-He, they have some nice\n\
+Heh, they have some nice\n\
 silverware there...\n\
 So shiny..."))
 //wingo1
@@ -1709,7 +1717,7 @@ DEFINE_DIALOG(DIALOG_197, 1, 4, 30, 200, _("\
 Well, regardless of\n\
 who this 'FAT MAN' is,\n\
 Chomp's story seems to\n\
-supports the defense.\n\
+support the defense.\n\
 Mr Toad, would you like\n\
 to cross examine the\n\
 witness?"))
@@ -1977,7 +1985,7 @@ He has a foul mouth.\n\
 He is very tall.\n\
 I jumped 5 feet high\n\
 and crushed him.\n\
-Wario beat the king."))
+Waluigi beat the king."))
 DEFINE_DIALOG(DIALOG_258, 1, 2, 30, 200, _("\
 There you have it!\n\
 Waluigi was the one!"))

@@ -152,8 +152,6 @@ const GeoLayout foodog_geo[] = {
 				GEO_CLOSE_NODE(),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, foodog_material_revert_render_settings),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, foodog_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

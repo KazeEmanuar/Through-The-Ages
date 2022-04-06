@@ -35,3 +35,4 @@
 #include "levels/ccm/smallblargg/model.inc.c"
 #include "levels/ccm/smallblargg/anims/data.inc.c"
 #include "levels/ccm/smallblargg/anims/table.inc.c"
+#include "levels/ccm/grindl/model.inc.c"

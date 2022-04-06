@@ -1,7 +1,7 @@
 #include "src/game/envfx_snow.h"
 
 const GeoLayout stingby_geo[] = {
-	GEO_NODE_START(),
+   GEO_SHADOW(SHADOW_CIRCLE_4_VERTS, 0x96, 100),
 	GEO_OPEN_NODE(),
 		GEO_TRANSLATE_ROTATE(LAYER_OPAQUE, 0, 0, 5, 90, 0, 0),
 		GEO_OPEN_NODE(),

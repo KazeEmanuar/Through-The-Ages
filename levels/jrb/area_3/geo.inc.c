@@ -5,6 +5,7 @@ const GeoLayout jrb_area_3_geo[] = {
 	GEO_OPEN_NODE(),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, jrb_dl_bush1_3_003_mesh_layer_4),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, jrb_dl_Cube_mesh_layer_1),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, jrb_dl_Cube_001_mesh_layer_6),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, jrb_dl_pillar12_001_mesh_layer_1),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, jrb_dl_pillar12_001_mesh_layer_4),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, jrb_dl_poles_001_mesh_layer_4),
@@ -38,6 +39,7 @@ const GeoLayout jrb_area_3[] = {
 		GEO_CLOSE_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, jrb_dl_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, jrb_dl_material_revert_render_settings),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT_DECAL, jrb_dl_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

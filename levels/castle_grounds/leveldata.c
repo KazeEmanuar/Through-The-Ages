@@ -32,3 +32,4 @@
 #include "levels/castle_grounds/toadlawyer/anims/table.inc.c"
 #include "levels/castle_grounds/treasuredoor/model.inc.c"
 #include "levels/castle_grounds/treasuredoor/collision.inc.c"
+#include "levels/castle_grounds/pipecolor/model.inc.c"

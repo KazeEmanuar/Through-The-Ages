@@ -273,9 +273,9 @@ void bhv_mario_update(void) {
     } else {
         cur_obj_set_model(1);
     }
-    if (gMarioState->controller->buttonPressed & R_JPAD){
+   /* if (gMarioState->controller->buttonPressed & R_JPAD){
         renderMario ^=1;
-    }
+    }*/
     particleFlags = execute_mario_action(gCurrentObject);
     gCurrentObject->oMarioParticleFlags = particleFlags;
 

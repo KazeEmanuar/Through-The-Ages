@@ -73,7 +73,7 @@ static void fire_piranha_plant_act_hide(void) {
                 set_object_respawn_info_bits(o, 1);
             }
         } else if (sNumActiveFirePiranhaPlants < 2 && o->oTimer > 100 && o->oDistanceToMario > 100.0f
-                   && o->oDistanceToMario < 800.0f) {
+                   && o->oDistanceToMario < 1200.0f) {
             cur_obj_play_sound_2(SOUND_OBJ_PIRANHA_PLANT_APPEAR);
 
             o->oFirePiranhaPlantActive = TRUE;

@@ -39,6 +39,29 @@ Gfx *geo_set_prim(s32 callContext, struct GraphNode *b, Mat4 *mtx) {
     return gfx;
 }
 
+Gfx *set_prim_to_opacity(s32 callContext, struct GraphNode *node, UNUSED void *context) {
+    Gfx *dlStart;
+    Gfx *DL;
+    struct Object *obj;
+    struct GraphNodeSwitchCase *switchCase;
+    struct GraphNodeGenerated *currentGraphNode = (struct GraphNodeGenerated *) node;
+    dlStart = alloc_display_list(sizeof(Gfx) * 3);
+    DL = dlStart;
+    if (callContext == GEO_CONTEXT_RENDER) {
+        obj = (struct Object *) gCurGraphNodeObject; // TODO: change global type to Object pointer
+
+        gDPSetPrimColor(DL++, 0, 0, obj->oOpacity, obj->oOpacity, obj->oOpacity, obj->oOpacity);
+        gSPEndDisplayList(DL);
+            currentGraphNode->fnNode.node.flags =
+                (currentGraphNode->fnNode.node.flags & 0xFF) | (LAYER_TRANSPARENT << 8);
+        return dlStart;
+    }
+
+    return NULL;
+}
+
+
+
 void bounceshroom(void) {
     if (cur_obj_is_mario_on_platform()) {
         m->action = ACT_TRIPLE_JUMP;

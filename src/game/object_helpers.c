@@ -550,7 +550,9 @@ struct Object *spawn_object(struct Object *parent, s32 model, const BehaviorScri
 
     obj = spawn_object_at_origin(parent, 0, model, behavior);
     obj_copy_pos_and_angle(obj, parent);
-
+    obj->header.gfx.pos[0] = obj->oPosX;
+    obj->header.gfx.pos[1] = obj->oPosY;
+    obj->header.gfx.pos[2] = obj->oPosZ;
     return obj;
 }
 

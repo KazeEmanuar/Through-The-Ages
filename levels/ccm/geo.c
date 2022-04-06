@@ -24,3 +24,4 @@
 #include "levels/ccm/pharaoh/geo.inc.c"
 #include "levels/ccm/crystalpillar/geo.inc.c"
 #include "levels/ccm/smallblargg/geo.inc.c"
+#include "levels/ccm/grindl/geo.inc.c"

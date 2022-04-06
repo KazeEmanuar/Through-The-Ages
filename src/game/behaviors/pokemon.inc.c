@@ -89,6 +89,10 @@ void pokemoncode(void) {
             }
             break;
         case 1:
+            if (m->action & (ACT_FLAG_WATER_OR_TEXT | ACT_FLAG_METAL_WATER | ACT_FLAG_INTANGIBLE)) {
+                obj_mark_for_deletion(o);
+                return;
+            }
             switch (o->oAction) {
                 case 0:
                     if (o->oTimer > 18) {
@@ -190,10 +194,10 @@ void pokemoncode(void) {
                     o->oForwardVel = 0.0f;
                 }
                 if (o->oTimer > poggers) {
-#define growth 80.f
+#define growth 106.f
                     f32 x, z, y;
-                    x = o->oPosX + (sins(o->oMoveAngleYaw) * growth * (o->oTimer - poggers));
-                    z = o->oPosZ + (coss(o->oMoveAngleYaw) * growth * (o->oTimer - poggers));
+                    x = o->oPosX + (sins(o->oMoveAngleYaw) * growth * o->oHiddenBlueCoinSwitch->header.gfx.scale[2]);
+                    z = o->oPosZ + (coss(o->oMoveAngleYaw) * growth * o->oHiddenBlueCoinSwitch->header.gfx.scale[2]);
                     y = o->oPosY;
                     if (o->oPosY < find_floor_height(x, o->oPosY + 200.f, z)) {
                         o->oAction++;
@@ -203,7 +207,7 @@ void pokemoncode(void) {
                         o->oHiddenBlueCoinSwitch->oTimer = 34;
                         o->oOpacity = o->oTimer - poggers;
                     }
-                    if (f32_find_wall_collision(&x, &y, &z, 20.f, 60.f)) {
+                    if (f32_find_wall_collision(&x, &y, &z, 20.f, 80.f)) {
                         o->oAction++;
                         o->oHomeX = (x - o->oPosX) / (o->oTimer - poggers);
                         o->oHomeZ = (z - o->oPosZ) / (o->oTimer - poggers);
@@ -414,7 +418,8 @@ void pokemoncode(void) {
                     while (obj != (struct Object *) listHead) {
                         if ((obj->header.gfx.sharedChild
                              == gLoadedGraphNodes[MODEL_YELLOW_COIN_NO_SHADOW])
-                            || (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_YELLOW_COIN])|| (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_RED_COIN])) {
+                            || (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_YELLOW_COIN])
+                            || (obj->header.gfx.sharedChild == gLoadedGraphNodes[MODEL_RED_COIN])) {
                             if (obj->activeFlags != ACTIVE_FLAG_DEACTIVATED && obj != o) {
                                 f32 objDist = dist_between_objects(o, obj);
                                 f32 multiplicator =
@@ -433,7 +438,6 @@ void pokemoncode(void) {
                         }
                         obj = (struct Object *) obj->header.next;
                     }
-
 
                     if ((o->header.gfx.unk38.animID == 1)) {
                         if ((o->header.gfx.unk38.animFrame > 22)) {

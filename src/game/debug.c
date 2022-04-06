@@ -653,6 +653,9 @@ void try_print_debug_mario_level_info(void) {
         if (gMarioState->action & ACT_FLAG_SWIMMING) {
             if (waterTimer) {
                 waterTimer--;
+                if  (gMarioState->controller->buttonPressed & Z_TRIG) {
+                gMarioState->flags |= MARIO_UNDERWATER_SUIT;
+                }
             } else {
                 gMarioState->flags |= MARIO_UNDERWATER_SUIT;
             }

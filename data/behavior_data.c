@@ -829,7 +829,7 @@ const BehaviorScript bhvWarp[] = {
 extern void warpPipeOWCode(void);
 const BehaviorScript bhvWarpPipe[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     SET_INT(oInteractType, INTERACT_WARP),
     LOAD_COLLISION_DATA(warp_pipe_seg3_collision_03009AC8),
     SET_FLOAT(oDrawingDistance, 16000),
@@ -3825,6 +3825,7 @@ const BehaviorScript bhvBobombFuseSmoke[] = {
     END_LOOP(),
 };
 
+extern void bhv_explode(void);
 const BehaviorScript bhvKoopaTalk[] = {
     BEGIN(OBJ_LIST_PUSHABLE),
     OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_HOLDABLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
@@ -3838,6 +3839,7 @@ const BehaviorScript bhvKoopaTalk[] = {
     BEGIN_LOOP(),
         SET_INT(oIntangibleTimer, 0),
         CALL_NATIVE(bhv_bobomb_buddy_loop),
+        CALL_NATIVE(bhv_explode),
     END_LOOP(),
 };
 
@@ -6678,6 +6680,7 @@ const BehaviorScript bhvToadmummy[] = {
     SET_HITBOX(70, 200),
     SET_INT(oDamageOrCoinValue, 2),
     SET_INTERACT_TYPE(INTERACT_BOUNCE_TOP2),
+    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 70, /*Gravity*/ -400, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 600, /*Unused*/ 0, 0),
     BEGIN_LOOP(),
         CALL_NATIVE(toadmummy),
         SET_INT(oInteractStatus, 0),
@@ -6824,7 +6827,7 @@ const BehaviorScript bhvBouncyLamp[] = {
     SET_HITBOX(/*Radius*/ 220, /*Height*/ 135),
     LOAD_ANIMATIONS(oAnimations, lamp_anims),
     SET_HOME(),
-    SET_FLOAT(oDrawingDistance, 32000),
+    SET_FLOAT(oDrawingDistance, 18000),
     SET_INT(oIntangibleTimer, 0),
     BEGIN_LOOP(),
         CALL_NATIVE(bouncylamp),
@@ -6835,7 +6838,7 @@ const BehaviorScript bhvBouncyLamp[] = {
 const BehaviorScript bhvGong[] = {
     BEGIN(OBJ_LIST_GENACTOR),
     OR_INT(oFlags, ( OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-    SET_FLOAT(oDrawingDistance, 32000),
+    SET_FLOAT(oDrawingDistance, 18000),
     BEGIN_LOOP(),
         CALL_NATIVE(gongcode),
     END_LOOP(),
@@ -6883,7 +6886,7 @@ const BehaviorScript bhvFireLamp[] = {
     LOAD_ANIMATIONS(oAnimations, lampfire_anims),
     ANIMATE(0),
     SET_HOME(),
-    SET_FLOAT(oDrawingDistance, 32000),
+    SET_FLOAT(oDrawingDistance, 18000),
     SET_INT(oIntangibleTimer, 0),
     BEGIN_LOOP(),
         CALL_NATIVE(firelampcode),
@@ -7508,11 +7511,12 @@ const BehaviorScript bhvWaluigiTroopa[] = {
     SET_INT(oIntangibleTimer, 0),
     SET_HOME(),
     SET_FLOAT(oGraphYOffset, -39),
-    SET_INT(oDamageOrCoinValue, 0),
+    SET_INT(oDamageOrCoinValue, 1),
     SET_INTERACT_TYPE(INTERACT_BOUNCE_TOP),
     LOAD_ANIMATIONS(oAnimations, walutroopa_anims),
-    SET_HITBOX(/*Radius*/ 80, /*Height*/ 140),
-    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
+    SET_HITBOX(/*Radius*/ 160, /*Height*/ 280),
+    SET_HURTBOX(/*Radius*/ 80, /*Height*/ 140),
+    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ 400, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
     BEGIN_LOOP(),
         CALL_NATIVE(waluigitroopa),
     END_LOOP(),
@@ -7968,5 +7972,14 @@ const BehaviorScript bhvCourtActor[] = {
     LOAD_ANIMATIONS(oAnimations, toadlawyer_anims),
     BEGIN_LOOP(),
         CALL_NATIVE(courtActor),
+    END_LOOP(),
+};
+
+extern void sleepcloud(void);
+const BehaviorScript bhvSleepCloud[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    BEGIN_LOOP(),
+        CALL_NATIVE(sleepcloud),
     END_LOOP(),
 };

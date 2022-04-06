@@ -40,7 +40,7 @@ void bhv_boo_cage_loop(void) {
 
             // Useless scale. This is also found in the code for BOO_CAGE_ACT_ON_GROUND.
             // Was the boo cage originally meant to have been shrunk and grow while falling?
-            cur_obj_scale(1.0f);
+            cur_obj_scale(2.0f);
 
             // If the cage's parent boo is killed, set the action to BOO_CAGE_ACT_FALLING,
             // give the cage an initial Y velocity of 60 units/frame, and play the puzzle jingle.
@@ -86,8 +86,6 @@ void bhv_boo_cage_loop(void) {
             // Allow Mario to enter the cage once it's still on the ground.
             cur_obj_become_tangible();
 
-            // The other useless scale
-            cur_obj_scale(1.0f);
 
             // Set the action to BOO_CAGE_ACT_MARIO_JUMPING_IN when Mario jumps in.
             if (obj_check_if_collided_with_object(o, gMarioObject)) {

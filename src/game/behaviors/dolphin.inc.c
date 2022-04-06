@@ -116,6 +116,40 @@ void dolphinswimcode(void) {
         o->oPosZ = MAXX;
     }
 }
+// spawn around mario, float slowly across the screen
+void sleepcloud(void) {
+    f32 dist;
+    s16 angle;
+    switch (o->oAction) {
+        case 0:
+            o->oForwardVel = random_float() * 10.f + 10.f;
+            // generate point around mario to move towards, point needs to be within 0x2000 angle
+            // range of marios faceangle
+            o->oMoveAngleYaw = gMarioState->faceAngle[1] + 0x8000;
+            o->oPosY = gMarioState->pos[1] + random_float() * 150.f + 100.f;
+            dist = random_float() * 500.f + 2500.f;
+            angle = gMarioState->faceAngle[1] + (random_u16() % 0x1FFF) - 0x1000;
+            o->oPosX = gMarioState->pos[0] + sins(angle) * dist;
+            o->oPosZ = gMarioState->pos[2] + coss(angle) * dist;
+            o->oAnimState = (dist / o->oForwardVel) * 1.8f;
+            o->oAction = 1;
+            cur_obj_scale(random_float() * .75f + .5f);
+            o->oFaceAngleYaw = random_u16();
+            break;
+        case 1:
+            if (o->oTimer > o->oAnimState) {
+                o->oOpacity = approach_s16_symmetric(o->oOpacity, 0, 2);
+                if (!o->oOpacity) {
+                    obj_mark_for_deletion(o);
+                }
+            } else {
+                o->oOpacity = approach_s16_symmetric(o->oOpacity, 192, 2);
+            }
+            break;
+    }
+    cur_obj_move_xz_using_fvel_and_yaw();
+    o->oPosY += sins(o->oTimer * 0x780) * 4.f;
+}
 // despawn him if you dont have enough stars or his star is already collected.
 void dolphincode(void) {
     float magnitude = 10.0f;
@@ -168,10 +202,12 @@ void dolphincode(void) {
             o->oAction = 2;
         } else {
             gMarioState->action = ACT_HOLDING_BOWSER;
-            if (gMarioState->controller->buttonPressed & A_BUTTON) {
-                magnitude = -40.0f;
+            magnitude = gMarioState->intendedMag * .5f
+                        * coss(abs_angle_diff(gMarioState->intendedYaw, o->oFaceAngleYaw));
+            if (magnitude < -5.f) {
                 play_sound(SOUND_MOVING_TERRAIN_SLIDE, gDefaultSoundArgs);
-            } else {
+            }
+            if (magnitude > 0) {
                 magnitude = 0;
             }
             gMarioState->pos[0] += sins(o->oMoveAngleYaw) * magnitude;
@@ -345,6 +381,9 @@ void pirateshipcode(void) {
     if ((save_file_get_total_star_count(gCurrSaveFileNum - 1, 0, 0x18) < 32)
         || ((save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1) & 0x08))) {
         obj_mark_for_deletion(o);
+        if (o->oFreePointer1) {
+            obj_mark_for_deletion(o->oFreePointer1);
+        }
         if ((save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1) & 0x08)) {
             object = spawn_object(o, 0x3a, bhvPirateTalk);
             object->oPosX = 560.f;
@@ -610,6 +649,9 @@ void quetzalcode(void) {
         o->oHiddenBlueCoinSwitch->oPosX = o->oPosX + sins(o->oMoveAngleYaw) * -1150.f;
         o->oHiddenBlueCoinSwitch->oPosZ = o->oPosZ + coss(o->oMoveAngleYaw) * -1150.f;
         o->oHiddenBlueCoinSwitch->oPosY = o->oPosY + 50.f;
+        o->oHiddenBlueCoinSwitch->hitboxDownOffset = -25.f;
+        o->oHiddenBlueCoinSwitch->hitboxHeight = 100.f;
+        o->oHiddenBlueCoinSwitch->hitboxRadius = 160.f;
     }
 }
 
@@ -712,15 +754,35 @@ int blackmarketselection;
 #define menuX 50
 #define menuY 0xb9
 #define menuoffset 0x11
-
+u16 pokedialog;
+extern u32 getPokeID(u16 selection);
 void renderAllItems(u8 a) {
-    int i, j;
+    int i, j, k;
     u8 ranktext[7] = { 0x9e, 0x9e, 0x9e, 0x9e, 0x9e, 0x9e, 0xff };
     for (i = 0; i < itemListlength; i++) {
         ranktext[0] = 0XFA;
         print_generic_string2(menuX + a, menuY - menuoffset - textheight * i - a, itemList[i].name);
-        convertNumberToSm64String(itemList[i].price, ranktext + 1); // normalize number
-        print_generic_string(menuX + a + 100, menuY - menuoffset - textheight * i - a, ranktext);
+        k = 0;
+        if (i == 0) {
+            if (gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[2]) {
+                k = 1;
+            }
+        } else if (i == 1) {
+            if (save_file_get_flags() & SAVE_FLAG_HAVE_WING_CAP) {
+                k = 1;
+            }
+        } else if (i < itemListlength - 1) {
+            if (gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[0] & getPokeID(i)) {
+                k = 1;
+            }
+            pokedialog = 0;
+        }
+        if (!k) {
+            convertNumberToSm64String(itemList[i].price, ranktext + 1); // normalize number
+            print_generic_string(menuX + a + 100, menuY - menuoffset - textheight * i - a, ranktext);
+        } else {
+            print_generic_string2(menuX + a + 100, menuY - menuoffset - textheight * i - a, "BOUGHT");
+        }
         ranktext[1] = 0x9e;
         ranktext[2] = 0x9e;
         ranktext[3] = 0x9e;
@@ -728,10 +790,9 @@ void renderAllItems(u8 a) {
         ranktext[5] = 0x9e;
     }
 }
-u16 pokedialog;
 extern int spawnID;
 u32 getPokeID(u16 selection) {
-    spawnID = selection - 2;
+    // spawnID = selection - 2;
     switch (selection) {
         case 2:
             pokedialog = 159;
@@ -874,9 +935,11 @@ void render_menu() {
                     if (gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[0]
                         & getPokeID(blackmarketselection)) {
                         play_sound(SOUND_MENU_CAMERA_BUZZ, gDefaultSoundArgs);
+                        pokedialog = 0;
                     } else {
                         gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[0] |=
                             getPokeID(blackmarketselection);
+                        spawnID = blackmarketselection - 2;
                         rendershop = 0;
                         gSaveBuffer.files[gCurrSaveFileNum - 1]->capPos[1] += 5;
                         play_sound(SOUND_MENU_STAR_SOUND, gDefaultSoundArgs);
@@ -985,11 +1048,11 @@ void select_menu() {
     } else {
         analogsetx = 0;
     }
-    if (yoshiselected > (10)) {
-        yoshiselected = 0;
-    } else if (yoshiselected == -1) {
-        yoshiselected = 10;
-    }
+    /* if (yoshiselected > (10)) {
+         yoshiselected = 0;
+     } else if (yoshiselected == -1) {
+         yoshiselected = 10;
+     }*/
 
     if (gMarioState->controller->buttonPressed & (A_BUTTON | START_BUTTON | B_BUTTON)) {
         pickpoke = 0;
@@ -1653,6 +1716,7 @@ void pharaohcode(void) {
             if (o->oHealth >= 3) {
                 if (o->oSubAction > 3) {
                     play_music(SEQ_PLAYER_LEVEL, 0, 0);
+                    stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
                     spawn_default_star(o->oHomeX, o->oHomeY - 200.f, o->oHomeZ);
                     obj_mark_for_deletion(o);
                 }
@@ -2133,6 +2197,64 @@ void warpPipeOWCode(void) {
             }
         }
     }
+    // add bouncey animation
+    if (gCurrLevelNum == LEVEL_CASTLE_GROUNDS) {
+        if (!o->oIntangibleTimer) {
+            switch (o->oOpacity) {
+                case 0:
+                    if (!o->oHiddenBlueCoinSwitch) {
+                        o->oHiddenBlueCoinSwitch = spawn_object(o, MODEL_NUMBER, bhvStaticObject);
+                        o->oHiddenBlueCoinSwitch->header.gfx.node.flags |= GRAPH_RENDER_BILLBOARD;
+                        o->oHiddenBlueCoinSwitch->oAnimState = (o->oBehParams2ndByte - 16) % 10;
+                        if ((o->oBehParams2ndByte - 16) > 9) {
+                            o->oBooParentBigBoo = spawn_object(o, MODEL_NUMBER, bhvStaticObject);
+                            o->oBooParentBigBoo->header.gfx.node.flags |= GRAPH_RENDER_BILLBOARD;
+                            o->oBooParentBigBoo->oAnimState = 1;
+                        }
+                        obj_scale(o->oHiddenBlueCoinSwitch, 0);
+                    }
+                    obj_scale(o->oHiddenBlueCoinSwitch,
+                              approach_f32_symmetric(o->oHiddenBlueCoinSwitch->header.gfx.scale[0], 0.f,
+                                                     0.05f));
+
+                    if (o->oDistanceToMario < 500.f) {
+                        o->oOpacity = 1;
+                    }
+                    break;
+                case 1:
+
+                    o->oBobombBuddyPosYCopy = approach_f32_asymptotic(
+                        o->oBobombBuddyPosYCopy, 1.f - o->oHiddenBlueCoinSwitch->header.gfx.scale[0],
+                        .15f);
+                    o->oBobombBuddyPosYCopy *= .9f;
+                    obj_scale(o->oHiddenBlueCoinSwitch,
+                              o->oHiddenBlueCoinSwitch->header.gfx.scale[0] + o->oBobombBuddyPosYCopy);
+
+                    if (o->oDistanceToMario > 500.f) {
+                        o->oOpacity = 0;
+                    }
+                    break;
+            }
+        }
+        if (o->oHiddenBlueCoinSwitch) {
+            o->oHiddenBlueCoinSwitch->oPosY =
+                o->oPosY - 50.f + o->oHiddenBlueCoinSwitch->header.gfx.scale[0] * 350.f;
+            if ((o->oBehParams2ndByte - 16) > 9) {
+                o->oHiddenBlueCoinSwitch->oPosX =
+                    o->oPosX
+                    + sins(newcam_yaw + 0x4000) * 30.f * o->oHiddenBlueCoinSwitch->header.gfx.scale[0];
+                o->oHiddenBlueCoinSwitch->oPosZ =
+                    o->oPosZ
+                    + coss(newcam_yaw + 0x4000) * 30.f * o->oHiddenBlueCoinSwitch->header.gfx.scale[0];
+            }
+            if (o->oBooParentBigBoo) {
+                obj_scale(o->oBooParentBigBoo, o->oBooParentBigBoo->header.gfx.scale[0]);
+                o->oBooParentBigBoo->oPosY = o->oHiddenBlueCoinSwitch->oPosY;
+                o->oBooParentBigBoo->oPosX = o->oPosX - (o->oHiddenBlueCoinSwitch->oPosX - o->oPosX);
+                o->oBooParentBigBoo->oPosZ = o->oPosZ - (o->oHiddenBlueCoinSwitch->oPosZ - o->oPosZ);
+            }
+        }
+    }
 }
 
 void toadlawyer(void) {
@@ -2557,4 +2679,75 @@ void courtActor(void) {
     newcam_pitch = 0;
     newcam_centering = 1;
     newcam_distance = 350;
+}
+
+void bhv_explode(void) {
+    if (cur_obj_dist_to_nearest_object_with_behavior(bhvExplosion) < 400.f) {
+        create_sound_spawner(SOUND_GENERAL_WALL_EXPLOSION);
+        o->oNumLootCoins = 2;
+        obj_explode_and_spawn_coins(80.0f, 1);
+    }
+}
+
+Gfx pipecolors[] = {
+    gsDPSetPrimColor(255, 255, 00, 0x84, 255, 255),
+    gsDPSetEnvColor(0x29, 255, 0, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0x00, 0x72, 0x04, 255),
+    gsDPSetEnvColor(0x83, 0x47, 0x00, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0x00, 0xc0, 0x03, 255),
+    gsDPSetEnvColor(0, 1, 255, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0xef, 255, 0, 255),
+    gsDPSetEnvColor(255, 0x6a, 0, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0x82, 0xc2, 255, 255),
+    gsDPSetEnvColor(0, 0x11, 255, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0, 0x68, 255, 255),
+    gsDPSetEnvColor(0xd3, 0, 255, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0xff, 0, 14, 255),
+    gsDPSetEnvColor(0x36, 0, 0, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0, 8, 34, 255),
+    gsDPSetEnvColor(19, 0, 0xa3, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0x8b, 0, 255, 255),
+    gsDPSetEnvColor(0xa3, 0x5b, 0, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+
+    gsDPSetPrimColor(0, 0, 0x81, 0x63, 0x3e, 255),
+    gsDPSetEnvColor(0, 3, 0xb1, 255),
+    gsSPEndDisplayList(),
+    gsSPEndDisplayList(),
+};
+extern struct GraphNodeObject *gCurGraphNodeObject;
+Gfx *geo_pipecolor(s32 callContext, struct GraphNode *b, Mat4 *mtx) {
+    Gfx *gfx = NULL;
+    struct Object *obj = (struct Object *) gCurGraphNodeObject;
+    struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
+    if (callContext == GEO_CONTEXT_RENDER) {
+        gfx = &pipecolors[(obj->oBehParams2ndByte - 0x11) * 4];
+        asGenerated->fnNode.node.flags = (asGenerated->fnNode.node.flags & 0xFF) | (1 << 8);
+    }
+    return gfx;
 }

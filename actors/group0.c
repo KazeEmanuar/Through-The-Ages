@@ -66,3 +66,4 @@
 #include "screw/collision.inc.c"
 #include "shoe1Wing/model.inc.c"
 #include "shoe2Wing/model.inc.c"
+#include "sleepcloud/model.inc.c"

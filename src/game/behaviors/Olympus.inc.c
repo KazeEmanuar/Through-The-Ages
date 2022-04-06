@@ -325,12 +325,16 @@ void yoshiRiding(void) {
         gMarioState->marioObj->header.gfx.pos[2] =
             gMarioState->pos[2] + HORIZOFFSET * coss(gMarioState->faceAngle[1]);
         // gMarioState->marioObj->header.gfx.angle[0] = -gMarioState->faceAngle[0];
-        gMarioState->marioObj->header.gfx.angle[0] = 0;
+       // gMarioState->marioObj->header.gfx.angle[0] = 0;
+       o->oFaceAngleRoll = gMarioState->marioObj->header.gfx.angle[0];
         gMarioState->marioObj->header.gfx.angle[1] = gMarioState->faceAngle[1];
         // gMarioState->marioObj->header.gfx.angle[2] = gMarioState->faceAngle[2];
         gMarioState->marioObj->header.gfx.angle[2] = 0;
         if ((gMarioState->action != ACT_FLYING_TRIPLE_JUMP) && (gMarioState->action != ACT_FLYING)) {
             onYoshi = 0;
+            if (gMarioState->action == ACT_SPECIAL_TRIPLE_JUMP){
+                mark_obj_for_deletion(o);
+            }
         }
     }
 #define YOSHIHORIZ 80.f
@@ -368,7 +372,7 @@ void controlHat(void) {
     Gfx *rainbow = segmented_to_virtual(mat_ddd_dl_RAINBOWTEX);
     if (!o->oOpacity) {
         o->oOpacity = 1;
-        if (gCurrActNum > 1) {
+        if ((gCurrActNum > 1) && (gCurrActNum < 6)) {
             o->oAction = 1;
         }
         if (gCurrActNum > 2) {
@@ -471,6 +475,8 @@ void medusacode(void) {
             gMarioState->health -= 0x10;
             if (gMarioState->health < 0x100) {
                 level_trigger_warp(m, WARP_OP_WARP_FLOOR);
+                o->oAction = 1;
+                gMarioState->action = o->oDamageOrCoinValue;
             }
             if (o->oTimer > 32) {
                 o->oAction = 1;
@@ -503,11 +509,17 @@ void checknipperwarp() {
 
 extern Vtx ddd_dl_Clouds_mesh_layer_1_vtx_0[1627];
 u32 waterphas2e = 0;
+extern f32 backupPos[3];
 void olympship(void) {
     Vtx *a = segmented_to_virtual(ddd_dl_Clouds_mesh_layer_1_vtx_0);
     u8 alpha;
     u16 i;
     u16 brightness;
+    if (gCurrAreaIndex>1){
+    backupPos[0] = o->oPosX;
+    backupPos[1] = o->oPosY+500.f;
+    backupPos[2] = o->oPosZ;
+    }
 #define WAVEHEIGHTMAX (512)
 #define SCROLLSIZE 6
     if (o->oBehParams2ndByte) {
@@ -685,6 +697,7 @@ void zeusCodeBoss(void) {
                     o->oMoveAngleYaw = o->oAngleToMario;
                     o->oForwardVel = -70.f;
                     o->oHealth++;
+                    o->oInteractStatus = 0;
                 }
             }
 
@@ -730,6 +743,8 @@ void zeusCodeBoss(void) {
                 o->oAction = 2;
                 gMarioState->forwardVel = 0.f;
                 if (o->oHealth == 3) {
+                    stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
+                    play_music(SEQ_PLAYER_LEVEL, 0, 0);
                     mark_obj_for_deletion(o);
                     spawn_default_star(0, 400, 12250.f);
                     spawn_mist_particles_variable(0, 0, 200.0f);

@@ -109,7 +109,7 @@ Gfx yellow7[] = {
     gsSPBranchList(coin_Circle_mesh),
 };
 
-#define REDCOLOR gsDPSetPrimColor(0, 0, 255, 0, 0, 255),
+#define REDCOLOR gsDPSetPrimColor(0, 0, 255, 63, 63, 255),
 Gfx red0[] = {
 	REDCOLOR
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b, 64, coin_CoinTurn__00000_ia8),
@@ -158,7 +158,7 @@ Gfx red7[] = {
     gsSPBranchList(coin_Circle_mesh),
 };
 
-#define BLUECOLOR gsDPSetPrimColor(0, 0, 0, 0, 255, 255),
+#define BLUECOLOR gsDPSetPrimColor(0, 0, 63, 127, 255, 255),
 Gfx blue0[] = {
 	BLUECOLOR
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b, 64, coin_CoinTurn__00000_ia8),
