@@ -582,6 +582,7 @@ void fliptilecode(void) {
                 o->oSubAction = 1;
             }
         }
+        load_object_collision_model();
     } else {
         o->oFaceAngleRoll += 0x800;
         if (o->oTimer > 14) {

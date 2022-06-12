@@ -570,24 +570,52 @@ void mtxf_mul_vec3s(Mat4 mtx, Vec3s b) {
  * exception. On Wii and Wii U Virtual Console the value will simply be clamped
  * and no crashes occur.
  */
-void mtxf_to_mtx(Mtx *dest, Mat4 src) {
-#ifdef AVOID_UB
-    // Avoid type-casting which is technically UB by calling the equivalent
-    // guMtxF2L function. This helps little-endian systems, as well.
-    guMtxF2L(src, dest);
-#else
-    s32 asFixedPoint;
-    register s32 i;
-    register s16 *a3 = (s16 *) dest;      // all integer parts stored in first 16 bytes
-    register s16 *t0 = (s16 *) dest + 16; // all fraction parts stored in last 16 bytes
-    register f32 *t1 = (f32 *) src;
 
-    for (i = 0; i < 16; i++) {
-        asFixedPoint = *t1++ * (1 << 16); //! float-to-integer conversion responsible for PU crashes
-        *a3++ = GET_HIGH_S16_OF_32(asFixedPoint); // integer part
-        *t0++ = GET_LOW_S16_OF_32(asFixedPoint);  // fraction part
+
+
+
+#define WORLD_SCALE 1.f
+void mtxf_to_mtx(s16 *dst, float *src) {
+    int i;
+    float scale = (65536.0f / WORLD_SCALE);
+    // Iterate over rows of values in the input matrix
+    for (i = 0; i < 4; i++) {
+        // Read the three input in the current row (assume the fourth is zero)
+        float a = src[4 * i + 0];
+        float b = src[4 * i + 1];
+        float c = src[4 * i + 2];
+        float a_scaled = a*scale;
+        float b_scaled = b*scale;
+        float c_scaled = c*scale;
+
+        // Convert the three inputs to fixed
+        s32 a_int = (s32) a_scaled;
+        s32 b_int = (s32) b_scaled;
+        s32 c_int = (s32) c_scaled;
+        s32 c_high = c_int & 0xFFFF0000;
+        s32 c_low = c_int << 16;
+
+        // Write the integer part of a, as well as garbage into the next two bytes.
+        // Those two bytes will get overwritten by the integer part of b.
+        // This prevents needing to shift or mask the integer value of a.
+        *(s32 *) (&dst[4 * i + 0]) = a_int;
+        // Write the fractional part of a
+        dst[4 * i + 16] = (s16) a_int;
+
+        // Write the integer part of b using swl to avoid needing to shift.
+        dst[4 * i+1 ] = b_int>>16;
+        // Write the fractional part of b.
+        dst[4 * i + 17] = (s16) b_int;
+
+        // Write the integer part of c and two zeroes for the 4th column.
+        *(s32 *) (&dst[4 * i + 2]) = c_high;
+        // Write the fractional part of c and two zeroes for the 4th column
+        *(s32 *) (&dst[4 * i + 18]) = c_low;
     }
-#endif
+    // Write 1.0 to the bottom right entry in the output matrix
+    // The low half was already set to zero in the loop, so we only need
+    //  to set the top half.
+    dst[15] = 1;
 }
 
 /**

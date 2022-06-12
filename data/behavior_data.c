@@ -6484,7 +6484,6 @@ const BehaviorScript bhvFliptile[] = {
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
     BEGIN_LOOP(),
         CALL_NATIVE(fliptilecode),
-        CALL_NATIVE(load_object_collision_model),
     END_LOOP(),
 };
 

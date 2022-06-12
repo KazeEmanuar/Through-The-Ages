@@ -265,6 +265,7 @@ u8 renderMario = 1;
 /**
  * Mario's primary behavior update function.
  */
+extern u8 canUseTangela;
 void bhv_mario_update(void) {
     u32 particleFlags = 0;
     s32 i;
@@ -272,6 +273,9 @@ void bhv_mario_update(void) {
         cur_obj_set_model(0);
     } else {
         cur_obj_set_model(1);
+    }
+    if (gMarioState->floorHeight == gMarioState->pos[1]){
+        canUseTangela = 1;
     }
    /* if (gMarioState->controller->buttonPressed & R_JPAD){
         renderMario ^=1;

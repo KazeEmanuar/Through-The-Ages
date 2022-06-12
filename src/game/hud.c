@@ -440,7 +440,7 @@ void render_hud(void) {
     Mtx *mtx;
 #endif
     create_dl_ortho_matrix();
-
+    
     if (gCurrLevelNum == LEVEL_ENDING) {
 // print total time it took since game start
 // print credits

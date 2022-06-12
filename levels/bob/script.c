@@ -65,7 +65,7 @@ const LevelScript level_bob_entry[] = {
 		OBJECT(MODEL_RED_COIN, 5742, 1917, -379, 0, -180, 0, 0x00ff0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, -5037, 1077, 379, 0, -180, 0, 0x00ff0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, -3894, 3118, 1879, 0, -180, 0, 0x00ff0000, bhvRedCoin),
-		OBJECT(MODEL_RED_COIN, 3356, 3162, 1633, 0, -180, 0, 0x00ff0000, bhvRedCoin),
+		OBJECT(MODEL_RED_COIN, 3356, 2712, 1633, 0, -180, 0, 0x00ff0000, bhvRedCoin),
 		OBJECT(MODEL_RED_COIN, 5841, 1626, 6599, 0, -180, 0, 0x00ff0000, bhvRedCoin),
 		OBJECT(0x35, -2546, 4176, -1847, 0, -180, 0, 0x00ff0000, bhvNoseguy),
 		OBJECT(0x35, -3423, 1917, -5425, 0, -90, 0, 0x00ff0000, bhvNoseguy),

@@ -14,7 +14,7 @@ int timerbeforerotation = -100;
 int timerbeforeminmovement = -100;
 u8 surfhit = 0;
 
-#define ACCEL 5
+#define ACCEL 10
 
 s16 newcam_yaw; // Z axis rotation
 f32 newcam_yaw_acc;
@@ -66,13 +66,16 @@ void newcam_init(struct Camera *c, u8 dv) {
 // store rotation initial and button press once buttonpressed happens
 // if let go, rotate to rotationinitial+0x2000
 // while pressed, do the normal ACCELeration
-u8 CBUTTONALLOWED = 0x0F;
+u32 CBUTTONALLOWED = 0xF0F;
 int heldframes = 0;
 u16 storedrotation;
 u16 storedbuttons;
 #define SLUGGISHNESS 7
+
+extern s16 approach_s16_symmetric(s16 value, s16 target, s16 increment);
+extern f32 approach_f32_symmetric(f32 value, f32 target, f32 increment);
 static void newcam_rotate_button(void) {
-    s32 CBUTTONS = gPlayer1Controller->buttonDown & CBUTTONALLOWED;
+    s32 CBUTTONS = gPlayer1Controller->buttonDown;
     if (gMarioState->action == ACT_DEBUG_FREE_MOVE) {
         adjustTimers(-10);
         return;
@@ -87,13 +90,27 @@ static void newcam_rotate_button(void) {
         storedrotation = newcam_yaw_target;
         storedbuttons = CBUTTONS;
     }
+    if (!(CBUTTONS & 0xF)) {
+        if (CBUTTONS & R_JPAD) {
+            newcam_yaw_acc = -30.f;
+            adjustTimers(-10);
+        } else if (CBUTTONS & L_JPAD) {
+            newcam_yaw_acc = 30.f;
+            adjustTimers(-10);
+        }
+    }
+    if (CBUTTONS & U_JPAD) {
+        newcam_distance_target = approach_s16_symmetric(newcam_distance_target, 500, 50);
+    } else if (CBUTTONS & D_JPAD) {
+        newcam_distance_target = approach_s16_symmetric(newcam_distance_target, 3000, 50);
+    }
 
     if (CBUTTONS & R_CBUTTONS) {
-        newcam_yaw_acc = approach_s16_symmetric(newcam_yaw_acc, -100, ACCEL);
+        newcam_yaw_acc = approach_f32_symmetric(newcam_yaw_acc, -100.f, ACCEL);
         heldframes++;
         adjustTimers(-10);
     } else if (CBUTTONS & L_CBUTTONS) {
-        newcam_yaw_acc = approach_s16_symmetric(newcam_yaw_acc, 100, ACCEL);
+        newcam_yaw_acc = approach_f32_symmetric(newcam_yaw_acc, 100.f, ACCEL);
         heldframes++;
         adjustTimers(-10);
     } else {
@@ -169,7 +186,7 @@ static void newcam_rotate_button(void) {
         adjustTimers(-10);
     }
     if (newcam_centering) {
-        newcam_yaw = approach_s16_symmetric(newcam_yaw, newcam_yaw_target, 0x800);
+        newcam_yaw = approach_s16_symmetric(newcam_yaw, newcam_yaw_target, 0x1000);
         if (abs_angle_diff(newcam_yaw, newcam_yaw_target) < 0x0010)
             newcam_centering = 0;
     } else {
@@ -187,7 +204,7 @@ static void newcam_update_values(void) { // For tilt, this just limits it so it 
                                          // sometimes lead to issues, so I just leave it shy of 90.
     int timerbackup = timerbeforerotation;
     u8 prevWaterFlag = waterflag;
-    CBUTTONALLOWED = 0x0F;
+    CBUTTONALLOWED = 0xF0F;
     waterflag = 0;
     newcam_yaw -= (newcam_yaw_acc * (newcam_sensitivityX / 10)) * ivrt(newcam_invertX);
     newcam_pitch -= (newcam_pitch_acc * (newcam_sensitivityY / 10)) * ivrt(newcam_invertY);
@@ -224,7 +241,7 @@ static void newcam_update_values(void) { // For tilt, this just limits it so it 
         }
         waterflag = 3;
         newcam_distance_target = 850;
-    } else {
+    } else if (prevWaterFlag == 3) {
         newcam_distance_target = 1500;
     }
 
@@ -573,11 +590,10 @@ void newcam_loop(struct Camera *c) {
         newcam_pos[2] =
             newcam_pos_target[2]
             + lengthdir_y(lengthdir_y(newcam_distance, newcam_pitch + newcam_floorpitch), newcam_yaw);
-        newcam_pos[1] =
-            newcam_pos_target[1]
-            + lengthdir_x(newcam_distance,
-                          newcam_pitch + gLakituState.shakeMagnitude[0] + newcam_floorpitch);
-                          }
+        newcam_pos[1] = newcam_pos_target[1]
+                        + lengthdir_x(newcam_distance, newcam_pitch + gLakituState.shakeMagnitude[0]
+                                                           + newcam_floorpitch);
+    }
     newcam_position_cam();
     newcam_find_fixed();
     if (gMarioObject)

@@ -1380,6 +1380,7 @@ void update_mario_geometry_inputs(struct MarioState *m) {
     }
 }
 
+
 /**
  * Handles Mario's input flags as well as a couple timers.
  */
@@ -1786,6 +1787,7 @@ extern u8 pickpoke;
 /**
  * Main function for executing Mario's behavior.
  */
+extern u16 newcam_distance_target;
 s32 execute_mario_action(UNUSED struct Object *o) {
     s32 inLoop = TRUE;
 
@@ -1794,6 +1796,14 @@ s32 execute_mario_action(UNUSED struct Object *o) {
         mario_reset_bodystate(gMarioState);
         if ((rendershop != 1) && (!pickpoke)) {
             update_mario_inputs(gMarioState);
+            
+            if (newcam_distance_target < 501){
+                    gMarioState->input |= INPUT_FIRST_PERSON;
+                    play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gDefaultSoundArgs);
+                    newcam_distance_target = 501;
+            } else {
+                    gCameraMovementFlags &= ~CAM_MOVE_C_UP_MODE;
+            }
         } else {
             gMarioState->input = 0;
             gMarioState->intendedMag = 0;

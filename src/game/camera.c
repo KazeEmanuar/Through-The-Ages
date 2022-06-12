@@ -4040,9 +4040,11 @@ void zoom_fov_30(UNUSED struct MarioState *m) {
  * Mario falls a sleep.
  */
 void fov_default(struct MarioState *m) {
-    if ((m->action == ACT_SLEEPING) || (m->action == ACT_START_SLEEPING)) {
+    if ((m->action == ACT_SLEEPING)) {
             newcam_distance_target = 3500;
-    } else {
+    } else if (m->action == ACT_WAKING_UP){
+        
+            newcam_distance_target = 1500;
     }
         sFOVState.fov =
             approach_f32_symmetric(sFOVState.fov, 45.f, absf((45.f - sFOVState.fov) / 30.f));

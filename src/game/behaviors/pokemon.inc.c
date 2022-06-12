@@ -36,6 +36,7 @@ extern int spawnID;
 // uses wallhitboxradius set by behav cmd
 #define MODEL_YELLOW_COIN 0x74           // yellow_coin_geo
 #define MODEL_YELLOW_COIN_NO_SHADOW 0x75 // yellow_coin_no_shadow_geo
+u8 canUseTangela = 1;
 void pokemoncode(void) {
     struct Surface *ceiling;
     float x, y, z;
@@ -169,10 +170,11 @@ void pokemoncode(void) {
         case 2:
 #define tangeloffset 50.f
             if ((o->oTimer == 0) && (o->oAction == 0)) {
-                if (!((gMarioState->pos[1] == gMarioState->floorHeight) || (gMarioState->vel[1] > 0))) {
+                if (!canUseTangela) {
                     obj_mark_for_deletion(o);
                     return;
                 }
+                canUseTangela = 0;
             }
             gMarioState->pos[0] = o->oPosX;
             gMarioState->pos[1] = o->oPosY;
@@ -196,8 +198,12 @@ void pokemoncode(void) {
                 if (o->oTimer > poggers) {
 #define growth 106.f
                     f32 x, z, y;
-                    x = o->oPosX + (sins(o->oMoveAngleYaw) * growth * o->oHiddenBlueCoinSwitch->header.gfx.scale[2]);
-                    z = o->oPosZ + (coss(o->oMoveAngleYaw) * growth * o->oHiddenBlueCoinSwitch->header.gfx.scale[2]);
+                    x = o->oPosX
+                        + (sins(o->oMoveAngleYaw) * growth
+                           * o->oHiddenBlueCoinSwitch->header.gfx.scale[2]);
+                    z = o->oPosZ
+                        + (coss(o->oMoveAngleYaw) * growth
+                           * o->oHiddenBlueCoinSwitch->header.gfx.scale[2]);
                     y = o->oPosY;
                     if (o->oPosY < find_floor_height(x, o->oPosY + 200.f, z)) {
                         o->oAction++;
@@ -528,8 +534,8 @@ void pokemoncode(void) {
                 && (gMarioState->pos[1] > o->oPosY + 200.f)) {
                 o->oHomeX = o->oPosX + sins(o->oMoveAngleYaw) * 120.f;
                 o->oHomeZ = o->oPosZ + coss(o->oMoveAngleYaw) * 120.f;
-                gMarioState->pos[0] = approach_f32_symmetric(gMarioState->pos[0], o->oHomeX, 3.0f);
-                gMarioState->pos[2] = approach_f32_symmetric(gMarioState->pos[2], o->oHomeZ, 3.0f);
+                gMarioState->pos[0] = approach_f32_symmetric(gMarioState->pos[0], o->oHomeX, 15.0f);
+                gMarioState->pos[2] = approach_f32_symmetric(gMarioState->pos[2], o->oHomeZ, 15.0f);
             }
             if (o->oHiddenBlueCoinSwitch) {
                 o->oHiddenBlueCoinSwitch->oVelX = o->oPosX - x;
