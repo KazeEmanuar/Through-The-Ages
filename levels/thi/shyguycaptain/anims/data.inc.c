@@ -1,0 +1,7 @@
+#include "anim_Idle_Piano.inc.c"
+#include "anim_Idle_Piano_TalktoMario_toFight.inc.c"
+#include "anim_Idle_Fight.inc.c"
+#include "anim_Spin_Attack.inc.c"
+#include "anim_Flame_Attack.inc.c"
+#include "anim_Damaged.inc.c"
+#include "anim_Dash_to_Piano.inc.c"

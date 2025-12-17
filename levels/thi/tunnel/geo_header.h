@@ -1,0 +1,14 @@
+extern const GeoLayout tunnel_geo[];
+extern u8 tunnel_exposed_cut_copper_ci4[];
+extern u8 tunnel_exposed_cut_copper_pal_rgba16[];
+extern u8 tunnel_SM64_LAST_IMPACT_0AEB52C5_0_2_all_ci8[];
+extern u8 tunnel_SM64_LAST_IMPACT_0AEB52C5_0_2_all_pal_rgba16[];
+extern Vtx tunnel_Plane_001_mesh_layer_1_vtx_0[60];
+extern Gfx tunnel_Plane_001_mesh_layer_1_tri_0[];
+extern Vtx tunnel_Plane_001_mesh_layer_1_vtx_1[114];
+extern Gfx tunnel_Plane_001_mesh_layer_1_tri_1[];
+extern Gfx mat_tunnel_f3d_material_030[];
+extern Gfx mat_revert_tunnel_f3d_material_030[];
+extern Gfx mat_tunnel_f3dlite_material[];
+extern Gfx mat_revert_tunnel_f3dlite_material[];
+extern Gfx tunnel_Plane_001_mesh_layer_1[];

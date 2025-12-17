@@ -1,0 +1,15 @@
+extern u8 CaptainBG_tex1_256x256_a87c458d2797db53_14_ia8[];
+extern u8 CaptainBG_cloudy_i4[];
+extern Vtx CaptainBG_CaptainBG_mesh_vtx_0[126];
+extern Gfx CaptainBG_CaptainBG_mesh_tri_0[];
+extern Vtx CaptainBG_CaptainBG_mesh_vtx_1[4];
+extern Gfx CaptainBG_CaptainBG_mesh_tri_1[];
+extern Vtx CaptainBG_CaptainBG_mesh_vtx_2[16];
+extern Gfx CaptainBG_CaptainBG_mesh_tri_2[];
+extern Gfx mat_CaptainBG_f3dlite_material_072_layer0[];
+extern Gfx mat_revert_CaptainBG_f3dlite_material_072_layer0[];
+extern Gfx mat_CaptainBG_f3dlite_material_070_layer0[];
+extern Gfx mat_revert_CaptainBG_f3dlite_material_070_layer0[];
+extern Gfx mat_CaptainBG_CLOUD_005_layer0[];
+extern Gfx mat_revert_CaptainBG_CLOUD_005_layer0[];
+extern Gfx CaptainBG_CaptainBG_mesh[];

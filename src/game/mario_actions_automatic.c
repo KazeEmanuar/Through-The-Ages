@@ -421,6 +421,38 @@ s32 act_start_hanging(struct MarioState *m) {
     return FALSE;
 }
 
+s32 act_hang_lantern(struct MarioState *m) {
+    f32 AngleForward;
+    f32 force = m->usedObj->oAngleVelPitch;
+    m->actionTimer++;
+    m->angleVel[0] -= force * 0.20f;
+    m->angleVel[0] -= m->faceAngle[0] * 0.10f;
+    m->faceAngle[0] += m->angleVel[0];
+    m->faceAngle[0] = approach_s16_symmetric(m->faceAngle[0], 0, 0x40);
+    m->angleVel[0] *= 0.975f;
+    set_mario_animation(m, MARIO_ANIM_HANG_ON_CEILING);
+    m->marioObj->header.gfx.unk38.animFrame = 17;
+    play_sound_if_no_flag(m, SOUND_ACTION_HANGING_STEP, MARIO_ACTION_SOUND_PLAYED);
+
+    // also displace mario forward som units
+    vec3f_copy(((f32 *) &m->marioObj->OBJECT_FIELD_F32(O_POS_INDEX)), m->pos);
+
+// also display mario forward depending on his anglevel
+#define OFFSETSCALE 75.f
+    AngleForward = sins(m->faceAngle[0]) * OFFSETSCALE;
+    m->marioObj->oPosX -= sins(m->faceAngle[1]) * AngleForward;
+    m->marioObj->oPosZ -= coss(m->faceAngle[1]) * AngleForward;
+    m->marioObj->oPosY += coss(m->faceAngle[1]) * OFFSETSCALE;
+
+    m->marioObj->oPosY -= 105.f;
+#define FORWARDOFFSET 17.f
+    m->marioObj->oPosX += sins(m->faceAngle[1]) * FORWARDOFFSET;
+    m->marioObj->oPosZ += coss(m->faceAngle[1]) * FORWARDOFFSET;
+    vec3s_set(((s16 *) &m->marioObj->OBJECT_FIELD_S16(O_MOVE_ANGLE_INDEX, 3)), m->faceAngle[0],
+              m->faceAngle[1], 0);
+    return FALSE;
+}
+
 s32 act_hanging(struct MarioState *m) {
     if (m->input & INPUT_NONZERO_ANALOG) {
         return set_mario_action(m, ACT_HANG_MOVING, m->actionArg);
@@ -873,6 +905,7 @@ s32 mario_execute_automatic_action(struct MarioState *m) {
         case ACT_TOP_OF_POLE_TRANSITION: cancel = act_top_of_pole_transition(m); break;
         case ACT_TOP_OF_POLE:            cancel = act_top_of_pole(m);            break;
         case ACT_START_HANGING:          cancel = act_start_hanging(m);          break;
+        case ACT_HANG_LANTERN:          cancel = act_hang_lantern(m);          break;
         case ACT_HANGING:                cancel = act_hanging(m);                break;
         case ACT_HANG_MOVING:            cancel = act_hang_moving(m);            break;
         case ACT_LEDGE_GRAB:             cancel = act_ledge_grab(m);             break;

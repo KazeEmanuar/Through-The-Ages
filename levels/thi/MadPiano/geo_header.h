@@ -1,0 +1,16 @@
+extern const GeoLayout MadPiano_geo[];
+extern u8 MadPiano__05007EF0_i8[];
+extern u8 MadPiano_piano_bfc_ia8[];
+extern Vtx MadPiano_Bone_mesh_layer_1_vtx_0[81];
+extern Gfx MadPiano_Bone_mesh_layer_1_tri_0[];
+extern Vtx MadPiano_Bone_mesh_layer_4_vtx_0[8];
+extern Gfx MadPiano_Bone_mesh_layer_4_tri_0[];
+extern Vtx MadPiano_Bone_002_mesh_layer_4_vtx_0[62];
+extern Gfx MadPiano_Bone_002_mesh_layer_4_tri_0[];
+extern Gfx mat_MadPiano_f3d_material_001_layer1[];
+extern Gfx mat_revert_MadPiano_f3d_material_001_layer1[];
+extern Gfx mat_MadPiano_f3dlite_material[];
+extern Gfx mat_revert_MadPiano_f3dlite_material[];
+extern Gfx MadPiano_Bone_mesh_layer_1[];
+extern Gfx MadPiano_Bone_mesh_layer_4[];
+extern Gfx MadPiano_Bone_002_mesh_layer_4[];

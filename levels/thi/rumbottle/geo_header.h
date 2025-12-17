@@ -1,0 +1,16 @@
+extern const GeoLayout rumbottle_Armature_001[];
+extern const GeoLayout rumbottle_geo[];
+extern u8 rumbottle_bottle_shaded_ci8[];
+extern u8 rumbottle_bottle_shaded_pal_rgba16[];
+extern u8 rumbottle_bottle_shaded_ci8_copy[];
+extern u8 rumbottle_bottle_shaded_pal_rgba16_copy[];
+extern Vtx rumbottle_Bone_001_mesh_layer_1_vtx_0[24];
+extern Gfx rumbottle_Bone_001_mesh_layer_1_tri_0[];
+extern Vtx rumbottle_fff_fsaghfsag_mesh_layer_1_vtx_0[24];
+extern Gfx rumbottle_fff_fsaghfsag_mesh_layer_1_tri_0[];
+extern Gfx mat_rumbottle_f3d_material[];
+extern Gfx mat_revert_rumbottle_f3d_material[];
+extern Gfx mat_rumbottle_f3d_material_040[];
+extern Gfx mat_revert_rumbottle_f3d_material_040[];
+extern Gfx rumbottle_Bone_001_mesh_layer_1[];
+extern Gfx rumbottle_fff_fsaghfsag_mesh_layer_1[];

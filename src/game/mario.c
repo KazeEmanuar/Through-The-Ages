@@ -1792,6 +1792,7 @@ s32 execute_mario_action(UNUSED struct Object *o) {
     s32 inLoop = TRUE;
 
     if (gMarioState->action) {
+        gMarioState->flags &= ~MARIO_FLAG_PUSHING_WALL;
         gMarioState->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
         mario_reset_bodystate(gMarioState);
         if ((rendershop != 1) && (!pickpoke)) {

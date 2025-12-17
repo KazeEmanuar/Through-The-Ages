@@ -421,7 +421,7 @@ const BehaviorScript bhvPoleGrabbing[] = {
 const BehaviorScript bhvThiHugeIslandTop[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-    LOAD_COLLISION_DATA(thi_seg7_collision_top_trap),
+    LOAD_COLLISION_DATA(0),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_thi_huge_island_top_loop),
     END_LOOP(),
@@ -7981,4 +7981,353 @@ const BehaviorScript bhvSleepCloud[] = {
     BEGIN_LOOP(),
         CALL_NATIVE(sleepcloud),
     END_LOOP(),
+};
+
+extern void ResetInteraction(void);
+const BehaviorScript bhvEmptyHitbox[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    SET_INT(oIntangibleTimer, 0),
+    BEGIN_LOOP(),
+        CALL_NATIVE(ResetInteraction),
+    END_LOOP(),
+};
+extern void retropiranha(void);
+const BehaviorScript bhvRetroPiranha[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+    BEGIN_LOOP(),
+        CALL_NATIVE(retropiranha),
+    END_LOOP(),
+};
+#define TICK(a) BEGIN_LOOP(),CALL_NATIVE(a), END_LOOP()
+#define SET_GRAPH_PARAMETERS(a, b, c, d) OR_INT(oFlags, 0)
+#define ConstructionScript BehaviorScript
+extern void lineplatform(void);
+const ConstructionScript bhvLinePlatform[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(lineplatform_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_GRAPH_PARAMETERS(235, 0, 0, 0), 
+    SET_HOME(),
+    TICK(lineplatform),
+};
+
+extern void fallplatform(void);
+const ConstructionScript bhvFallPlatform[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(fallplatform1_collision),
+    SET_GRAPH_PARAMETERS(380, 0, 0, 0), 
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    TICK(fallplatform),
+};
+
+extern void wallsword(void);
+const ConstructionScript bhvWallSword[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    // Boo - common:
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO
+                    | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ 0,
+                    /*Drag strength*/ 0, /*Friction*/ 1000, /*Buoyancy*/ 0, /*Unused*/ 0, 0),
+    SET_INTERACT_TYPE(INTERACT_DAMAGE),
+    SET_INT(oDamageOrCoinValue, 3),
+    SET_HITBOX(/*Radius*/ 180, /*Height*/ 20),
+    SET_GRAPH_PARAMETERS(220, 0, 0, 0), 
+    TICK(wallsword),
+};
+
+extern void rotatetunnel(void);
+const ConstructionScript bhvTunnelShip[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(tunnel_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_GRAPH_PARAMETERS(1376, 0, 0, 0), 
+    TICK(rotatetunnel),
+};
+const ConstructionScript bhvTunnelShip2[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(tunnel2_collision),
+    GOTO(bhvTunnelShip + 1 + 2),
+};
+
+extern void shyguysays(void);
+const ConstructionScript bhvShyGuySays[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    // Boo - common:
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO
+                    | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    LOAD_ANIMATIONS(oAnimations, Shyguysays_anims),
+    SET_GRAPH_PARAMETERS(128, SHADOW_CIRCLE_4_VERTS, 0x35, 90), 
+    SCALE(/*Unused*/ 0, /*Field*/ 150),
+    TICK(shyguysays),
+};
+
+extern void shyguyblock(void);
+const ConstructionScript bhvShyGuyBlock[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(shyguyblock_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_FLOAT(oCollisionDistance, 32000),
+    SET_GRAPH_PARAMETERS(303, 0, 0, 0), 
+    TICK(shyguyblock),
+};
+
+extern void shyguybed(void);
+const ConstructionScript bhvShyGuyBed[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(guybed_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_GRAPH_PARAMETERS(466, 0, 0, 0), 
+    TICK(shyguybed),
+};
+
+extern void Ropebridge(void);
+extern void Ropebridge_Init(void);
+const ConstructionScript bhvRopeBridge[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(ropebridge_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_GRAPH_PARAMETERS(324, 0, 0, 0), 
+    CALL_NATIVE(Ropebridge_Init),
+    TICK(Ropebridge),
+};
+
+
+extern void pushthingy(void);
+const ConstructionScript bhvPushCargo[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(movecrate_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_GRAPH_PARAMETERS(490, 0, 0, 0), 
+    TICK(pushthingy),
+};
+extern void pushthingy2(void);
+const ConstructionScript bhvPushShelf[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(pushshelf_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_FLOAT(oDrawingDistance, 32000),
+    SET_GRAPH_PARAMETERS(734, 0, 0, 0), 
+    SET_HOME(),
+    TICK(pushthingy2),
+};
+
+// canon name: jellomp
+extern void jellyblock(void);
+const ConstructionScript bhvJellyBlock[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_ANIMATIONS(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(jellyblock_collision),
+    SET_FLOAT(oCollisionDistance, 6000),
+    SET_HOME(),
+    LOAD_ANIMATIONS(oAnimations, jellyblock_anims),
+    ANIMATE(0),
+    SET_GRAPH_PARAMETERS(600, 0, 0, 0), 
+    TICK(jellyblock),
+};
+
+
+const ConstructionScript bhvFlameSmall[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    BILLBOARD(),
+    SCALE(/*Unused*/ 0, /*Field*/ 70),
+    SET_GRAPH_PARAMETERS(28, 0, 0, 0),
+    BEGIN_LOOP(),
+    END_LOOP(),
+};
+const ConstructionScript bhvFlameMedium[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    BILLBOARD(),
+    SCALE(/*Unused*/ 0, /*Field*/ 250),
+    SET_GRAPH_PARAMETERS(100, 0, 0, 0),
+    BEGIN_LOOP(),
+    END_LOOP(),
+};
+
+void DoubleDoor(void);
+const ConstructionScript bhvDoubleDoor[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(DoubleDoor_collision),
+    SET_GRAPH_PARAMETERS(457, 0, 0, 0), 
+    TICK(DoubleDoor),
+};
+
+extern void destroybarrelcode(void);
+extern void SetBarrelColor(void);
+const ConstructionScript bhvDestroyBarrel[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(destroybarrel_collision),
+    SET_HOME(),
+    SET_GRAPH_PARAMETERS(241, SHADOW_CIRCLE_4_VERTS, 0xb4, 250), 
+    CALL_NATIVE(SetBarrelColor),
+    CALL_NATIVE(cur_obj_update_floor_height),
+    TICK(destroybarrelcode),
+};
+
+extern void crumblebridge(void);
+const ConstructionScript bhvCrumbleBridge[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(crumblefloor_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_FLOAT(oDrawingDistance, 32000),
+    SET_GRAPH_PARAMETERS(224, 0, 0, 0), 
+    TICK(crumblebridge),
+};
+
+extern void chandelier(void);
+extern void ChandelierInit(void);
+const ConstructionScript bhvChandelier[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(chandelier_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_GRAPH_PARAMETERS(1484, 0, 0, 0), 
+    CALL_NATIVE(ChandelierInit),
+    TICK(chandelier),
+};
+
+void Catchnet(void);
+void Catchnet_Init(void);
+const ConstructionScript bhvCatchnet[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(Catchnet_collision),
+    SET_GRAPH_PARAMETERS(1326, 0, 0, 0), 
+    CALL_NATIVE(Catchnet_Init),
+    TICK(Catchnet),
+};
+
+extern void breakabletile(void);
+const ConstructionScript bhvBreakableTile[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(floorbreak_collision),
+    SET_GRAPH_PARAMETERS(287, 0, 0, 0), 
+    TICK(breakabletile),
+};
+
+extern void booGuyPainting(void);
+const ConstructionScript bhvBooGuyPainting[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    // Boo - common:
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO
+                    | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    SET_GRAPH_PARAMETERS(105, 0, 0, 0), 
+    TICK(booGuyPainting),
+};
+
+extern void boobarrel(void);
+const ConstructionScript bhvBooBarrel[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(destroybarrel_collision),
+    LOAD_ANIMATIONS(oAnimations, booguybarrell_anims),
+    SET_HOME(),
+    CALL_NATIVE(cur_obj_update_floor_height),
+    SET_GRAPH_PARAMETERS(606, SHADOW_CIRCLE_4_VERTS, 0xb4, 250), 
+    TICK(boobarrel),
+};
+
+const ConstructionScript bhvYoshiCoin[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    // Yellow coin - common:
+    BILLBOARD(),
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    CALL_NATIVE(bhv_yellow_coin_init),
+    SET_MODEL(MODEL_BLUE_COIN),
+    SET_INT(oDamageOrCoinValue, 5),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_yellow_coin_loop),
+    END_LOOP(),
+};
+
+
+void ThePlank(void);
+const ConstructionScript bhvThePlank[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    LOAD_COLLISION_DATA(ThePlank_collision),
+    SET_GRAPH_PARAMETERS(849, 0, 0, 0), 
+    TICK(ThePlank),
+};
+
+extern void shyguycpt(void);
+const ConstructionScript bhvShyGuyCaptain[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    // Boo - common:
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO
+                    | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    SET_HITBOX(/*Radius*/ 100, /*Height*/ 205),
+    SET_INTERACT_TYPE(INTERACT_BOUNCE_TOP),
+    SET_INT(oDamageOrCoinValue, 2),
+    LOAD_ANIMATIONS(oAnimations, shyguycaptain_anims),
+    SET_GRAPH_PARAMETERS(298, SHADOW_CIRCLE_4_VERTS, 0x4f, 100), 
+    TICK(shyguycpt),
+};
+
+extern void movecratecode(void);
+const ConstructionScript bhvMoveCrate[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    LOAD_COLLISION_DATA(movecrate_collision),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    SET_GRAPH_PARAMETERS(491, 0, 0, 0), 
+    TICK(movecratecode),
+};
+
+extern void ghostplatform(void);
+const ConstructionScript bhvGhostPlatform[] = {
+    BEGIN(OBJ_LIST_SPAWNER),
+    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_COLLISION_DATA(ghostplatform_collision),
+    SET_HOME(),
+    SET_GRAPH_PARAMETERS(258, SHADOW_SQUARE_PERMANENT, 0xB4, 614), 
+    TICK(ghostplatform),
+};
+
+extern void ghostLantern(void);
+const ConstructionScript bhvGhostLantern[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW
+                    | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    SET_GRAPH_PARAMETERS(339, 0, 0, 0), 
+    TICK(ghostLantern),
+};
+
+extern void booGuy(void);
+const ConstructionScript bhvBooGuy[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    // Boo - common:
+    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO
+                    | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    SET_HOME(),
+    SET_INTERACT_TYPE(INTERACT_BOUNCE_TOP),
+    SET_INT(oDamageOrCoinValue, 2),
+    SET_HITBOX(/*Radius*/ 60, /*Height*/ 160),
+    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ 0, /*Bounciness*/ -50,
+                    /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
+    LOAD_ANIMATIONS(oAnimations, booguy_anims),
+    SET_GRAPH_PARAMETERS(95, SHADOW_CIRCLE_4_VERTS, 0x35, 90), 
+    TICK(booGuy),
+};
+
+
+void SleepBubbleInit(void);
+void SleepBubble(void);
+const ConstructionScript bhvYoshiBubble[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    SET_GRAPH_PARAMETERS(50, 0, 0, 0), 
+    BILLBOARD(),
+    CALL_NATIVE(SleepBubbleInit),
+    TICK(SleepBubble),
 };

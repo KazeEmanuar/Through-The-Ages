@@ -1,0 +1,10 @@
+extern const GeoLayout NewBookend_geo[];
+extern u8 NewBookend_bookend_rgba16[];
+extern Vtx NewBookend_Bone_mesh_layer_1_vtx_0[41];
+extern Gfx NewBookend_Bone_mesh_layer_1_tri_0[];
+extern Vtx NewBookend_Bone_001_mesh_layer_1_vtx_0[41];
+extern Gfx NewBookend_Bone_001_mesh_layer_1_tri_0[];
+extern Gfx mat_NewBookend_f3d_material_008[];
+extern Gfx mat_revert_NewBookend_f3d_material_008[];
+extern Gfx NewBookend_Bone_mesh_layer_1[];
+extern Gfx NewBookend_Bone_001_mesh_layer_1[];

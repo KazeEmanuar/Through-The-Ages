@@ -1,0 +1,10 @@
+extern const GeoLayout Shipcannon_Geo[];
+extern Lights1 Shipcannon_f3dlite_material_008_layer1_lights;
+extern u8 Shipcannon_SM64_LAST_IMPACT_AB88498D_0_2_all_ci8[];
+extern u8 Shipcannon_SM64_LAST_IMPACT_AB88498D_0_2_all_pal_rgba16[];
+extern Vtx Shipcannon_cannonship_mesh_layer_1_vtx_cull[8];
+extern Vtx Shipcannon_cannonship_mesh_layer_1_vtx_0[78];
+extern Gfx Shipcannon_cannonship_mesh_layer_1_tri_0[];
+extern Gfx mat_Shipcannon_f3dlite_material_008_layer1[];
+extern Gfx mat_revert_Shipcannon_f3dlite_material_008_layer1[];
+extern Gfx Shipcannon_cannonship_mesh_layer_1[];

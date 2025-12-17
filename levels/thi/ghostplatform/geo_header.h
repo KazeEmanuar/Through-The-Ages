@@ -1,0 +1,15 @@
+extern const GeoLayout ghostplatform_Armature_001[];
+extern const GeoLayout ghostplatform_geo[];
+extern u8 ghostplatform_barrel_bottom__3__i4[];
+extern u8 ghostplatform_hairal_obj_01_55A80__2____Copy_i4[];
+extern u8 ghostplatform_LightBeam2_ia8[];
+extern Vtx ghostplatform_Bone_mesh_layer_1_vtx_0[16];
+extern Gfx ghostplatform_Bone_mesh_layer_1_tri_0[];
+extern Vtx ghostplatform_Bone_002_mesh_layer_5_vtx_0[36];
+extern Gfx ghostplatform_Bone_002_mesh_layer_5_tri_0[];
+extern Gfx mat_ghostplatform_f3d_material_038_layer1[];
+extern Gfx mat_revert_ghostplatform_f3d_material_038_layer1[];
+extern Gfx mat_ghostplatform_f3d_material_002[];
+extern Gfx mat_revert_ghostplatform_f3d_material_002[];
+extern Gfx ghostplatform_Bone_mesh_layer_1[];
+extern Gfx ghostplatform_Bone_002_mesh_layer_5[];

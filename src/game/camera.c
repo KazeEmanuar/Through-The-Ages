@@ -1778,6 +1778,22 @@ struct CameraTrigger sCamWDW[] = {
 struct CameraTrigger sCamBitS[] = {
 	NULL_TRIGGER
 };
+struct CameraTrigger sCamTHI[] = {
+	{-1, 5, 1914, -6492, 379, 18011, 1257, 3448, 0xffff},
+	{-1, 1, 6049, -308, 1356, 3000, 3255, 2303, 0xffff},
+	{-1, 3, -4586, 2368, 356, 3000, 2817, 3073, 0xffff},
+	{-1, 6, -9535, 2368, -1649, 740, 3255, 3073, 0xffff},
+	{-1, 4, -4700, -2700, 4154, 6332, 1958, 2303, 0xffff},
+	{-1, 4, -10737, -2680, 1584, 1693, 1239, 3216, 0xffff},
+	{-1, 2, -8198, 1484, 325, 688, 3255, 2326, 0xffff},
+	{-1, 2, -3059, -2517, 368, 6217, 2145, 1573, 0xffff},
+	{-1, 7, -10925, 2368, -1649, 740, 3255, 3073, 0xffff},
+	{-1, 8, -12261, 2368, -1649, 740, 3255, 3073, 0xffff},
+	{-1, 9, -15774, 2368, -1649, 2959, 3255, 3073, 0xffff},
+	{-1, 2, -9959, -6024, 368, 927, 2145, 1573, 0xffff},
+	{-1, 5, -9959, -6024, 368, 927, 2145, 1573, 0xffff},
+	NULL_TRIGGER
+};
 struct CameraTrigger *sCameraTriggers[LEVEL_COUNT + 1] = {
     NULL,
 #include "levels/level_defines.h"
@@ -3842,7 +3858,7 @@ u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 1, 1, 1), // CASTLE_INSIDE  | HMC
 	ZOOMOUT_AREA_MASK(1, 1, 1, 0, 1, 1, 1, 0), // SSL            | BOB
 	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 1, 1, 1), // SL             | WDW
-	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 1, 0, 0), // JRB            | THI
+	ZOOMOUT_AREA_MASK(1, 1, 1, 1, 1, 1, 1, 1), // JRB            | THI
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // TTC            | RR
 	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 1, 1, 1, 1), // CASTLE_GROUNDS | BITDW
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 1, 1, 1), // VCUTM          | BITFS

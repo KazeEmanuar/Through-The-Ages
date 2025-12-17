@@ -62,7 +62,7 @@ struct KoopaTheQuickProperties {
  */
 static struct KoopaTheQuickProperties sKoopaTheQuickProperties[] = {
     { DIALOG_005, DIALOG_007, bob_seg7_trajectory_koopa, { 3030, 4500, -4600 } },
-    { DIALOG_009, DIALOG_031, thi_seg7_trajectory_koopa, { 7100, -1300, -6000 } }
+    { DIALOG_009, DIALOG_031, 0, { 7100, -1300, -6000 } }
 };
 
 /**

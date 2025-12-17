@@ -1,0 +1,13 @@
+extern const GeoLayout pushcargobox_geo[];
+extern u8 pushcargobox__381c3000_fmt0431_slice0_mip00_128x128_tm04_i8[];
+extern u8 pushcargobox_Untitled_i8[];
+extern Vtx pushcargobox_Plane_032_mesh_layer_1_vtx_0[12];
+extern Gfx pushcargobox_Plane_032_mesh_layer_1_tri_0[];
+extern Vtx pushcargobox_Plane_032_mesh_layer_6_vtx_0[4];
+extern Gfx pushcargobox_Plane_032_mesh_layer_6_tri_0[];
+extern Gfx mat_pushcargobox_f3d_material_039[];
+extern Gfx mat_revert_pushcargobox_f3d_material_039[];
+extern Gfx mat_pushcargobox_f3dlite_material[];
+extern Gfx mat_revert_pushcargobox_f3dlite_material[];
+extern Gfx pushcargobox_Plane_032_mesh_layer_1[];
+extern Gfx pushcargobox_Plane_032_mesh_layer_6[];
