@@ -29,6 +29,8 @@ extern Gfx *geo_exec_flying_carpet_create(s32 callContext, struct GraphNode *nod
 extern Gfx *geo_exec_cake_end_screen(s32 callContext, struct GraphNode *node, UNUSED f32 mtx[4][4]);
 extern Gfx *background_translate(s32 callContext, struct GraphNode *node, UNUSED f32 mtx[4][4]);
 
+
+
 #define gLoadBlockTexture(dl, width, height, format, image)                                                  \
 {                                                                                                            \
     gDPSetTextureImage((dl), (format), G_IM_SIZ_16b, 1, (image));                                            \

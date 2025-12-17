@@ -3829,6 +3829,7 @@ void ThePlank(void) {
 
 Gfx *geo_render_captain_background(s32 callContext, UNUSED struct GraphNode *node,
                                    UNUSED Mat4 b) {
+    struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
     s32 i;
     f32 pos[3];
     if (callContext == GEO_CONTEXT_RENDER && CurrentRoom == 9) {
@@ -3843,6 +3844,7 @@ Gfx *geo_render_captain_background(s32 callContext, UNUSED struct GraphNode *nod
                   G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
         gSPDisplayList(dlist++, CaptainBG_CaptainBG_mesh);
         gSPEndDisplayList(dlist++);
+        asGenerated->fnNode.node.flags = (asGenerated->fnNode.node.flags & 0xFF) | (0 << 8);
         return Start;
     }
     return 0;
@@ -3854,8 +3856,8 @@ Gfx DeadEnvColor[] = {
 };
 
 Gfx *Geo_KillEnvColor(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
-    Gfx *gfx = NULL;
     struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
+    Gfx *gfx = NULL;
     if (callContext == GEO_CONTEXT_RENDER) {
         gfx = &DeadEnvColor[0];
         asGenerated->fnNode.node.flags = (asGenerated->fnNode.node.flags & 0xFF) | (LAYER_OPAQUE << 8);
@@ -4821,4 +4823,133 @@ void SleepBubble(void) {
         }
         DestroyActor(o);
     }
+}
+Gfx *geo_set_primOpa(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
+    struct Object *obj = (struct Object *) gCurGraphNodeObject;
+    struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
+    if (callContext == GEO_CONTEXT_RENDER) {
+        Gfx *gfx = alloc_display_listGRAPH(sizeof(Gfx) * 2);
+        Gfx *dlStart = gfx;
+        CreateDirtyExclusiveOne(gfx);
+        gDPSetPrimColor(dlStart++, 0, 0, 0, (ObjbParam2(obj) - 16) * 20, (ObjbParam2(obj) - 16) * 20,
+                        obj->oOpacity);
+        gSPEndDisplayList(dlStart++);
+        asGenerated->fnNode.node.flags = (asGenerated->fnNode.node.flags & 0xFF) | (asGenerated->parameter << 8);
+        return gfx;
+    }
+    return 0;
+}
+
+
+#include "levels/thi/header.h"
+
+Gfx *BGList[] = {
+   0,
+    0,
+0,
+    0,
+    0,
+    0,
+    0,
+    &MoonlitBG_AAAAAAABackGround_001_mesh[0],
+    &MoonlitBG2_AAAAAAABackGroundTransparent_mesh[0]
+};
+
+f32 farawaynesses[] = {
+    0.99f, 0.99f, 0.99f, 0.99f,    0.99f,  0.75675f, 0.99f, 0.75675f, 0.99f, // 8
+    0.99f, 1.f,   0.99f, 0.75675f, 0.975f, 0.99f,    0.99f, 0.99f,    0.99f, // 17
+    0.99f, 0.99f, 0.99f, 0.99f,    0.99f,  1.00f,    0.99f, 0.99f,    0.99f, // 26
+    0.99f, 0.99f, 0.99f,
+};
+Gfx *geo_render_INFBG(s32 callContext, struct GraphNode *node, UNUSED Mat4 b) {
+    f32 pos[3];
+    s32 i;
+    struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) node;
+    if (callContext == GEO_CONTEXT_RENDER) {
+        Mtx *mtx = alloc_display_listGRAPH(sizeof(*mtx));
+        Gfx *dlist = alloc_display_list(4 * sizeof(Gfx));
+        Gfx *Start = dlist;
+        for (i = 0; i < 3; i++) {
+            pos[i] = newcam_pos[i] * farawaynesses[asGenerated->parameter];
+        }
+        guTranslate(mtx, pos[0], pos[1], pos[2]);
+        gSPMatrix(dlist++, (mtx),
+                  G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+        gSPDisplayList(dlist++, CaptainBG_CaptainBG_mesh);
+        gSPEndDisplayList(dlist++);
+        asGenerated->fnNode.node.flags = (asGenerated->fnNode.node.flags & 0xFF) | (0 << 8);
+        return Start;
+    }
+    return 0;
+}
+
+Gfx *FindFirstMatching(Gfx *DLStart, u32 Word1Flag, u32 Word2Flag, u32 DesiredWord1,
+                            u32 DesiredWord2) {
+    s32 DebugCounter = 0;
+    do {
+        if (!0) {
+            DebugCounter++;
+            // crash on purpose
+            if (!(DebugCounter < (0x300000 / 8)))
+                return 0;
+        }
+        if ((DLStart[0].words.w0 & Word1Flag) != (DesiredWord1 & Word1Flag))
+            continue;
+        if ((DLStart[0].words.w1 & Word2Flag) != (DesiredWord2 & Word2Flag))
+            continue;
+        return DLStart;
+    } while (DLStart++);
+    return 0;
+}
+
+Gfx envColor[] = {
+    sDPRGBColor(G_SETENVCOLOR, 64, 64, 64, 64),
+    gsSPEndDisplayList(),
+};
+// Gfx pointers that may be backed up by various geo nodes or texture animations
+Gfx *GfxPointerStorage[10];
+#define LIGHTINGTIMER (envColor[0].words.w1 & 0x000000FF)
+u8 bolted = 0;
+static const Gfx FindFoamyWater = gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_16b, 1, thi_dl_tiki1_i4);
+static const Gfx FindGFX2 = gsDPSetTileSize(1, 0, 0, 252, 252);
+Gfx *geo_cause_env_lightning(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
+    Gfx *gfx = NULL;
+    s32 old;
+    u8 brightness;
+    struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
+    if (callContext == GEO_CONTEXT_RENDER) {
+        gfx = &envColor[0];
+        if (!asGenerated->parameter) {
+            brightness = (envColor[0].words.w1 & 0x000000FF);
+            if ((brightness > 30) && ((RandomU16() % 175) == 0)) {
+                brightness = 0;
+                bolted = 1;
+            } else {
+                brightness = approach_s16_symmetric(brightness, 64, 1);
+            }
+            envColor[0].words.w1 =
+                brightness + brightness * 256 + brightness * 256 * 256 + brightness * 256 * 256 * 256;
+            // ALSO: scroll water. because it fits here i guess
+#define SCROLLBITFLAG _SHIFTL(0xFFF, 12, 12)
+#define SCROLLBITFLAG2 _SHIFTL(0xFFF, 0, 12)
+            old = (GfxPointerStorage[1]->words.w0 & SCROLLBITFLAG) >> 12;
+            GfxPointerStorage[1]->words.w0 =
+                ((GfxPointerStorage[1]->words.w0 & (~SCROLLBITFLAG)) | _SHIFTL(old + 5, 12, 12));
+            old = (GfxPointerStorage[1]->words.w0 & SCROLLBITFLAG2) >> 0;
+            GfxPointerStorage[1]->words.w0 =
+                ((GfxPointerStorage[1]->words.w0 & (~SCROLLBITFLAG2)) | _SHIFTL(old - 6, 0, 12));
+        }
+        asGenerated->fnNode.node.flags = (asGenerated->fnNode.node.flags & 0xFF) | (asGenerated->parameter << 8);
+    } else if (callContext == GEO_CONTEXT_CREATE) {
+        if (!asGenerated->parameter) {
+            Gfx *Found =
+                FindFirstMatching(SegmentedToVirtual(thi_dl_OCEAN_mesh_layer_1), 0xFFFFFFFF,
+                                  0xFFFFFFFF, FindFoamyWater.words.w0, FindFoamyWater.words.w1);
+            Found->words.w1 = water_get_srcI4() & 0x00FFFFFF;
+            GfxPointerStorage[1] =
+                FindFirstMatching(SegmentedToVirtual(thi_dl_OCEAN_mesh_layer_1), 0xFF000000,
+                                  0xFFFFFFFF, FindGFX2.words.w0, FindGFX2.words.w1);
+        }
+    }
+    return gfx;
 }

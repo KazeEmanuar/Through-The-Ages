@@ -619,6 +619,12 @@ Gfx *geo_set_prim(s32 callContext, struct GraphNode *b, Mat4 *mtx);
 Gfx *geo_pipecolor(s32 callContext, struct GraphNode *b, Mat4 *mtx);
 Gfx *set_prim_to_opacity(s32 callContext, struct GraphNode *node, UNUSED void *context);
 
+Gfx *geo_set_primOpa(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx);
+Gfx *geo_GhostPlatform(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx);
+Gfx *geo_render_captain_background(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtxf);
+Gfx *Geo_KillEnvColor(s32 callContext, struct GraphNode *b, Mat4 *mtx);
+extern Gfx *geo_render_INFBG(s32 callContext, struct GraphNode *node, UNUSED Mat4 mtx);
+extern Gfx *geo_cause_env_lightning(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx);
 // Water splash
 extern struct WaterDropletParams gShallowWaterSplashDropletParams;
 extern struct WaterDropletParams gShallowWaterWaveDropletParams;

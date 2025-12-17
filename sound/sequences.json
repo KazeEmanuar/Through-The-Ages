@@ -51,5 +51,8 @@
 	"30_secret": ["27_streamed2"],
 	"31_Court": ["27_streamed2"],
 	"32_atlantis": ["27_streamed2"],
-	"33_surreal": ["27_streamed2"]
+	"33_surreal": ["27_streamed2"],
+	"34_GhostShip": ["29_stinkypoopyman"],
+	"35_inside_ghostship": ["29_stinkypoopyman"],
+	"36_ShyGuy_Captain": ["29_stinkypoopyman"]
 }

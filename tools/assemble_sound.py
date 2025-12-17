@@ -485,6 +485,7 @@ def mark_sample_bank_uses(bank):
 
 
 def serialize_ctl(bank, base_ser):
+    print(f"[sound] serializing bank: {bank.name}", file=sys.stderr)
     json = bank.json
 
     drums = []
