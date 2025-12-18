@@ -1322,7 +1322,6 @@ Gfx mario_right_foot[] = {
     gsSPDisplayList(mario_right_foot_dl),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };
@@ -1334,7 +1333,6 @@ Gfx mario_metal_right_foot[] = {
     gsSPClearGeometryMode(G_TEXTURE_GEN),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPTexture(0x0F80, 0x07C0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };
@@ -3943,7 +3941,6 @@ Gfx mario_medium_poly_right_foot[] = {
     gsSPDisplayList(mario_medium_poly_right_foot_dl),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };
@@ -3955,7 +3952,6 @@ Gfx mario_metal_medium_poly_right_foot[] = {
     gsSPClearGeometryMode(G_TEXTURE_GEN),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPTexture(0x0F80, 0x07C0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };
@@ -4627,7 +4623,6 @@ Gfx mario_low_poly_right_foot[] = {
     gsSPDisplayList(mario_low_poly_right_foot_dl),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };
@@ -4639,7 +4634,6 @@ Gfx mario_metal_low_poly_right_foot[] = {
     gsSPClearGeometryMode(G_TEXTURE_GEN),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPTexture(0x0F80, 0x07C0, 0, G_TX_RENDERTILE, G_OFF),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };

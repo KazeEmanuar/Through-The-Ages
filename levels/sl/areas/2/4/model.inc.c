@@ -45,6 +45,5 @@ const Gfx sl_seg7_dl_0700CB58[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_CULL_BACK | G_SHADING_SMOOTH),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

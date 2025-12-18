@@ -350,6 +350,5 @@ const Gfx boo_seg5_dl_0500C1B0[] = {
     gsSPDisplayList(boo_seg5_dl_0500BFA0),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

@@ -143,6 +143,5 @@ const Gfx rr_seg7_dl_0700E830[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

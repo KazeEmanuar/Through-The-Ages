@@ -2214,7 +2214,6 @@ const Gfx peach_seg5_dl_0500A0A8[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_CULL_BACK),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),
 };
@@ -2235,7 +2234,6 @@ const Gfx peach_seg5_us_dl_0500A188[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_CULL_BACK),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetRenderMode(G_RM_AA_ZB_XLU_SURF, G_RM_NOOP2),
     gsDPSetAlphaCompare(G_AC_NONE),
     gsSPEndDisplayList(),

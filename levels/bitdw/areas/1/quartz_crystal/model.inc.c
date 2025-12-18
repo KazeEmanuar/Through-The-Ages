@@ -85,6 +85,5 @@ const Gfx bitdw_seg7_dl_070093B0[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

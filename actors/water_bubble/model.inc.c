@@ -215,6 +215,5 @@ const Gfx water_bubble_seg5_dl_05011000[] = {
     gsDPPipeSync(),
     gsSPClearGeometryMode(G_TEXTURE_GEN),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

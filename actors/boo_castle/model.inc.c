@@ -350,6 +350,5 @@ const Gfx boo_castle_seg6_dl_06017CE0[] = {
     gsSPDisplayList(boo_castle_seg6_dl_06017AD0),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

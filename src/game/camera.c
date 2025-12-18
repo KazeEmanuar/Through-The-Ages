@@ -481,12 +481,17 @@ void set_camera_mode(struct Camera *c, s32 mode, s32 frames) { // puppycam
 /**
  * Updates Lakitu's position/focus and applies camera shakes.
  */
+f32 camRoll = 0;
+f32 camRollSpeed = 6.f;
+#define PERCENTAGE 0.001f
+#define MAGNITUDESET (750.f * 2048.f)
 void update_lakitu(struct Camera *c) {
     struct Surface *floor = NULL;
     Vec3f newPos;
     Vec3f newFoc;
     f32 distToFloor;
     s32 newYaw;
+    f32 offsetShake;
 
     if (gCameraMovementFlags & CAM_MOVE_PAUSE_SCREEN) {
     } else {
@@ -539,6 +544,14 @@ void update_lakitu(struct Camera *c) {
 
         gLakituState.roll += sHandheldShakeRoll;
         gLakituState.roll += gLakituState.keyDanceRoll;
+    if ((gCurrLevelNum == LEVEL_THI) && (gCurrAreaIndex != 4)) {
+        camRoll += camRollSpeed;
+        camRollSpeed -= camRoll * PERCENTAGE;
+
+       gLakituState.roll = camRoll * sins(newcam_yaw);
+        offsetShake = 2.f * coss(newcam_yaw) * sins(camRoll) * MAGNITUDESET / newcam_distance;
+        newcam_pos[1] += offsetShake;
+    }
 
         vec3f_copy(sModeTransition.marioPos, sMarioCamState->pos);
     }

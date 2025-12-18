@@ -48,7 +48,6 @@ const Gfx inside_castle_seg7_dl_07037DE8[] = {
     gsSPDisplayList(inside_castle_seg7_dl_07037D70),
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPSetGeometryMode(G_LIGHTING),
     gsSPEndDisplayList(),
 };

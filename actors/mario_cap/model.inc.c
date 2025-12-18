@@ -274,7 +274,6 @@ const Gfx mario_cap_seg3_dl_03022F48[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsDPSetAlphaCompare(G_AC_NONE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };
 
@@ -295,7 +294,6 @@ const Gfx mario_cap_seg3_dl_03022FF8[] = {
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPTexture(0x0F80, 0x07C0, 0, G_TX_RENDERTILE, G_OFF),
     gsDPSetAlphaCompare(G_AC_NONE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };
 
@@ -368,7 +366,6 @@ const Gfx mario_cap_seg3_dl_03023160[] = {
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
     gsDPSetAlphaCompare(G_AC_NONE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };
 
@@ -411,6 +408,5 @@ const Gfx mario_cap_seg3_dl_03023298[] = {
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
     gsDPSetAlphaCompare(G_AC_NONE),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };

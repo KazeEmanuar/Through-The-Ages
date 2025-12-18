@@ -89,4 +89,8 @@ void scroll_textures() {
 		scroll_textures_thi();
 	}
 
+	if(SCROLL_CONDITION(sSegmentROMTable[0x7] == (uintptr_t)_thi_segment_7SegmentRomStart)) {
+		scroll_textures_thi();
+	}
+
 }

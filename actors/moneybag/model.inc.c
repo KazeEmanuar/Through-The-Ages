@@ -165,7 +165,6 @@ const Gfx moneybag_seg6_dl_06005618[] = {
 const Gfx moneybag_seg6_dl_06005688[] = {
     gsSPDisplayList(moneybag_seg6_dl_060053B8),
     gsSPDisplayList(moneybag_seg6_dl_06005618),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsSPEndDisplayList(),
 };
 

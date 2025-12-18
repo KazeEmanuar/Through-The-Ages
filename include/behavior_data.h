@@ -718,4 +718,5 @@ extern const BehaviorScript bhvGhostLantern[];
 extern const BehaviorScript bhvDoorWarp2[];
 extern const BehaviorScript bhvBooGuy[];
 extern const BehaviorScript bhvYoshiBubble[];
+extern const BehaviorScript bhvShipCannon2[];
 #endif // BEHAVIOR_DATA_H

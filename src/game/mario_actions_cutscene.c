@@ -725,44 +725,6 @@ s32 launch_mario_until_land(struct MarioState *m, s32 endAction, s32 animation, 
 }
 
 s32 act_unlocking_key_door(struct MarioState *m) {
-    m->faceAngle[1] = m->usedObj->oMoveAngleYaw;
-
-    m->pos[0] = m->usedObj->oPosX + coss(m->faceAngle[1]) * 75.0f;
-    m->pos[2] = m->usedObj->oPosZ + sins(m->faceAngle[1]) * 75.0f;
-
-    if (m->actionArg & 2) {
-        m->faceAngle[1] += 0x8000;
-    }
-
-    if (m->actionTimer == 0) {
-        spawn_obj_at_mario_rel_yaw(m, MODEL_BOWSER_KEY_CUTSCENE, bhvBowserKeyUnlockDoor, 0);
-        set_mario_animation(m, MARIO_ANIM_UNLOCK_DOOR);
-    }
-
-    switch (m->marioObj->header.gfx.unk38.animFrame) {
-        case 79:
-            play_sound(SOUND_GENERAL_DOOR_INSERT_KEY, m->marioObj->header.gfx.cameraToObject);
-            break;
-        case 111:
-            play_sound(SOUND_GENERAL_DOOR_TURN_KEY, m->marioObj->header.gfx.cameraToObject);
-            break;
-    }
-
-    update_mario_pos_for_anim(m);
-    stop_and_set_height_to_floor(m);
-
-    if (is_anim_at_end(m)) {
-        if (m->usedObj->oBehParams >> 24 == 1) {
-            save_file_set_flags(SAVE_FLAG_UNLOCKED_UPSTAIRS_DOOR);
-            save_file_clear_flags(SAVE_FLAG_HAVE_KEY_2);
-        } else {
-            save_file_set_flags(SAVE_FLAG_UNLOCKED_BASEMENT_DOOR);
-            save_file_clear_flags(SAVE_FLAG_HAVE_KEY_1);
-        }
-        set_mario_action(m, ACT_WALKING, 0);
-    }
-
-    m->actionTimer++;
     return FALSE;
 }
 
@@ -1026,81 +988,6 @@ s32 act_falling_exit_airborne(struct MarioState *m) {
 }
 
 s32 act_exit_land_save_dialog(struct MarioState *m) {
-    s32 animFrame;
-    stationary_ground_step(m);
-    play_mario_landing_sound_once(m, SOUND_ACTION_TERRAIN_LANDING);
-    switch (m->actionState) {
-        // determine type of exit
-        case 0:
-            set_mario_animation(m, m->actionArg == 0 ? MARIO_ANIM_GENERAL_LAND
-                                                     : MARIO_ANIM_LAND_FROM_SINGLE_JUMP);
-            if (is_anim_past_end(m)) {
-                if (gLastCompletedCourseNum != COURSE_BITDW
-                    && gLastCompletedCourseNum != COURSE_BITFS) {
-                    enable_time_stop();
-                }
-
-                set_menu_mode(RENDER_COURSE_DONE_SCREEN);
-                gSaveOptSelectIndex = 0;
-
-                m->actionState = 3; // star exit with cap
-                if (!(m->flags & MARIO_CAP_ON_HEAD)) {
-                    m->actionState = 2; // star exit without cap
-                }
-            }
-            break;
-        // key exit
-        case 1:
-            animFrame = set_mario_animation(m, MARIO_ANIM_THROW_CATCH_KEY);
-            switch (animFrame) {
-                case -1:
-                    spawn_obj_at_mario_rel_yaw(m, MODEL_BOWSER_KEY_CUTSCENE, bhvBowserKeyCourseExit, -32768);
-                    //! fall through
-                case 67:
-                    play_sound(SOUND_ACTION_KEY_SWISH, m->marioObj->header.gfx.cameraToObject);
-                    //! fall through
-                case 83:
-                    play_sound(SOUND_ACTION_PAT_BACK, m->marioObj->header.gfx.cameraToObject);
-                    //! fall through
-                case 111:
-                    play_sound(SOUND_ACTION_UNKNOWN45C, m->marioObj->header.gfx.cameraToObject);
-                    // no break
-            }
-            handle_save_menu(m);
-            break;
-        // exit without cap
-        case 2:
-            animFrame = set_mario_animation(m, MARIO_ANIM_MISSING_CAP);
-            if ((animFrame >= 18 && animFrame < 55) || (animFrame >= 112 && animFrame < 134)) {
-                m->marioBodyState->handState = MARIO_HAND_OPEN;
-            }
-            if (!(animFrame < 109) && animFrame < 154) {
-                m->marioBodyState->eyeState = MARIO_EYES_HALF_CLOSED;
-            }
-
-            handle_save_menu(m);
-            break;
-        // exit with cap
-        case 3:
-            animFrame = set_mario_animation(m, MARIO_ANIM_TAKE_CAP_OFF_THEN_ON);
-            switch (animFrame) {
-                case 12:
-                    cutscene_take_cap_off(m);
-                    break;
-                case 37:
-                // fall through
-                case 53:
-                    play_sound(SOUND_ACTION_BRUSH_HAIR, m->marioObj->header.gfx.cameraToObject);
-                    break;
-                case 82:
-                    cutscene_put_cap_on(m);
-                    break;
-            }
-            handle_save_menu(m);
-            break;
-    }
-
-    m->marioObj->header.gfx.angle[1] += 0x8000;
     return FALSE;
 }
 

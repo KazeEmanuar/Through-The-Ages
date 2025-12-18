@@ -2394,7 +2394,7 @@ Gfx shyguycaptain_elbow_r_mesh_layer_5_tri_2[] = {
 Gfx mat_shyguycaptain_Coat_f3d[] = {
 	gsSPClearGeometryMode(G_CULL_BACK),
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, ENVIRONMENT, SHADE, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, TEXEL0, ENVIRONMENT, SHADE, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, TEXEL0, 0, SHADE, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_8b_LOAD_BLOCK, 1, shyguycaptain_CoatGhost_ia8),
@@ -2414,7 +2414,7 @@ Gfx mat_revert_shyguycaptain_Coat_f3d[] = {
 
 Gfx mat_shyguycaptain_Face_f3d_001[] = {
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, ENVIRONMENT, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE, TEXEL0, ENVIRONMENT, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE, TEXEL0, 0, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE),
 	gsDPSetAlphaDither(G_AD_NOISE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_8b_LOAD_BLOCK, 1, shyguycaptain_FaceGhost_i8),
@@ -2434,7 +2434,7 @@ Gfx mat_revert_shyguycaptain_Face_f3d_001[] = {
 Gfx mat_shyguycaptain_Hat_f3d_001[] = {
 	gsSPClearGeometryMode(G_CULL_BACK),
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, ENVIRONMENT, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE, TEXEL0, ENVIRONMENT, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE),
+	gsDPSetCombineLERP(TEXEL0, 0, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE, TEXEL0, 0, SHADE, PRIMITIVE, 0, 0, 0, PRIMITIVE),
 	gsDPSetAlphaDither(G_AD_NOISE),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_8b_LOAD_BLOCK, 1, shyguycaptain_HatGhost_i8),
@@ -2484,7 +2484,7 @@ Gfx mat_revert_shyguycaptain_SwordMap_f3d_001[] = {
 Gfx mat_shyguycaptain_Teeth_f3d_001[] = {
 	gsSPClearGeometryMode(G_CULL_BACK),
 	gsDPPipeSync(),
-	gsDPSetCombineLERP(TEXEL0, ENVIRONMENT, TEXEL0, 0, 0, 0, 0, TEXEL0, TEXEL0, ENVIRONMENT, TEXEL0, 0, 0, 0, 0, TEXEL0),
+	gsDPSetCombineLERP(TEXEL0, 0, TEXEL0, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, TEXEL0, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
 	gsDPSetTextureLUT(G_TT_RGBA16),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -2577,7 +2577,6 @@ Gfx shyguycaptain_Bone_006_mesh_layer_1[] = {
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 0),
-	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsSPEndDisplayList(),
 };
@@ -2591,7 +2590,6 @@ Gfx shyguycaptain_Bone_006_mesh_layer_4[] = {
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 0),
-	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsSPEndDisplayList(),
 };
@@ -2632,7 +2630,6 @@ Gfx shyguycaptain_elbow_r_mesh_layer_5[] = {
 	gsSPClearGeometryMode(G_TEXTURE_GEN),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 0),
-	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsSPEndDisplayList(),
 };

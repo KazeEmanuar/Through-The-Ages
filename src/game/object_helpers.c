@@ -105,9 +105,6 @@ Gfx *geo_update_layer_transparency(s32 callContext, struct GraphNode *node, UNUS
                 }
             }
 #else // gDebugInfo accesses were removed in all non-JP versions.
-            if (objectOpacity == 0 && segmented_to_virtual(bhvBowser) == objectGraphNode->behavior) {
-                objectGraphNode->oAnimState = 2;
-            }
             // the debug info check was removed in US. so we need to
             // perform the only necessary check instead of the debuginfo
             // one.
@@ -1149,12 +1146,6 @@ static void cur_obj_move_after_thrown_or_dropped(f32 forwardVel, f32 velY) {
 }
 
 void cur_obj_get_thrown_or_placed(f32 forwardVel, f32 velY, s32 thrownAction) {
-    if (o->behavior == segmented_to_virtual(bhvBowser)) {
-        // Interestingly, when bowser is thrown, he is offset slightly to
-        // Mario's right
-        cur_obj_set_pos_relative_to_parent(-41.684f, 85.859f, 321.577f);
-    } else {
-    }
 
     cur_obj_become_tangible();
     cur_obj_enable_rendering();

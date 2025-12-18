@@ -412,19 +412,12 @@ struct Object *mario_get_collided_object(struct MarioState *m, u32 interactType)
 u32 mario_check_object_grab(struct MarioState *m) {
     u32 result = FALSE;
     void *script;
+    s16 facingDYaw ;
 
     if (m->input & INPUT_INTERACT_OBJ_GRABBABLE) {
         script = virtual_to_segmented(0x13, m->interactObj->behavior);
 
-        if (script == bhvBowser) {
-            s16 facingDYaw = m->faceAngle[1] - m->interactObj->oMoveAngleYaw;
-            if (facingDYaw >= -0x5555 && facingDYaw <= 0x5555) {
-                m->faceAngle[1] = m->interactObj->oMoveAngleYaw;
-                m->usedObj = m->interactObj;
-                result = set_mario_action(m, ACT_PICKING_UP_BOWSER, 0);
-            }
-        } else {
-            s16 facingDYaw = mario_obj_angle_to_object(m, m->interactObj) - m->faceAngle[1];
+            facingDYaw = mario_obj_angle_to_object(m, m->interactObj) - m->faceAngle[1];
             if (facingDYaw >= -0x2AAA && facingDYaw <= 0x2AAA) {
                 m->usedObj = m->interactObj;
 
@@ -435,7 +428,6 @@ u32 mario_check_object_grab(struct MarioState *m) {
 
                 result = TRUE;
             }
-        }
     }
 
     return result;
@@ -1650,9 +1642,7 @@ u32 interact_grabbable(struct MarioState *m, u32 interactType, struct Object *o)
         }
     }
 
-    if (script != bhvBowser) {
         push_mario_out_of_object(m, o, -5.0f);
-    }
     return FALSE;
 }
 

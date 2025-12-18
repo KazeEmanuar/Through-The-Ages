@@ -539,7 +539,6 @@ Gfx paintguy_Plane_027_mesh_layer_6[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 0),
-	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
 	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
 	gsDPSetAlphaDither(G_AD_DISABLE),

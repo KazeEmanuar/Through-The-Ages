@@ -56,9 +56,10 @@ enum SeqId {
     SEQ_LEVEL_COURT,        // 0x31
     SEQ_LEVEL_ATLANTIS,        // 0x31
     SEQ_LEVEL_SURREAL,        // 0x33
-    SEQ_LEVEL_INSHIP,               //0x34
-    SEQ_EVENT_SHYGUYBOSS,               //0x35
-    SEQ_LEVEL_GHOSTSHIP,              //0x36
+    SEQ_LEVEL_GHOSTSHIP,              //0x34
+    SEQ_LEVEL_INSHIP,               //0x35
+    SEQ_EVENT_SHYGUYBOSS,               //0x36
+    SEQ_LEVEL_YI_NIGHT_RETRO,               //0x37
     SEQ_COUNT
 };
 

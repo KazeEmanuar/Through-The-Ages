@@ -2135,20 +2135,580 @@ void generateNightSky(u8 *texture) {
     }
 }
 
+// changing array sizes here requires also to change the room sizes below!!!!
+Gfx *room1[2] = { &thi_dl_Room1_mesh_layer_1, &thi_dl_Room1_mesh_layer_4 };
+Gfx *room2[5] = { &thi_dl_Room2_mesh_layer_1, &thi_dl_Room2_mesh_layer_5, &thi_dl_Room2_mesh_layer_4,
+                  &thi_dl_Room2_mesh_layer_2, &thi_dl_Room2_mesh_layer_6 };
+Gfx *room3[5] = { &thi_dl_Room3_mesh_layer_1, &thi_dl_Room3_mesh_layer_6, &thi_dl_Room3_mesh_layer_4,
+                  &thi_dl_Room3_mesh_layer_5, &thi_dl_Room3_mesh_layer_2 };
+Gfx *room4[2] = { &thi_dl_Room4_mesh_layer_1, &thi_dl_Room4_mesh_layer_4 };
+Gfx *room5[3] = { &thi_dl_Room5_mesh_layer_1, &thi_dl_Room5_mesh_layer_5, &thi_dl_Room5_mesh_layer_4 };
+Gfx *room6[2] = { &thi_dl_Room6_mesh_layer_1, &thi_dl_Room6_mesh_layer_4 };
+Gfx *room7[2] = { &thi_dl_Room7_mesh_layer_1, &thi_dl_Room7_mesh_layer_4 };
+Gfx *room8[2] = { &thi_dl_Room8_mesh_layer_1, &thi_dl_Room8_mesh_layer_4 };
+Gfx *room9[4] = { &thi_dl_Room9_mesh_layer_1, &thi_dl_Room9_mesh_layer_4, &thi_dl_Room9_mesh_layer_2,
+                  &thi_dl_Room9_mesh_layer_6 };
+Gfx **roomList[9] = { room1, room2, room3, room4, room5, room6, room7, room8, room9 };
+u8 roomSizes[9] = { 2, 5, 5, 2, 3, 2, 2, 2, 4 };
+Gfx backupRooms[9][6] = { 0 };
+
+s16 gearRots[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+extern u8 CurrentRoom;
+extern u8 PreviousRoom;
+#define ROOMCOUNT 9
+Gfx EndDlCmd = gsSPEndDisplayList();
+#define SegmentedToVirtual(a) segmented_to_virtual(a)
+void cullBBHRooms() {
+    u8 i, j;
+    Gfx *manip;
+    if (CurrentRoom > 0) {
+        if (!backupRooms[0][0].words.w0) {
+            for (i = 0; i < ROOMCOUNT; i++) {
+                for (j = 0; j < roomSizes[i]; j++) {
+                    backupRooms[i][j] = *((Gfx *) SegmentedToVirtual(*(roomList[i] + j)));
+                }
+            }
+        }
+        for (i = 0; i < ROOMCOUNT; i++) {
+            for (j = 0; j < roomSizes[i]; j++) {
+                manip = SegmentedToVirtual(*(roomList[i] + j));
+                *manip = EndDlCmd;
+            }
+        }
+        for (j = 0; j < roomSizes[CurrentRoom - 1]; j++) {
+            manip = SegmentedToVirtual(*(roomList[CurrentRoom - 1] + j));
+            *manip = backupRooms[CurrentRoom - 1][j];
+        }
+        if ((gMarioState->action == ACT_PULLING_DOOR) || (gMarioState->action == ACT_PUSHING_DOOR)) {
+            for (j = 0; j < roomSizes[PreviousRoom - 1]; j++) {
+                manip = SegmentedToVirtual(*(roomList[PreviousRoom - 1] + j));
+                *manip = backupRooms[PreviousRoom - 1][j];
+            }
+        } else {
+            PreviousRoom = CurrentRoom;
+        }
+    }
+#define ROOM5HEIGHT -4930.f
+    if (gMarioState->pos[1] < ROOM5HEIGHT - 50.f) {
+        CurrentRoom = 5;
+    } else if (CurrentRoom == 5 && gMarioState->pos[1] > ROOM5HEIGHT + 50.f) {
+        CurrentRoom = 2;
+    }
+}
+
+
+Gfx *FindFirstMatching(Gfx *DLStart, u32 Word1Flag, u32 Word2Flag, u32 DesiredWord1,
+                            u32 DesiredWord2) {
+    s32 DebugCounter = 0;
+    do {
+        if (!0) {
+            DebugCounter++;
+            // crash on purpose
+            if (!(DebugCounter < (0x300000 / 8)))
+                return 0;
+        }
+        if ((DLStart[0].words.w0 & Word1Flag) != (DesiredWord1 & Word1Flag))
+            continue;
+        if ((DLStart[0].words.w1 & Word2Flag) != (DesiredWord2 & Word2Flag))
+            continue;
+        return DLStart;
+    } while (DLStart++);
+    return 0;
+}
+
+#define /*0x0FC*/ oObjPointer1 OBJECT_FIELD_OBJ(0x1D)
+#define PulsateTimer OBJECT_FIELD_S32(0x1B)
+static const Gfx MatchingBooguyGFX = gsDPSetPrimColor(0, 0, 0, 116, 62, 142);
+void pulsateBooGuy(void) {
+    u8 brightness;
+    if (!o->oObjPointer1) {
+        o->oObjPointer1 =
+            FindFirstMatching(SegmentedToVirtual(booguy_Bone_mesh_layer_5), 0xFFFFFFFF, 0x00000000,
+                              MatchingBooguyGFX.words.w0, MatchingBooguyGFX.words.w1);
+    }
+    brightness = (o->PulsateTimer > 0x3F) ? (o->PulsateTimer) : ((0x80 - o->PulsateTimer));
+    o->PulsateTimer = (o->PulsateTimer + 2) & 0x7F;
+    ((Gfx *) o->oObjPointer1)->words.w1 =
+        ((brightness + brightness / 2) << 16) + (brightness << 8) + 202;
+}
+#define NUM_VERTS_PER_SAIL 12
+#define NUM_SAILS 6
+Vtx SailVertices[NUM_SAILS][NUM_VERTS_PER_SAIL];
+Vtx *sailList[NUM_SAILS] = { &thi_dl_Zail_mesh_layer_4_vtx_0,     &thi_dl_Zail_001_mesh_layer_4_vtx_0,
+                             &thi_dl_Zail_002_mesh_layer_4_vtx_0, &thi_dl_Zail_003_mesh_layer_4_vtx_0,
+                             &thi_dl_Zail_004_mesh_layer_4_vtx_0, &thi_dl_Zail_005_mesh_layer_4_vtx_0
+
+};
+
+f32 findHighestVertHeight(s32 maxHeight, Vtx *list) {
+    s32 i;
+    f32 bestHeight = (-32767.f);
+    for (i = 0; i < NUM_VERTS_PER_SAIL; i++) {
+        if ((bestHeight < list[i].n.ob[1]) && (list[i].n.ob[1] < maxHeight)) {
+            bestHeight = list[i].n.ob[1];
+        }
+    }
+    return bestHeight;
+}
+// minimize SegmentedToVirtuals
+#define LEFTNUM (50.f)
+#define RIGHTNUM (-50.f)
+f32 windRightStrength = 0.f;
+f32 windLeftStrength = 0.f;
+void animateSails(void) {
+                f32 strengthMod;
+    s32 i,j;
+    f32 top, topmid, botmid;
+    f32 windR, windM, windL;
+    if (random_u16() % 70 == 0) {
+        o->oBobombBuddyPosXCopy = 20.f;
+    }
+    if (random_u16() % 90 == 0) {
+        o->oBobombBuddyPosZCopy = 25.f;
+    }
+    if (random_u16() % 30 == 0) {
+        o->oBobombBuddyPosXCopy = 7.f;
+    }
+    if (random_u16() % 20 == 0) {
+        o->oBobombBuddyPosZCopy = 5.f;
+    }
+    if (o->oTimer > 200) {
+        if (random_u16() % 170 == 0) {
+            o->oBobombBuddyPosXCopy = 35.f;
+        }
+        if (random_u16() % 150 == 0) {
+            o->oBobombBuddyPosZCopy = 32.f;
+        }
+    }
+    o->oVelX += o->oBobombBuddyPosXCopy;
+    o->oVelZ += o->oBobombBuddyPosZCopy;
+    windRightStrength += o->oVelX;
+    windLeftStrength += o->oVelZ;
+    windRightStrength *= 0.95f;
+    windLeftStrength *= 0.95f;
+    o->oBobombBuddyPosXCopy *= 0.9f;
+    o->oBobombBuddyPosZCopy *= 0.9f;
+    o->oVelX *= 0.8f;
+    o->oVelZ *= 0.8f;
+#define WINDCLOSURE 0.03f
+    windRightStrength = approach_f32_asymptotic(windRightStrength, windLeftStrength, WINDCLOSURE);
+    windLeftStrength = approach_f32_asymptotic(windLeftStrength, windRightStrength, WINDCLOSURE);
+
+    windR = windRightStrength;
+    windM = (windRightStrength + windLeftStrength) / (2.f);
+    windL = windLeftStrength;
+    if (!(SailVertices[0][0].v.ob[1])) {
+        for ( i = 0; i < NUM_SAILS; i++) {
+            memcpy(&SailVertices[i][0], SegmentedToVirtual(sailList[i]),
+                           16 * NUM_VERTS_PER_SAIL);
+        }
+        // give each vertex a flag depending on context
+        // flag 1: stuck in place
+        // flag 2: cant go too far back
+        // flag 4: top middle piece
+        // flag 8: bottom middle piece
+        // flag 16: bottom piece
+        // flag 0x00E0: size of the proportinal indexing, goes for whole sail, depends on botmid
+        // flag 0xFF00: identifier number
+        for ( i = 0; i < NUM_SAILS; i++) {
+            top = findHighestVertHeight(32000, &SailVertices[i][0]) - (10.f);
+            topmid = findHighestVertHeight(top, &SailVertices[i][0]) - (10.f);
+            botmid = findHighestVertHeight(topmid, &SailVertices[i][0]) - (10.f);
+            for ( j = 0; j < NUM_VERTS_PER_SAIL; j++) {
+                u32 number;
+                if (SailVertices[i][j].v.ob[2] > LEFTNUM) {
+                    number = 2;
+                } else if (SailVertices[i][j].v.ob[2] < RIGHTNUM) {
+                    number = 0;
+                } else {
+                    number = 1;
+                    SailVertices[i][j].v.flag += 0x0002;
+                }
+                if (SailVertices[i][j].v.ob[1] > top) {
+                    number += 0;
+                    SailVertices[i][j].v.flag += 0x0001;
+                } else if (SailVertices[i][j].v.ob[1] > topmid) {
+                    number += 3;
+                    SailVertices[i][j].v.flag += 0x0004;
+                } else if (SailVertices[i][j].v.ob[1] > botmid) {
+                    number += 6;
+                    SailVertices[i][j].v.flag += 0x0008;
+                } else {
+                    number += 9;
+                    SailVertices[i][j].v.flag += 0x0010;
+                }
+                SailVertices[i][j].v.flag += number << 8;
+                SailVertices[i][j].v.flag +=
+                    (((u32) (((botmid + 1050) * (64.f)) / (-3619.f))) & 0xE) * 0x10;
+            }
+        }
+    } else {
+        for ( i = 0; i < NUM_SAILS; i++) { // apply wind and material stiffness
+            for ( j = 0; j < NUM_VERTS_PER_SAIL; j++) {
+                f32 blowStrength =
+                    ((SailVertices[i][j].v.flag & 0x00E0) + 256) / (512.f); // big sail connect slow
+                Vtx *currVert = &((Vtx *) SegmentedToVirtual(sailList[i]))[j];
+                if (SailVertices[i][j].v.flag & 1) {
+                    continue;
+                }
+                // top attached part is not allowed to deform
+                if ((SailVertices[i][j].v.flag & 0x08) && SailVertices[i][j].v.cn[3]) {
+                    continue;
+                }
+                if (SailVertices[i][j].v.flag & 0x04) {
+                    strengthMod = 0.6f;
+                } else if (SailVertices[i][j].v.flag & 0x08) {
+                    strengthMod = 0.7f;
+                } else {
+                    strengthMod = 0.5f;
+                }
+                // apply the 3 different wind types (left/middle/right)
+                if (((SailVertices[i][j].v.flag & 0x0F00) % 0x0300) == 0x0200) {
+                    currVert->v.flag =
+                        ((s16) currVert->v.flag) + blowStrength * strengthMod * windR * 0.05f;
+                } else if (((SailVertices[i][j].v.flag & 0x0F00) % 0x0300) == 0x0100) {
+                    currVert->v.flag =
+                        ((s16) currVert->v.flag) + blowStrength * strengthMod * windM * 0.05f;
+                } else {
+                    currVert->v.flag =
+                        ((s16) currVert->v.flag) + blowStrength * strengthMod * windL * 0.05f;
+                }
+            }
+        }
+        for ( i = 0; i < NUM_SAILS; i++) { // apply speed and friction
+            Vtx *currVert = &((Vtx *) SegmentedToVirtual(sailList[i]))[0];
+            for ( j = 0; j < NUM_VERTS_PER_SAIL; j++) {
+                // don't deform the top attached part
+                if ((SailVertices[i][j].v.flag & 0x08) && SailVertices[i][j].v.cn[3]) {
+                    continue;
+                }
+                // spring physics
+                currVert[j].v.flag = ((s16) currVert[j].v.flag) - (currVert[j].v.ob[0] / 16);
+                currVert[j].v.ob[0] += (s16) (currVert[j].v.flag);
+                // some vertices are not allowed to go backwards to prevent clipping
+                if (SailVertices[i][j].v.flag & 2) {
+                    if (currVert[j].v.ob[0] < 0) {
+                        currVert[j].v.ob[0] = 0;
+                    }
+                }
+            }
+        }
+    }
+}
+u8 water_tex[64 * 64];
+u8 water_texI4[64 * 32];
+static u8 water1_x = 0, water1_y = 0;
+static u8 water2_x = 0, water2_y = 0;
+void water_scroll() {
+    water1_x++;
+    water2_x--;
+    water2_y++;
+}
+u8 int_map[16][16] = {
+    { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
+    { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x11 },
+    { 0x00, 0x02, 0x04, 0x06, 0x09, 0x0B, 0x0D, 0x0F, 0x12, 0x14, 0x16, 0x18, 0x1B, 0x1D, 0x1F, 0x22 },
+    { 0x00, 0x03, 0x06, 0x0A, 0x0D, 0x11, 0x14, 0x17, 0x1B, 0x1E, 0x22, 0x25, 0x28, 0x2C, 0x2F, 0x33 },
+    { 0x00, 0x04, 0x09, 0x0D, 0x12, 0x16, 0x1B, 0x1F, 0x24, 0x28, 0x2D, 0x31, 0x36, 0x3A, 0x3F, 0x44 },
+    { 0x00, 0x05, 0x0B, 0x11, 0x16, 0x1C, 0x22, 0x27, 0x2D, 0x33, 0x38, 0x3E, 0x44, 0x49, 0x4F, 0x55 },
+    { 0x00, 0x06, 0x0D, 0x14, 0x1B, 0x22, 0x28, 0x2F, 0x36, 0x3D, 0x44, 0x4A, 0x51, 0x58, 0x5F, 0x66 },
+    { 0x00, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F, 0x47, 0x4F, 0x57, 0x5F, 0x67, 0x6F, 0x77 },
+    { 0x00, 0x09, 0x12, 0x1B, 0x24, 0x2D, 0x36, 0x3F, 0x48, 0x51, 0x5A, 0x63, 0x6C, 0x75, 0x7E, 0x88 },
+    { 0x00, 0x0A, 0x14, 0x1E, 0x28, 0x33, 0x3D, 0x47, 0x51, 0x5B, 0x66, 0x70, 0x7A, 0x84, 0x8E, 0x99 },
+    { 0x00, 0x0B, 0x16, 0x22, 0x2D, 0x38, 0x44, 0x4F, 0x5A, 0x66, 0x71, 0x7C, 0x88, 0x93, 0x9E, 0xAA },
+    { 0x00, 0x0C, 0x18, 0x25, 0x31, 0x3E, 0x4A, 0x57, 0x63, 0x70, 0x7C, 0x89, 0x95, 0xA2, 0xAE, 0xBB },
+    { 0x00, 0x0D, 0x1B, 0x28, 0x36, 0x44, 0x51, 0x5F, 0x6C, 0x7A, 0x88, 0x95, 0xA3, 0xB0, 0xBE, 0xCC },
+    { 0x00, 0x0E, 0x1D, 0x2C, 0x3A, 0x49, 0x58, 0x67, 0x75, 0x84, 0x93, 0xA2, 0xB0, 0xBF, 0xCE, 0xDD },
+    { 0x00, 0x0F, 0x1F, 0x2F, 0x3F, 0x4F, 0x5F, 0x6F, 0x7E, 0x8E, 0x9E, 0xAE, 0xBE, 0xCE, 0xDE, 0xEE },
+    { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF },
+};
+#include "water1.h" //water1_tex
+#include "water2.h" //water2_tex
+// produces 64x64 i4
+void water_renderI4() {
+    int x, y;
+    
+    const u8 *y1, *y2;
+    u8 s1, s2;
+    u8 p1, p2;
+    u8 *top = water_texI4;
+    u8 fp1;
+    u8 fp2;
+    water_scroll();
+
+    for (y = 0; y < 256; y += 4) {
+        // Get texture pointers
+        y1 = water1_tex + ((u8) (water1_y + y) << 7);
+        s1 = (water1_x & 1) ? 0 : 4;
+
+        y2 = water2_tex + ((u8) (water2_y + y) << 7);
+        s2 = (water2_x & 1) ? 0 : 4;
+
+        for (x = 0; x < 256; x += 8) {
+            p1 = (y1[(u8) (water1_x + x) >> 1] >> s1) & 0xF;
+            p2 = (y2[(u8) (water2_x + x) >> 1] >> s2) & 0xF;
+            fp1 = int_map[p1][p2] / 16;
+            p1 = (y1[(u8) (water1_x + x + 4) >> 1] >> s1) & 0xF;
+            p2 = (y2[(u8) (water2_x + x + 4) >> 1] >> s2) & 0xF;
+            fp2 = int_map[p1][p2] / 16;
+
+            *top++ = (fp1 * 16 + fp2);
+        }
+    }
+}
+// 0x20, 0x21 and 0x22 used in animateSails
+// 0x1b and 0x1C used in pulsateBooGuy
+extern f32 newcam_pos[3];
+u16 waterphase = 0;
+void AnimateGalleonMainArea(void) {
+    s32 i;
+    Vtx *verts;
+    if (newcam_pos[1] < o->oPosY + 600.f) {
+        newcam_pos[1] = o->oPosY + 600.f;
+        gLakituState.pos[1] = newcam_pos[1];
+        gLakituState.posHSpeed = 0;
+        gLakituState.focHSpeed = 0;
+    }
+    animateSails();
+    water_renderI4();
+    pulsateBooGuy();
+    verts = SegmentedToVirtual(thi_dl_OCEAN_mesh_layer_1_vtx_0);
+    waterphase += 0x10;
+    /*if (!verts[0].n.flag) {
+        for (i = 0; i < sizeof(thi_dl_OCEAN_mesh_layer_1_vtx_0) / 0x10; i++) {
+            verts[i].n.flag = verts[i].n.ob[1] + 1;
+        }
+    }*/
+#define SCROLLSIZE 15
+#define WAVEHEIGHTMAX (170)
+#define WATER_HEIGHT -1223
+    for (i = 0; i < sizeof(thi_dl_OCEAN_mesh_layer_1_vtx_0) / 0x10; i++) {
+        verts[i].n.ob[1] = /* verts[i].n.flag
+                        + */
+            sins(verts[i].n.ob[2] * SCROLLSIZE + waterphase * 17) * WAVEHEIGHTMAX
+            + sins((verts[i].n.ob[0] + verts[i].n.ob[2] / 4) * SCROLLSIZE + waterphase * 16)
+                  * WAVEHEIGHTMAX
+            + WATER_HEIGHT;
+        if (verts[i].n.ob[1] + 1223 > 300) {
+            s32 brightness = verts[i].v.cn[3] + 3;
+            verts[i].v.cn[3] = MIN(brightness, 192);
+        } else {
+            s32 brightness = verts[i].v.cn[3] - 1;
+            verts[i].v.cn[3] = MAX(brightness, 0);
+        }
+        verts[i].n.ob[1] += (absi(verts[i].n.ob[0]) + absi(verts[i].n.ob[2])) >> 5;
+    }
+    verts = SegmentedToVirtual(thi_dl_OceanDecal_mesh_layer_6_vtx_0);
+    for (i = 0; i < sizeof(thi_dl_OceanDecal_mesh_layer_6_vtx_0) / 0x10; i++) {
+        verts[i].n.ob[1] = /* verts[i].n.flag
+                        + */
+            sins(verts[i].n.ob[2] * SCROLLSIZE + waterphase * 17) * WAVEHEIGHTMAX
+            + sins((verts[i].n.ob[0] + verts[i].n.ob[2] / 4) * SCROLLSIZE + waterphase * 16)
+                  * WAVEHEIGHTMAX
+            + WATER_HEIGHT;
+        verts[i].n.ob[1] += (absi(verts[i].n.ob[0]) + absi(verts[i].n.ob[2])) >> 5;
+    }
+#undef SCROLLSIZE
+#undef WAVEHEIGHTMAX
+}
+
+void AnimateShipRoom5(void) {
+    s32 i;
+    Vtx *verts;
+    waterphase += 270;
+    verts = SegmentedToVirtual(thi_dl_Room5_mesh_layer_1_vtx_0);
+    if (!verts[0].n.flag) {
+        for (i = 0; i < sizeof(thi_dl_Room5_mesh_layer_1_vtx_0) / 0x10; i++) {
+            verts[i].n.flag = verts[i].n.tc[0] & 0xff00 | (verts[i].n.tc[1] >> 8);
+        }
+    }
+#define SCROLLSIZE 11
+#define SCROLLSIZE2 13
+#define WAVEHEIGHTMAX (300.f)
+    for (i = 0; i < sizeof(thi_dl_Room5_mesh_layer_1_vtx_0) / 0x10; i++) {
+        verts[i].n.tc[0] =
+            (verts[i].n.ob[0] / 2)
+            + sins(verts[i].n.ob[0] * SCROLLSIZE + verts[i].n.ob[2] * SCROLLSIZE2 + waterphase) * 100.f;
+        verts[i].n.tc[1] =
+            (verts[i].n.ob[2] / 2)
+            + sins(verts[i].n.ob[0] * SCROLLSIZE2 + verts[i].n.ob[2] * SCROLLSIZE + waterphase) * 100.f;
+    }
+    if (gMarioState->floor->type == SURFACE_DEEP_QUICKSAND) {
+        if (gMarioState->pos[1] == gMarioState->floorHeight) {
+            if (gMarioState->action != ACT_FEET_STUCK_IN_GROUND) {
+                play_sound(SOUND_MARIO_WAAAOOOW, gMarioState->marioObj->header.gfx.cameraToObject);
+            }
+            gMarioState->action = ACT_FEET_STUCK_IN_GROUND;
+            m->actionTimer = 0;
+            if (!o->oOpacity) {
+                play_transition(WARP_TRANSITION_FADE_INTO_COLOR, 0x0A, 0, 0, 0);
+            }
+            o->oOpacity++;
+            m->marioObj->oGraphYOffset -= 10;
+            if (o->oOpacity == 10) {
+                o->oOpacity = 0;
+                gMarioState->action = ACT_BACKWARD_AIR_KB;
+                gMarioState->pos[0] = o->oPosX;
+                gMarioState->pos[1] = o->oPosY;
+                gMarioState->pos[2] = o->oPosZ;
+                play_transition(WARP_TRANSITION_FADE_FROM_COLOR, 10, 0, 0, 0);
+                m->marioObj->oGraphYOffset = 0;
+                // m->hurtCounter = 4;
+            }
+        }
+    }
+#undef SCROLLSIZE
+#undef WAVEHEIGHTMAX
+}
+
+#define STARCOUNTMAX 16
+void NightskyInit() {
+    s32 i;
+    for (i = 0; i < STARCOUNTMAX; i++) {
+        if (!(random_u16() & 7)) {
+            starInfo[0][i] = random_u16() & 0x3F;
+            starInfo[1][i] = random_u16() & 0x3F;
+            starInfo[2][i] = 0;
+        } else {
+            starInfo[2][i] = -1;
+        }
+    }
+}
+void YIRetroArea() {
+    if (!o->oTimer)
+        NightskyInit();
+    generateNightSky(SegmentedToVirtual(thi_dl_NightskyAnimpng_i4));
+    if (o->oTimer == 20) {
+        play_music(SEQ_LEVEL_YI_NIGHT_RETRO, 1, 0);
+    }
+}
+void (*AnimFunctions[])() = {
+    0, // 0
+    0,
+    0,
+    0,
+    0,
+    0, // 5
+    0,
+    0,
+    0,
+    AnimateGalleonMainArea, // 9
+    AnimateShipRoom5,
+    0,
+    0,
+    YIRetroArea,
+};
+s16 maxVolumes[4][3] = {
+    { -10231, 1950, -2144 }, { -11581, 1950, -1249 }, { -12931, 1950, -1249 }, { -14281, 2372, -1249 }
+};
+
+void muteCptInstruments() {
+    s32 i;
+    for (i = 0; i < 16; i++) {
+        if (i != 3) {
+            if (gSequencePlayers[SEQ_PLAYER_ENV].channels[i]) {
+                gSequencePlayers[SEQ_PLAYER_ENV].channels[i]->volume = 0;
+            }
+        }
+    }
+}
+void fadeVolToPos(s16 *pos) {
+    f32 dist;
+    f32 x, y, z;
+    if (!o->oAction) {
+        play_secondary_music(SEQ_EVENT_SHYGUYBOSS, 0, 127, 200);
+        o->oAction = 1;
+    }
+    x = gMarioState->pos[0] - pos[0];
+    z = gMarioState->pos[2] - pos[2];
+    dist = sqrtf(x * x + z * z);
+    y = (3500.f - dist) / 5000.f;
+            func_8031D838(SEQ_PLAYER_ENV, 20, (y * y * y) * 254);
+    muteCptInstruments();
+}
+void cptlabyrinth(void) {
+    switch (CurrentRoom) {
+        case 6:
+            fadeVolToPos(&maxVolumes[0][0]);
+            break;
+        case 7:
+            fadeVolToPos(&maxVolumes[1][0]);
+            break;
+        case 8:
+            fadeVolToPos(&maxVolumes[2][0]);
+            break;
+        case 9:
+            fadeVolToPos(&maxVolumes[3][0]);
+            break;
+        default:
+            if (o->oAction) {
+                func_80321080(50);
+                o->oAction = 0;
+            }
+            break;
+    }
+}
+f32 beamSpeeds[128];
+
+f32 lastFrameCount = 100.f;
+f32 beamcount;
+#define FRICTION 0.995f
+#define DECEL 10.5f
+#define CARRYOVER 0.1f
+#define LIGHTFACTOR (2048.f / beamcount)
+#define LIGHTFACTOR2 (65536.f / beamcount)
+void generateLightBeamTexture(u8 *texture) {
+    u8 x, y;
+    s16 brightness;
+    s16 brightnessY;
+    beamcount = lastFrameCount;
+    lastFrameCount = 0;
+    for (x = 0; x < 128; x++) {
+        beamSpeeds[x] *= FRICTION;
+        beamSpeeds[x] -= DECEL;
+        if (!(random_u16() & 0x3F)) {
+            beamSpeeds[x] += ((random_u16() & 0x3F) + 8) * LIGHTFACTOR;
+        }
+        brightness = texture[x];
+        brightness += texture[((x - 1) & 0x7F)] * CARRYOVER * LIGHTFACTOR;
+        brightness += texture[((x + 1) & 0x7F)] * CARRYOVER * LIGHTFACTOR;
+        brightness += beamSpeeds[x];
+        if (brightness > 255) {
+            brightness = 255;
+            beamSpeeds[x] -= -20.f;
+        } else if (brightness < 0) {
+            brightness = 0;
+            beamSpeeds[x] = 0;
+        }
+        lastFrameCount += brightness;
+        for (y = 0; y < 16; y++) {
+            brightnessY = brightness + 180 - 12 * ((y - 1) & 0x0F);
+            if (brightnessY > 255) {
+                brightnessY = 255;
+            }
+            texture[y * 128 + x] = brightnessY;
+        }
+    }
+}
 extern u8 bitfs_dl_Unbenannt_i4[];
 extern u8 bitdw_dl_Unbenannt_i4[];
 extern Gfx mat_hmc_dl_TIKIWATER_layer7[];
 extern Vtx hmc_dl_Tikiwatwat_mesh_layer_7_vtx_0[825];
 u16 watervertcount2 = sizeof(hmc_dl_Tikiwatwat_mesh_layer_7_vtx_0) / 0x10;
-u16 waterphase = 0;
 void textureanim(void) {
+            u8 EffectiveRoom;
     int i;
     int j;
     Gfx *b;
+    u8 *lightTexture = SegmentedToVirtual(thi_dl_LightBeam2_i8);
     Vtx *a = segmented_to_virtual(hmc_dl_Tikiwatwat_mesh_layer_7_vtx_0);
     Gfx *scrollMaterial = segmented_to_virtual(mat_hmc_dl_TIKIWATER_layer7);
     u8 *nightSky = segmented_to_virtual(bitdw_dl_Unbenannt_i4);
     int old;
+    if (AnimFunctions[o->oBehParams2ndByte]) {
+        AnimFunctions[o->oBehParams2ndByte]();
+        return;
+    }
     switch (o->oBehParams2ndByte) {
         case 0:
 #define SCROLLBITFLAG _SHIFTL(0xFFF, 12, 12)
@@ -2184,6 +2744,26 @@ void textureanim(void) {
             } else {
                 nightSky = segmented_to_virtual(bitfs_dl_Unbenannt_i4);
                 generateNightSky(nightSky);
+            }
+            break;
+        case 11:
+            pulsateBooGuy();
+            cullBBHRooms();
+            cptlabyrinth();
+            EffectiveRoom = CurrentRoom;
+            if (CurrentRoom == 2 && gMarioState->pos[1] > 1077.f) {
+                EffectiveRoom = 10;
+            }
+            if (o->oAnimState != EffectiveRoom) {
+                o->oAnimState = EffectiveRoom;
+            }
+            break;
+        case 12:
+            generateLightBeamTexture(lightTexture);
+            if ((absf(gMarioState->pos[0] - o->oPosX) + absf(gMarioState->pos[1] - o->oPosY)
+                 + absf(gMarioState->pos[2] - o->oPosZ))
+                < 500.f) {
+                CurrentRoom = 2;
             }
             break;
     }
@@ -2926,7 +3506,6 @@ void retropiranha(void) {
 extern const Trajectory thi_area_4_spline_LinePlatformPath1[];
 extern const Trajectory thi_area_4_spline_LinePlatformPath2[];
 extern const Trajectory thi_area_4_spline_LinePlatformPath3[];
-#define SegmentedToVirtual(a) segmented_to_virtual(a)
 #define PlaySFX(a) cur_obj_play_sound_1(a)
 #define Solidify() load_object_collision_model()
 #define cur_obj_move_using_vel() cur_obj_move_using_vel()
@@ -3891,7 +4470,7 @@ void boobarrel(void) {
     Solidify();
 }
 void ThePlank(void) {
-            f32 Multiplier;
+    f32 Multiplier;
     s16 *coll = o->collisionData;
     s32 i, k;
     Vtx *VisualVTX = SegmentedToVirtual(ThePlank_AAAPlane_002_mesh_layer_1_vtx_0);
@@ -4013,17 +4592,6 @@ void shyguymovement() {
     o->oPosY = approach_f32_symmetric(o->oPosY, o->oBobombBuddyPosYCopy, 11.f);
     o->oVelY = approach_f32_symmetric(o->oVelY, 0, 1.5f);
     cur_obj_move_using_vel();
-}
-
-void muteCptInstruments() {
-    s32 i;
-    for (i = 0; i < 16; i++) {
-        if (i != 3) {
-            if (gSequencePlayers[SEQ_PLAYER_ENV].channels[i]) {
-                gSequencePlayers[SEQ_PLAYER_ENV].channels[i]->volume = 0;
-            }
-        }
-    }
 }
 
 u16 cloakTimer = 0;
@@ -5049,27 +5617,6 @@ Gfx *geo_render_INFBG(s32 callContext, struct GraphNode *node, UNUSED Mat4 b) {
     return 0;
 }
 
-Gfx *FindFirstMatching(Gfx *DLStart, u32 Word1Flag, u32 Word2Flag, u32 DesiredWord1,
-                            u32 DesiredWord2) {
-    s32 DebugCounter = 0;
-    do {
-        if (!0) {
-            DebugCounter++;
-            // crash on purpose
-            if (!(DebugCounter < (0x300000 / 8)))
-                return 0;
-        }
-        if ((DLStart[0].words.w0 & Word1Flag) != (DesiredWord1 & Word1Flag))
-            continue;
-        if ((DLStart[0].words.w1 & Word2Flag) != (DesiredWord2 & Word2Flag))
-            continue;
-        return DLStart;
-    } while (DLStart++);
-    return 0;
-}
-
-
-u8 water_texI4[64 * 32];
 
 u32 water_get_srcI4() {
     return water_texI4;
@@ -5185,4 +5732,113 @@ void fallplatform(void) {
             break;
     }
     o->oPosY += o->oVelY;
+}
+
+void shipCannon(void) {
+                s16 UsedPitch;
+    switch (o->oAction) {
+        case 0:
+            o->oFaceAnglePitch = 0;
+            if (gMarioState->floor && (gMarioState->floor->object == o)
+                && (gMarioState->pos[1] == gMarioState->floorHeight)
+                && (gMarioState->action != ACT_LEDGE_GRAB)
+                && (gMarioState->action != ACT_LEDGE_CLIMB_FAST
+                    && (gMarioState->action != ACT_LEDGE_CLIMB_SLOW_1))) {
+                o->oAction = 1;
+                m->action = ACT_WAITING_FOR_DIALOG;
+            }
+            Solidify();
+            break;
+        case 1:
+            gMarioState->pos[0] = approach_f32_asymptotic(gMarioState->pos[0], o->oPosX, 0.2f);
+            gMarioState->pos[2] = approach_f32_asymptotic(gMarioState->pos[2], o->oPosZ, 0.2f);
+            if (o->oTimer > 10) {
+                o->oAction = 2;
+                PlaySFX(SOUND_OBJ_CANNON2);
+            }
+            Solidify();
+            break;
+        case 2:
+            if (o->oTimer < 13) {
+                gMarioState->pos[1] -= o->oTimer * 4;
+            } else {
+                gMarioState->faceAngle[1] = o->oFaceAngleYaw;
+                gMarioState->marioObj->header.gfx.sharedChild = 0;
+            }
+            if (o->oTimer > 20) {
+                o->oFaceAnglePitch = approach_s16_symmetric(
+                    o->oFaceAnglePitch, 0x3000 - bParam2 * 0x40, 0x200);
+                play_sound(SOUND_MOVING_AIM_CANNON, m->marioObj->header.gfx.cameraToObject);
+            }
+            if (o->oTimer > 60) {
+                play_sound(SOUND_ACTION_FLYING_FAST, m->marioObj->header.gfx.cameraToObject);
+                play_sound(SOUND_OBJ_POUNDING_CANNON, m->marioObj->header.gfx.cameraToObject);
+                gMarioState->forwardVel = 70.f - bParam2 / 8.f;
+                gMarioState->vel[1] = 50.f + bParam2 / 2.f;
+#define FORWARD_WARP_OFFSET 175.f
+                UsedPitch = o->oFaceAnglePitch;
+                gMarioState->pos[0] =
+                    o->oPosX + sins(o->oFaceAngleYaw) * sins(UsedPitch) * FORWARD_WARP_OFFSET;
+                gMarioState->pos[1] = o->oPosY + coss(UsedPitch) * FORWARD_WARP_OFFSET;
+                gMarioState->pos[2] =
+                    o->oPosZ + coss(o->oFaceAngleYaw) * sins(UsedPitch) * FORWARD_WARP_OFFSET;
+                o->oAction = 3;
+                gMarioState->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[1];
+                set_mario_action(m, ACT_SHOT_FROM_CANNON, 0);
+                o->oAngleVelPitch = -0x800 + bParam2 * 8;
+            }
+            break;
+        case 3:
+            o->oFaceAnglePitch += o->oAngleVelPitch;
+            o->oAngleVelPitch = approach_s16_symmetric(o->oAngleVelPitch, 0, 0x0080);
+            o->oFaceAnglePitch = approach_s16_symmetric(o->oFaceAnglePitch, 0, 0x0100);
+            if (o->oTimer > 1) {
+                gMarioState->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+                m->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
+            }
+            if (o->oTimer > 100) {
+                o->oAction = 0;
+            }
+            break;
+    }
+}
+void cptPiano(void) {
+    f32 y;
+    o->oIntangibleTimer = 0;
+    o->oInteractStatus = 0;
+    switch (o->oAction) {
+        case 0:
+            if (!o->oTimer) {
+                cur_obj_update_floor_height();
+            }
+            o->oForwardVel = 0.f;
+            if (cur_obj_check_if_at_animation_end()) {
+                cur_obj_init_animation(0);
+                o->oInteractType = INTERACT_IGLOO_BARRIER;
+            }
+            break;
+        case 1:
+            cur_obj_init_animation(1);
+            break;
+        case 2:
+            o->oInteractType = INTERACT_MR_BLIZZARD;
+            cur_obj_init_animation(1);
+            if ((((o->header.gfx.unk38.animFrame) + 1) % 12) == 0) {
+                PlaySFX(SOUND_OBJ_MAD_PIANO_CHOMPING);
+            }
+            o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, o->oAngleToMario, 0x800);
+
+            o->oForwardVel =
+                approach_f32_symmetric(o->oForwardVel,
+                                       (9.f + bParam2 * 2.5f)
+                                           * (coss(o->oAngleToMario - o->oMoveAngleYaw) + 1.0f),
+                                       1.f);
+            break;
+    }
+    y = o->oPosY;
+    PerformActorMove(0);
+    if (o->oFloorHeight < 1200.f) {
+        o->oPosY = y;
+        o->oVelY = 0;
+    }
 }

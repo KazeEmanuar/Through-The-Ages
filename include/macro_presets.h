@@ -56,8 +56,8 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvCarrySomething1, MODEL_UNKNOWN_7D, 0}, // unused
     {bhvBetaTrampolineTop, MODEL_TRAMPOLINE, 0}, // unused
     {bhvFreeBowlingBall, MODEL_BOWLING_BALL, 0}, // unused
-    {bhvSnufit, MODEL_SNUFIT, 0},
-    {bhvRecoveryHeart, MODEL_HEART, 0},
+    {0, MODEL_SNUFIT, 0},
+    {0, MODEL_HEART, 0},
     {bhv1upSliding, MODEL_1UP, 0},
     {bhv1Up, MODEL_1UP, 0},
     {bhv1upJumpOnApproach, MODEL_1UP, 0}, // unused
@@ -99,7 +99,7 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvThwomp2, MODEL_THWOMP, 0}, // unused
     {bhvFireSpitter, MODEL_BOWLING_BALL, 0},
-    {bhvFlyGuy, MODEL_FLYGUY, 1},
+    {0, MODEL_FLYGUY, 1},
     {bhvJumpingBox, MODEL_BREAKABLE_BOX, 0},
     {bhvTripletButterfly, MODEL_BUTTERFLY, 0},
     {bhvTripletButterfly, MODEL_BUTTERFLY, 4},
@@ -119,15 +119,15 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
-    {bhvWoodenPost, MODEL_WOODEN_POST, 0},
+    {0, MODEL_WOODEN_POST, 0},
     {bhvWaterBombSpawner, MODEL_NONE, 0},
     {bhvEnemyLakitu, MODEL_ENEMY_LAKITU, 0},
     {bhvKoopa, MODEL_KOOPA_WITH_SHELL, 2}, // unused
     {bhvKoopaRaceEndpoint, MODEL_NONE, 0}, // unused
     {bhvBobomb, MODEL_BLACK_BOBOMB, 0},
-    {bhvWaterBombCannon, MODEL_CANNON_BASE, 0}, // unused
+    {0, MODEL_CANNON_BASE, 0}, // unused
     {bhvBobombBuddyOpensCannon, MODEL_BOBOMB_BUDDY, 0}, // unused
-    {bhvWaterBombCannon, MODEL_CANNON_BASE, 0},
+    {0, MODEL_CANNON_BASE, 0},
     {bhvBobomb, MODEL_BLACK_BOBOMB, 1},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -138,8 +138,8 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvUnusedFakeStar, MODEL_UNKNOWN_54, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
-    {bhvUnagi, MODEL_UNAGI, 0}, // unused
-    {bhvSushiShark, MODEL_SUSHI, 0}, // unused
+    {0, MODEL_UNAGI, 0}, // unused
+    {0, MODEL_SUSHI, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -152,8 +152,8 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvStaticObject, MODEL_KLEPTO, 0}, // unused
     {bhvTweester, MODEL_TWEESTER, 0}, // unused
-    {bhvPokey, MODEL_NONE, 0},
-    {bhvPokey, MODEL_NONE, 0}, // unused
+    {0, MODEL_NONE, 0},
+    {0, MODEL_NONE, 0}, // unused
     {bhvToxBox, MODEL_SSL_TOX_BOX, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -167,7 +167,7 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvMontyMole, MODEL_MONTY_MOLE, 0}, // unused
     {bhvMontyMole, MODEL_MONTY_MOLE, 1},
     {bhvMontyMoleHole, MODEL_DL_MONTY_MOLE_HOLE, 0},
-    {bhvFlyGuy, MODEL_FLYGUY, 0},
+    {0, MODEL_FLYGUY, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvWigglerHead, MODEL_WIGGLER_HEAD, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -179,13 +179,13 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvSpindrift, MODEL_SPINDRIFT, 0},
-    {bhvMrBlizzard, MODEL_MR_BLIZZARD_HIDDEN, 0},
-    {bhvMrBlizzard, MODEL_MR_BLIZZARD_HIDDEN, 0}, // unused
+    {0, MODEL_MR_BLIZZARD_HIDDEN, 0},
+    {0, MODEL_MR_BLIZZARD_HIDDEN, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvSmallPenguin, MODEL_PENGUIN, 0}, // unused
     {bhvTuxiesMother, MODEL_PENGUIN, 0}, // unused
     {bhvTuxiesMother, MODEL_PENGUIN, 0}, // unused
-    {bhvMrBlizzard, MODEL_MR_BLIZZARD_HIDDEN, 1}, // unused
+    {0, MODEL_MR_BLIZZARD_HIDDEN, 1}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -202,14 +202,14 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
-    {bhvHauntedChair, MODEL_HAUNTED_CHAIR, 0}, // unused
-    {bhvHauntedChair, MODEL_HAUNTED_CHAIR, 0},
-    {bhvHauntedChair, MODEL_HAUNTED_CHAIR, 0}, // unused
+    {0, MODEL_HAUNTED_CHAIR, 0}, // unused
+    {0, MODEL_HAUNTED_CHAIR, 0},
+    {0, MODEL_HAUNTED_CHAIR, 0}, // unused
     {bhvGhostHuntBoo, MODEL_BOO, 0}, // unused
     {bhvGhostHuntBoo, MODEL_BOO, 0}, // unused
     {bhvCourtyardBooTriplet, MODEL_BOO, 0}, // unused
     {bhvBooWithCage, MODEL_BOO, 0}, // unused
-    {bhvAlphaBooKey, MODEL_BETA_BOO_KEY, 0}, // unused
+    {0, MODEL_BETA_BOO_KEY, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
@@ -269,11 +269,11 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvPiranhaPlant, MODEL_PIRANHA_PLANT, 0}, // unused
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvSmallWhomp, MODEL_WHOMP, 0},
-    {bhvChainChomp, MODEL_CHAIN_CHOMP, 0},
+    {0, MODEL_CHAIN_CHOMP, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvKoopa, MODEL_KOOPA_WITH_SHELL, 1},
     {bhvKoopa, MODEL_KOOPA_WITHOUT_SHELL, 0}, // unused
-    {bhvWoodenPost, MODEL_WOODEN_POST, 0}, // unused
+    {0, MODEL_WOODEN_POST, 0}, // unused
     {bhvFirePiranhaPlant, MODEL_PIRANHA_PLANT, 0},
     {bhvFirePiranhaPlant, MODEL_PIRANHA_PLANT, 1}, // unused
     {bhvKoopa, MODEL_KOOPA_WITH_SHELL, 4},
@@ -302,9 +302,9 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},
-    {bhvSwoop, MODEL_SWOOP, 0},
-    {bhvSwoop, MODEL_SWOOP, 1},
-    {bhvMrI, MODEL_NONE, 0},
+    {0, MODEL_SWOOP, 0},
+    {0, MODEL_SWOOP, 1},
+    {0, MODEL_NONE, 0},
     {bhvScuttlebugSpawn, MODEL_NONE, 0},
     {bhvScuttlebug, MODEL_SCUTTLEBUG, 0},
     {bhvYellowCoin, MODEL_YELLOW_COIN, 0},

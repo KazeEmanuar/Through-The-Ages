@@ -23,7 +23,6 @@ const Gfx cotmc_dl_water_end[] = {
     gsDPPipeSync(),
     gsDPSetCycleType(G_CYC_1CYCLE),
     gsSPGeometryModeSetFirst(G_FOG, G_LIGHTING | G_CULL_BACK),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsDPSetRenderMode(G_RM_AA_ZB_XLU_INTER, G_RM_NOOP2),
     gsSPEndDisplayList(),

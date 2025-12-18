@@ -46,7 +46,6 @@ const Gfx transparent_star_seg3_dl_0302C620[] = {
     gsDPSetCombineMode(G_CC_SHADEFADEA, G_CC_SHADEFADEA),
     gsDPSetEnvColor(255, 255, 255, 120),
     gsSPDisplayList(transparent_star_seg3_dl_0302C560),
-    gsDPSetEnvColor(255, 255, 255, 255),
     gsDPSetCombineMode(G_CC_SHADE, G_CC_SHADE),
     gsSPEndDisplayList(),
 };
