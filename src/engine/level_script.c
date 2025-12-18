@@ -280,6 +280,7 @@ static void level_cmd_load_mio0(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
+#define gFrameBuffer0 gFrameBuffers[0]
 static void level_cmd_load_mario_head(void) {
     // TODO: Fix these hardcoded sizes
     void *addr = main_pool_alloc(DOUBLE_SIZE_ON_64_BIT(0xE1000), MEMORY_POOL_LEFT);

@@ -583,7 +583,7 @@ void init_controllers(void) {
         }
     }
 }
-
+#include "buffers/framebuffers.h"
 void setup_game_memory(void) {
     UNUSED u8 pad[8];
 

@@ -117,7 +117,7 @@ s32 should_get_stuck_in_ground(struct MarioState *m) {
     s32 type = floor->type;
 
     if (floor != NULL && (terrainType == TERRAIN_SNOW || terrainType == TERRAIN_SAND)
-        && type != SURFACE_BURNING && SURFACE_IS_NOT_HARD(type)) {
+        && type != SURFACE_BURNING) {
         if (!(flags & 0x01) && m->peakHeight - m->pos[1] > 1000.0f && floor->normal.y >= 0.8660254f) {
             return TRUE;
         }

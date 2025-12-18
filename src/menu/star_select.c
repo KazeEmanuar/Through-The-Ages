@@ -105,7 +105,11 @@ void render_100_coin_star(u8 stars) {
  * the correct star models, the 100 coin star and also handles
  * checks of what star should be next in sInitSelectedActNum.
  */
+u8 PreviousRoom = 0;
+u8 CurrentRoom = 0;
 void bhv_act_selector_init(void) {
+    PreviousRoom = 0;
+    CurrentRoom = 0;
     s16 i = 0;
     s32 selectorModelIDs[10];
     u8 stars = save_file_get_star_flags(gCurrSaveFileNum - 1, gCurrCourseNum - 1);

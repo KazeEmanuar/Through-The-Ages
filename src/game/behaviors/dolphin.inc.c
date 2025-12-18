@@ -54,15 +54,15 @@ void offsetChildByFloat(struct Object *child, struct Object *parent, float yOffs
 
 
 u8 talkToMario2(int dialogID, int actionArg) {
-    return CurObjUpdateDialog(actionArg, 1, CUTSCENE_DIALOG, dialogID);
+    return cur_obj_update_dialog_with_cutscene(actionArg, 1, CUTSCENE_DIALOG, dialogID);
 }
 
 u8 talkToMarioNoRotation2(int dialogID, int actionArg) {
-    return CurObjUpdateDialog(actionArg, 0, CUTSCENE_DIALOG, dialogID);
+    return cur_obj_update_dialog_with_cutscene(actionArg, 0, CUTSCENE_DIALOG, dialogID);
 }
 
 u8 askMario2(int dialogID, u8 rotate, int actionArg) {
-    return CurObjUpdateDialog(actionArg, rotate, CUTSCENE_RACE_DIALOG, dialogID);
+    return cur_obj_update_dialog_with_cutscene(actionArg, rotate, CUTSCENE_RACE_DIALOG, dialogID);
 }
 u8 talkToMario(int dialogID) {
     return cur_obj_update_dialog_with_cutscene(2, 1, CUTSCENE_DIALOG, dialogID);
@@ -2792,9 +2792,10 @@ void PerformActorMove(s32 bAllowWalkoff) {
     f32 PrevX = o->oPosX;
     f32 PrevZ = o->oPosZ;
     f32 WaterLevel;
+    f32 sin;
     // Compute current velocity and intended movement
-    o->oVelX = o->oForwardVel * get_sin_and_cos_Accurate(o->oMoveAngleYaw, &cos);
-    o->oVelZ = o->oForwardVel * cos;
+    o->oVelX = o->oForwardVel * sins(o->oMoveAngleYaw);
+    o->oVelZ = o->oForwardVel * coss(o->oMoveAngleYaw);
     o->oVelY += o->oGravity;
     o->oVelY = MAX(o->oVelY, -78.f);
     for (i = 0; i < 3; i++) {
@@ -2802,11 +2803,11 @@ void PerformActorMove(s32 bAllowWalkoff) {
             o->OBJECT_FIELD_F32(O_POS_INDEX + i) + o->OBJECT_FIELD_F32(O_VEL_INDEX + i);
     }
     o->oMoveFlags &= ~OBJ_MOVE_HIT_WALL;
-    if (ResolveWallCollision()) {
+    if (cur_obj_resolve_wall_collisions()) {
         o->oMoveFlags |= OBJ_MOVE_HIT_WALL;
     }
     // Check whether we are moving to a legal position
-    IntendedFloorHeight = FindFloor(o->oPosX, o->oPosY, o->oPosZ, &IntendedFloor);
+    IntendedFloorHeight = find_floor(o->oPosX, o->oPosY, o->oPosZ, &IntendedFloor);
     DeltaFloorHeight = IntendedFloorHeight - o->oFloorHeight;
     o->oMoveFlags &= ~OBJ_MOVE_HIT_OOB;
     bRanPastEdge = (DeltaFloorHeight < 5.0f && !bAllowWalkoff)
@@ -2844,7 +2845,7 @@ void PerformActorMove(s32 bAllowWalkoff) {
         }
     }
     // update water movement flags!
-    WaterLevel = FindWaterLevel(o->oPosX, o->oPosZ);
+    WaterLevel = find_water_level(o->oPosX, o->oPosZ);
     if (o->oPosY <= WaterLevel) {
         if (o->oMoveFlags & (OBJ_MOVE_ENTERED_WATER | OBJ_MOVE_IN_WATER)) {
             o->oMoveFlags &= ~OBJ_MOVE_ENTERED_WATER;
@@ -2872,7 +2873,7 @@ void ResetInteraction(void) {
 }
 void retropiranha(void) {
     if (!o->oHiddenBlueCoinSwitch) {
-        o->oHiddenBlueCoinSwitch = SpawnActor(o, 0, bhvEmptyHitbox);
+        o->oHiddenBlueCoinSwitch = spawn_object(o, 0, bhvEmptyHitbox);
         o->oHiddenBlueCoinSwitch->hitboxDownOffset = 100.f;
         o->oHiddenBlueCoinSwitch->hitboxRadius = 100.f;
         o->oHiddenBlueCoinSwitch->hitboxHeight = 200.f;
@@ -2883,12 +2884,12 @@ void retropiranha(void) {
             o->oAnimState = 0;
             o->oHiddenBlueCoinSwitch->oIntangibleTimer = -1;
             if (!o->oSubAction) {
-                CurObjScale(0.25f);
+                cur_obj_scale(0.25f);
                 if (o->oDistanceToMario < sqr(750.f)) {
                     o->oSubAction = 1;
                 }
             } else {
-                CurObjScale(o->header.gfx.scale[0] + 0.05f);
+                cur_obj_scale(o->header.gfx.scale[0] + 0.05f);
                 if (o->header.gfx.scale[0] >= 1.f) {
                     o->oAction = 1;
                 }
@@ -2906,7 +2907,7 @@ void retropiranha(void) {
             o->oFaceAngleYaw = approach_s16_symmetric(o->oFaceAngleYaw, o->oAngleToMario, 0x0200);
             o->oAnimState = ((o->oTimer + 3) >> 2) & 1;
             if (!(o->oTimer & 7))
-                PlaySFX(SOUND_OBJ2_PIRANHA_PLANT_BITE);
+                cur_obj_play_sound_1(SOUND_OBJ2_PIRANHA_PLANT_BITE);
             if (o->oDistanceToMario > sqr(850.f)) {
                 o->oAction = 2;
                 o->oAnimState = 0;
@@ -2915,20 +2916,20 @@ void retropiranha(void) {
         case 2:
             // shrink
             o->oHiddenBlueCoinSwitch->oIntangibleTimer = -1;
-            CurObjScale(o->header.gfx.scale[0] - 0.05f);
+            cur_obj_scale(o->header.gfx.scale[0] - 0.05f);
             if (o->header.gfx.scale[0] <= .3f) {
                 o->oAction = 0;
             }
             break;
     }
 }
-extern const Trajectory bbh_area_4_spline_LinePlatformPath1[];
-extern const Trajectory bbh_area_4_spline_LinePlatformPath2[];
-extern const Trajectory bbh_area_4_spline_LinePlatformPath3[];
+extern const Trajectory thi_area_4_spline_LinePlatformPath1[];
+extern const Trajectory thi_area_4_spline_LinePlatformPath2[];
+extern const Trajectory thi_area_4_spline_LinePlatformPath3[];
 #define SegmentedToVirtual(a) segmented_to_virtual(a)
 #define PlaySFX(a) cur_obj_play_sound_1(a)
 #define Solidify() load_object_collision_model()
-#define CurObjMoveUsingVel() cur_obj_move_using_vel()
+#define cur_obj_move_using_vel() cur_obj_move_using_vel()
 #define bParam1 (*((u8 *) &o->oBehParams))
 #define bParam2 (*(((u8 *) &o->oBehParams)+1))
 #define bParam3 (*(((u8 *) &o->oBehParams)+2))
@@ -2945,15 +2946,15 @@ extern const Trajectory bbh_area_4_spline_LinePlatformPath3[];
 #define /*0x108*/ oObjPointer5 OBJECT_FIELD_OBJ(0x20)
 #define /*0x10C*/ oObjPointer6 OBJECT_FIELD_OBJ(0x21)
 #define /*0x10C*/ oObjPointer7 OBJECT_FIELD_OBJ(0x22)
-Trajectory *trajectoryList[3] = { &bbh_area_4_spline_LinePlatformPath1,
-                                  &bbh_area_4_spline_LinePlatformPath2 };
+Trajectory *trajectoryList[3] = { &thi_area_4_spline_LinePlatformPath1,
+                                  &thi_area_4_spline_LinePlatformPath2 };
 
 void lineplatform(void) {
     s16 *curPath = SegmentedToVirtual(trajectoryList[bParam2]);
     f32 x, z, y;
     switch (o->oAction) {
         case 0:
-            if (IsMarioOnCurObj()) {
+            if (cur_obj_is_mario_on_platform()) {
                 o->oAction++;
                 o->oBobombBuddyRole = o->oMoveAngleYaw;
                 o->oOpacity += 4;
@@ -3037,7 +3038,7 @@ void lineplatform(void) {
         o->oVelX = coss(-o->oMoveAnglePitch) * sins(o->oMoveAngleYaw) * o->oForwardVel;
         o->oVelZ = coss(-o->oMoveAnglePitch) * coss(o->oMoveAngleYaw) * o->oForwardVel;
     }
-    CurObjMoveUsingVel();
+    cur_obj_move_using_vel();
     Solidify();
 }
 
@@ -3070,7 +3071,7 @@ void wallsword(void) {
     o->oInteractStatus = 0;
     o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, o->oAngleToMario, 0x100);
     if (o->oMoveFlags & (OBJ_MOVE_HIT_WALL | OBJ_MOVE_HIT_OOB)) {
-        GenericDeath(SOUND_OBJ_DEFAULT_DEATH);
+        spawn_mist_particles_with_sound(SOUND_OBJ_DEFAULT_DEATH);
     }
     PerformActorMove(1);
 }
@@ -3092,7 +3093,7 @@ u8 blockUp = 0;
 extern u8 PreviousRoom;
 extern u8 CurrentRoom;
 u32 checkFakeOut(f32 diffiCulty) {
-    return ((RandomU16() % 255) < diffiCulty);
+    return ((random_u16() % 255) < diffiCulty);
 }
 
 void shyguysays(void) {
@@ -3100,7 +3101,7 @@ void shyguysays(void) {
     switch (o->oAction) {
         case 0:
             // wait for mario to approach
-            CurObjAnimate(0);
+            cur_obj_init_animation(0);
             if (CurrentRoom == 5) {
                 if (gMarioState->pos[0] > -8650.f) {
                     o->oAction = 1;
@@ -3109,7 +3110,7 @@ void shyguysays(void) {
             break;
         case 1:
             // talk
-            CurObjAnimate(0);
+            cur_obj_init_animation(0);
             if (talkToMario2(107, 4)) {
                 o->oAction = 2;
                 o->oHealth = 0;
@@ -3133,20 +3134,20 @@ void shyguysays(void) {
             } else if (o->oVelZ > MAXSPEED) {
                 o->oVelZ = MAXSPEED;
             }
-            CurObjMoveUsingVel();
+            cur_obj_move_using_vel();
             if (o->oOpacity) {
                 o->oOpacity--;
             }
             switch (o->oSubAction) {
                 case 0:
-                    CurObjAnimate(0);
+                    cur_obj_init_animation(0);
                     if (!o->oOpacity) {
-                        o->oSubAction = (RandomU16() & 1) + 1;
+                        o->oSubAction = (random_u16() & 1) + 1;
                         o->oHealth = 0;
                     }
                     break;
                 case 1:
-                    CurObjAnimate(1);
+                    cur_obj_init_animation(1);
                     if (o->header.gfx.unk38.animFrame == 18) {
                         if (checkFakeOut(difficulty - o->oHealth)) {
                             o->oSubAction = 3;
@@ -3156,13 +3157,13 @@ void shyguysays(void) {
                         blockUp = 0;
                         PlaySFX(SOUND_OBJ_GOOMBA_ALERT);
                     }
-                    if (IsAnimationFinished()) {
+                    if (cur_obj_check_if_at_animation_end()) {
                         o->oSubAction = 0;
-                        o->oOpacity = RandomU16() % 40 + 40 - difficulty / 10.f;
+                        o->oOpacity = random_u16() % 40 + 40 - difficulty / 10.f;
                     }
                     break;
                 case 2:
-                    CurObjAnimate(2);
+                    cur_obj_init_animation(2);
                     if (o->header.gfx.unk38.animFrame == 18) {
                         if (checkFakeOut(difficulty - o->oHealth)) {
                             o->oSubAction = 4;
@@ -3172,9 +3173,9 @@ void shyguysays(void) {
                         blockUp = 1;
                         PlaySFX(SOUND_OBJ_GOOMBA_ALERT);
                     }
-                    if (IsAnimationFinished()) {
+                    if (cur_obj_check_if_at_animation_end()) {
                         o->oSubAction = 0;
-                        o->oOpacity = RandomU16() % 40 + 40 - difficulty / 10.f;
+                        o->oOpacity = random_u16() % 40 + 40 - difficulty / 10.f;
                     }
                     break;
                 case 3:
@@ -3204,7 +3205,7 @@ void shyguysays(void) {
             }
             break;
         case 3:
-            CurObjAnimate(0);
+            cur_obj_init_animation(0);
             o->oPosX = approach_f32_asymptotic(o->oPosX, 16200.f, 0.05f);
             o->oPosZ = approach_f32_asymptotic(o->oPosZ, -1368.f, 0.05f);
             // wait at end
@@ -3245,11 +3246,11 @@ void shyguyblock(void) {
 void shyguybed(void) {
     switch (o->oAction) {
         case 0:
-            if (IsMarioOnCurObj()) {
+            if (cur_obj_is_mario_on_platform()) {
                 o->oAction = 1;
                 o->oVelY = -20.f;
             }
-            if (CurObjWasGroundPoundedByMario()) {
+            if (cur_obj_is_mario_ground_pounding_platform()) {
                 o->oAction = 1;
                 o->oVelY = -35.f;
             }
@@ -3260,7 +3261,7 @@ void shyguybed(void) {
                     set_mario_action(m, ACT_TRIPLE_JUMP, 0);
                 }
             }
-            if (!IsMarioOnCurObj()) {
+            if (!cur_obj_is_mario_on_platform()) {
                 o->oAction = 0;
                 set_mario_action(m, ACT_TRIPLE_JUMP, 0);
             }
@@ -3280,6 +3281,70 @@ struct DynaPolyInfo {
     s16 InitialCoordinate;
     s16 Padding;
 };
+// mark fixed vertices with valpha = 0!
+void DynaPolyCollisionUpdate(Vtx *VisualVTX, s32 VertCount, f32 ImpactSize, f32 ImpactStrength,
+                             f32 Snappiness, f32 Resistance, struct DynaPolyInfo *VertSpeedArray) {
+    s16 *coll = o->collisionData;
+    f32 RelativeX = gMarioState->pos[0] - o->oPosX;
+    f32 RelativeZ = gMarioState->pos[2] - o->oPosZ;
+    f32 x, y;
+    s32 i;
+    f32 Strength;
+
+    if (cur_obj_is_mario_on_platform()) {
+         Strength =
+            cur_obj_is_mario_ground_pounding_platform() ? ImpactStrength * 2.f : ImpactStrength;
+        for (i = 0; i < VertCount; i++) {
+            if (VisualVTX[i].v.cn[3]) {
+                x = RelativeX - VisualVTX[i].v.ob[0];
+                y = RelativeZ - VisualVTX[i].v.ob[2];
+                x = sqrtf(x * x + y * y);
+                if (x < ImpactSize) {
+                    VertSpeedArray[i].Speed -= Strength * (ImpactSize - x) / ImpactSize;
+                }
+            }
+        }
+    }
+    for (i = 0; i < VertCount; i++) {
+        if (VisualVTX[i].v.cn[3]) {
+            VisualVTX[i].v.ob[1] += VertSpeedArray[i].Speed;
+            VertSpeedArray[i].Speed +=
+                (-(f32) VisualVTX[i].v.ob[1] + VertSpeedArray[i].InitialCoordinate)
+                * (Snappiness
+                   * ((sqrtf(absi(VisualVTX[i].v.ob[0]) + absi(VisualVTX[i].v.ob[2]))) / 14.f));
+            VertSpeedArray[i].Speed -= 1.f;
+            VertSpeedArray[i].Speed *= Resistance;
+            coll[VisualVTX[i].v.flag * 3 + 3] = VisualVTX[i].v.ob[0];
+            coll[VisualVTX[i].v.flag * 3 + 4] = VisualVTX[i].v.ob[1];
+            coll[VisualVTX[i].v.flag * 3 + 5] = VisualVTX[i].v.ob[2];
+        }
+    }
+    Solidify();
+}
+
+void DynaPolyCollisionInit(Vtx *VisualVTX, s32 VertCount, f32 ImpactSize, f32 ImpactStrength,
+                           f32 Snappiness, f32 Resistance, struct DynaPolyInfo *VertSpeedArray) {
+    s16 *coll = o->collisionData;
+    s32 i, k;
+    for (i = 0; i < VertCount; i++) {
+        VertSpeedArray[i].Speed = 0;
+        VertSpeedArray[i].InitialCoordinate = VisualVTX[i].v.ob[1];
+        for (k = 0; k < VertCount; k++) {
+            if (coll[k * 3 + 3] == VisualVTX[i].v.ob[0]) {
+                if (coll[k * 3 + 4] == VisualVTX[i].v.ob[1]) {
+                    if (coll[k * 3 + 5] == VisualVTX[i].v.ob[2]) {
+                        VisualVTX[i].v.flag = k;
+                    }
+                }
+            }
+        }
+    }
+    s32 runCount = 255;
+    for (; runCount > 0; runCount--) {
+        DynaPolyCollisionUpdate(VisualVTX, VertCount, ImpactSize, ImpactStrength, Snappiness,
+                                Resistance, VertSpeedArray);
+    }
+}
 struct DynaPolyInfo vertSpeeds[10];
 #define ROPEBRIDGE_VERTLIST ropebridge_Plane_031_mesh_layer_4_vtx_0
 #define ROPEBRIDGE_VERTCOUNT (sizeof(ropebridge_Plane_031_mesh_layer_4_vtx_0) / 0x10)
@@ -3320,25 +3385,25 @@ void pushbehavior(f32 xwall, f32 zwall, f32 ywall) {
             o->oPosZ += coss(moveVec) * PUSHSPEED;
             m->pos[0] += sins(moveVec) * PUSHSPEED;
             m->pos[2] += coss(moveVec) * PUSHSPEED;
-            floorY = FindFloorHeight(o->oPosX + xwall, y + ywall, o->oPosZ + zwall);
+            floorY = find_floor_height(o->oPosX + xwall, y + ywall, o->oPosZ + zwall);
             if (absf(floorY - o->oPosY) > 10.f) {
                 o->oPosX = x;
                 o->oPosZ = z;
                 goto nosound;
             }
-            floorY = FindFloorHeight(o->oPosX + xwall, y + ywall, o->oPosZ - zwall);
+            floorY = find_floor_height(o->oPosX + xwall, y + ywall, o->oPosZ - zwall);
             if (absf(floorY - o->oPosY) > 10.f) {
                 o->oPosX = x;
                 o->oPosZ = z;
                 goto nosound;
             }
-            floorY = FindFloorHeight(o->oPosX - xwall, y + ywall, o->oPosZ + zwall);
+            floorY = find_floor_height(o->oPosX - xwall, y + ywall, o->oPosZ + zwall);
             if (absf(floorY - o->oPosY) > 10.f) {
                 o->oPosX = x;
                 o->oPosZ = z;
                 goto nosound;
             }
-            floorY = FindFloorHeight(o->oPosX - xwall, y + ywall, o->oPosZ - zwall);
+            floorY = find_floor_height(o->oPosX - xwall, y + ywall, o->oPosZ - zwall);
             if (absf(floorY - o->oPosY) > 10.f) {
                 o->oPosX = x;
                 o->oPosZ = z;
@@ -3362,6 +3427,43 @@ void pushthingy(void) {
 
     pushbehavior(200.f, 200.f, 1500.f);
 }
+static float const E = 2.718281828459f;
+static float slow_logf(float x) {
+    float p = 0.0f;
+    float r = 0.0f, c = -1.0f;
+    int i;
+
+    if (x == 0.0f) {
+        return -9999999999999999999999999999999999999999999999999999999.f;
+    }
+    while (x < 0.5f) {
+        x *= E;
+        ++p;
+    }
+
+    x -= 1.0f;
+    for (i = 1; i < 8; ++i) {
+        c *= -x;
+        r += c / i;
+    }
+    return r - p;
+}
+static float slow_expf(float x) {
+    float r = 1.0f, c = 1.0f;
+    int i;
+    x = -x;
+    for (i = 1; i < 8; ++i) {
+        c *= x / i;
+        r += c;
+    }
+    return 1.0f / r;
+}
+float slow_powf(float base, float exponent) {
+    if (base <= 0.0f) {
+        return 0.0f;
+    }
+    return slow_expf(exponent * slow_logf(base));
+}
 #define scaleX o->header.gfx.scale[0]
 #define scaleY o->header.gfx.scale[1]
 #define scaleZ o->header.gfx.scale[2]
@@ -3375,7 +3477,7 @@ void jellyblock(void) {
     x = o->oPosX;
     y = o->oPosY;
     z = o->oPosZ;
-    if (CurObjWasGroundPoundedByMario()) {
+    if (cur_obj_is_mario_ground_pounding_platform()) {
         if (!o->oSubAction) {
             o->oOpacity = 12;
             PlaySFX(SOUND_OBJ_SPINY_UNK59);
@@ -3409,27 +3511,27 @@ void jellyblock(void) {
             }
         }
 #define JELLYSIZE 175.f
-        floorY = FindFloorHeight(x, y + 10.f, z);
+        floorY = find_floor_height(x, y + 10.f, z);
         if (absf(floorY - o->oPosY) > scaleY * JELLYSIZE) {
             o->oPosX = x;
             o->oPosZ = z;
         }
-        floorY = FindFloorHeight(x + JELLYSIZE * scaleZ, y + 10.f, z);
+        floorY = find_floor_height(x + JELLYSIZE * scaleZ, y + 10.f, z);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oBobombBuddyPosZCopy = (x - o->oPosX) / JELLYSIZE;
             o->oPosX = x;
         }
-        floorY = FindFloorHeight(x - JELLYSIZE * scaleZ, y + 10.f, z);
+        floorY = find_floor_height(x - JELLYSIZE * scaleZ, y + 10.f, z);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oBobombBuddyPosZCopy = (x - o->oPosX) / JELLYSIZE;
             o->oPosX = x;
         }
-        floorY = FindFloorHeight(x, y + 10.f, z + JELLYSIZE * scaleX);
+        floorY = find_floor_height(x, y + 10.f, z + JELLYSIZE * scaleX);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oBobombBuddyPosXCopy = (z - o->oPosZ) / JELLYSIZE;
             o->oPosZ = z;
         }
-        floorY = FindFloorHeight(x, y + 10.f, z - JELLYSIZE * scaleX);
+        floorY = find_floor_height(x, y + 10.f, z - JELLYSIZE * scaleX);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oBobombBuddyPosXCopy = (z - o->oPosZ) / JELLYSIZE;
             o->oPosZ = z;
@@ -3459,21 +3561,21 @@ void jellyblock(void) {
     scaleZ /= normalizing;
     // move the block if its now blocking
     if (PrevX != scaleX) {
-        floorY = FindFloorHeight(x, y + 10.f, z + JELLYSIZE * scaleX);
+        floorY = find_floor_height(x, y + 10.f, z + JELLYSIZE * scaleX);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oPosZ += (PrevX - scaleX) * JELLYSIZE;
         }
-        floorY = FindFloorHeight(x, y + 10.f, z - JELLYSIZE * scaleX);
+        floorY = find_floor_height(x, y + 10.f, z - JELLYSIZE * scaleX);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oPosZ -= (PrevX - scaleX) * JELLYSIZE;
         }
     }
     if (PrevZ < scaleZ) {
-        floorY = FindFloorHeight(x + JELLYSIZE * scaleZ, y + 10.f, z);
+        floorY = find_floor_height(x + JELLYSIZE * scaleZ, y + 10.f, z);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oPosX += (PrevZ - scaleZ) * JELLYSIZE;
         }
-        floorY = FindFloorHeight(x - JELLYSIZE * scaleZ, y + 10.f, z);
+        floorY = find_floor_height(x - JELLYSIZE * scaleZ, y + 10.f, z);
         if (absf(floorY - o->oPosY) > 10.f) {
             o->oPosX -= (PrevZ - scaleZ) * JELLYSIZE;
         }
@@ -3484,7 +3586,7 @@ void jellyblock(void) {
 void DoubleDoor(void) {
     if (!o->oOpacity) {
         o->oOpacity = o->oFaceAngleYaw;
-        o->oHiddenBlueCoinSwitch = CurObjFindNearestActor(bhvFloorSwitchHiddenObjects);
+        o->oHiddenBlueCoinSwitch = cur_obj_nearest_object_with_behavior(bhvFloorSwitchHiddenObjects);
     }
     if (!o->oAction) {
         // rotate back to normal
@@ -3516,11 +3618,11 @@ void SetBarrelColor(void) {
 }
 void destroybarrelcode(void) {
     if (!o->oAction) {
-        if (CurObjWasGroundPoundedByMario()) {
+        if (cur_obj_is_mario_ground_pounding_platform()) {
             o->oAction = 1;
             o->oTimer = 0;
         }
-        if (IsMarioOnCurObj()) {
+        if (cur_obj_is_mario_on_platform()) {
             o->oVelY += 0.01f;
         }
         o->oVelY *= 0.9f;
@@ -3535,20 +3637,20 @@ void destroybarrelcode(void) {
         o->header.gfx.scale[2] = o->header.gfx.scale[0];
         if (o->header.gfx.scale[1] < (MINSUB * 4)) {
             mark_obj_for_deletion(o);
-            SpawnMistParticles(20, 0, 46.f);
-            SpawnTriangleParticles(15, MODEL_DIRT_ANIMATION, 3.0f, 4);
+            spawn_mist_particles_variable(20, 0, 46.f);
+            spawn_triangle_break_particles(15, MODEL_DIRT_ANIMATION, 3.0f, 4);
             switch (bParam2) {
                 case 0:
-                    SpawnActor(o, MODEL_YELLOW_COIN, bhvSingleCoinGetsSpawned);
+                    spawn_object(o, MODEL_YELLOW_COIN, bhvSingleCoinGetsSpawned);
                     break;
                 case 1:
-                    SpawnActor(o, 0, bhvThreeCoinsSpawn);
+                    spawn_object(o, 0, bhvThreeCoinsSpawn);
                     break;
                 case 2:
-                    SpawnActor(o, MODEL_BLUE_COIN, bhvMrIBlueCoin);
+                    spawn_object(o, MODEL_BLUE_COIN, bhvMrIBlueCoin);
                     break;
                 case 3:
-                    SpawnActor(o, 0, bhvTenCoinsSpawn);
+                    spawn_object(o, 0, bhvTenCoinsSpawn);
                     break;
             }
         }
@@ -3564,7 +3666,7 @@ void crumblebridge(void) {
         if (!o->oAction) { /*
              for (i = 0; i < 5; i++) {
                  for (j = 0; j < 4; j++) {
-                     SpawnActorAtLocation(o, 0x45, bhvCrumbleBridge,
+                     spawn_objectAtLocation(o, 0x45, bhvCrumbleBridge,
  #define XRANGE 312.5f
  #define ZRANGE 500.f
                                                o->oPosX - XRANGE * 1.5f + j * XRANGE, o->oPosY,
@@ -3573,20 +3675,20 @@ void crumblebridge(void) {
              }*/
             for (i = 0; i < 8; i++) {
                 for (j = 0; j < 4; j++) {
-                    SpawnActorAtLocation(o, 0x45, bhvCrumbleBridge,
+                    spawn_object_abs_with_rot(o,0, 0x45, bhvCrumbleBridge,
 #define SQUARESIZE 312.5f
                                               o->oPosX - j * SQUARESIZE, o->oPosY,
-                                              o->oPosZ - SQUARESIZE * i);
+                                              o->oPosZ - SQUARESIZE * i,0,0,0);
                 }
             }
             o->oAction = 1;
         } else {
-            if (!CurObjFindNearestActor(bhvCrumbleBridge)) {
+            if (!cur_obj_nearest_object_with_behavior(bhvCrumbleBridge)) {
                 if (o->oOpacity < 15) {
                     if (o->oOpacity == 14) {
-                        PlayPuzzleJingle();
+                        play_puzzle_jingle();
                     }
-                    coin = SpawnActorOffset(0, 0, 600.f, 0, gMarioState->marioObj,
+                    coin = spawn_object_relative(0, 0, 600.f, 0, gMarioState->marioObj,
                                                  MODEL_YELLOW_COIN, bhvSingleCoinGetsSpawned);
                     coin->oCoinUnk110 = -60.f;
                     o->oOpacity++;
@@ -3604,16 +3706,16 @@ void crumblebridge(void) {
                 if (o->oAngleVelRoll > -0x400 && o->oAngleVelRoll < 0x400)
                     o->oAngleVelRoll += o->oTumblingBridgeUnkF4; // acceleration?
                 o->oGravity = -3.0f;
-                CurObjApplyAngleVelocity();
-                CurObjMoveUsingFVelWithGravity();
+                cur_obj_rotate_move_angle_using_vel();
+                cur_obj_move_using_fvel_and_gravity();
                 if (o->oTimer > 80) {
-                    DestroyActor(o);
+                    obj_mark_for_deletion(o);
                 }
             } else if (o->oTimer == 3) {
                 PlaySFX(SOUND_GENERAL_PLATFORM);
             }
         } else {
-            if (IsMarioOnCurObj()) {
+            if (cur_obj_is_mario_on_platform()) {
                 o->oAction = 1;
                 o->oTumblingBridgeUnkF4 = random_sign() * 0x80;
             }
@@ -3634,11 +3736,32 @@ void ChandelierInit(void) {
     s32 i;
     o->oAngleVelPitch = 0x40;
     for (i = 0; i < 8; i++) {
-        o->OBJECT_FIELD_OBJ(0x1B + i) = SpawnActor(o, MODEL_BLUE_FLAME, bhvFlameMedium);
+        o->OBJECT_FIELD_OBJ(0x1B + i) = spawn_object(o, MODEL_BLUE_FLAME, bhvFlameMedium);
         o->OBJECT_FIELD_OBJ(0x1B + i)->oBehParams = 0x02000000;
     }
 }
 
+
+void OffsetChildByTransform(struct Object *source, struct Object *target, float left, float up,
+                            float forward) {
+    // Calculate the direction vectors for the source object
+    float forwardX = sins(source->oFaceAngleYaw) * coss(source->oFaceAnglePitch);
+    float forwardY = sins(-source->oFaceAnglePitch);
+    float forwardZ = coss(source->oFaceAngleYaw) * coss(source->oFaceAnglePitch);
+
+    float leftX = sins(source->oFaceAngleYaw + 0x4000) * coss(source->oFaceAngleRoll);
+    float leftY = sins(source->oFaceAngleRoll); // Assuming no roll
+    float leftZ = coss(source->oFaceAngleYaw + 0x4000) * coss(source->oFaceAngleRoll);
+
+    float upX = sins(source->oFaceAngleYaw) * sins(source->oFaceAnglePitch);
+    float upY = coss(-source->oFaceAnglePitch);
+    float upZ = coss(source->oFaceAngleYaw) * sins(source->oFaceAnglePitch);
+
+    // Apply the offsets to the target object
+    target->oPosX = source->oPosX + forward * forwardX + left * leftX + up * upX;
+    target->oPosY = source->oPosY + forward * forwardY + left * leftY + up * upY;
+    target->oPosZ = source->oPosZ + forward * forwardZ + left * leftZ + up * upZ;
+}
 void chandelier(void) {
     s32 i;
 #define CANDLERADIUS 703.f
@@ -3671,10 +3794,10 @@ void Catchnet(void) {
 }
 
 void breakabletile(void) {
-    if (CurObjWasGroundPoundedByMario()) {
+    if (cur_obj_is_mario_ground_pounding_platform()) {
         mark_obj_for_deletion(o);
-        SpawnMistParticles(20, 0, 46.f);
-        SpawnTriangleParticles(15, MODEL_DIRT_ANIMATION, 3.0f, 4);
+        spawn_mist_particles_variable(20, 0, 46.f);
+        spawn_triangle_break_particles(15, MODEL_DIRT_ANIMATION, 3.0f, 4);
     }
     Solidify();
 }
@@ -3689,7 +3812,7 @@ void booGuyPainting(void) {
             break;
         case 1:
             if (sqr(o->oDistanceToMario) < sqr(1250.f)) {
-                if (DiffBetweenAngles(newcam_yaw + 0x8000,
+                if (abs_angle_diff(newcam_yaw + 0x8000,
                                    atan2s(o->oPosZ - newcam_pos[2],
                                           o->oPosX - newcam_pos[0]))
                     < 0x2000) {
@@ -3704,7 +3827,7 @@ void booGuyPainting(void) {
             }
             break;
         case 3:
-            o->oHiddenBlueCoinSwitch = SpawnActor(o, 0x3B, bhvBooGuy);
+            o->oHiddenBlueCoinSwitch = spawn_object(o, 0x3B, bhvBooGuy);
             o->oHiddenBlueCoinSwitch->oPosY -= 50.f;
             o->oHiddenBlueCoinSwitch->oAction = 1;
             o->oHiddenBlueCoinSwitch->oIntangibleTimer = 0;
@@ -3731,26 +3854,26 @@ void booGuyPainting(void) {
 void boobarrel(void) {
     switch (o->oAction) {
         case 0:
-            CurObjAnimate(0); // startpeek
-            if (IsAnimationFinished()) {
+            cur_obj_init_animation(0); // startpeek
+            if (cur_obj_check_if_at_animation_end()) {
                 o->oAction++;
             }
             break;
         case 1:
-            CurObjAnimate(1); // peeking
+            cur_obj_init_animation(1); // peeking
             if (sqr(o->oDistanceToMario) < sqr(1000.f)) {
                 o->oAction++;
             }
             break;
         case 2:
-            CurObjAnimate(2); // stoppeek
+            cur_obj_init_animation(2); // stoppeek
             if (sqr(o->oDistanceToMario) > sqr(1000.f)) {
                 o->oAction = 0;
             }
-            if (IsMarioOnCurObj()) {
+            if (cur_obj_is_mario_on_platform()) {
                 o->oAction++;
                 m->action = ACT_THROWN_BACKWARD;
-                RequestSound(SOUND_MARIO_WAAAOOOW, gDefaultSoundArgs);
+                play_sound(SOUND_MARIO_WAAAOOOW, gDefaultSoundArgs);
                 PlaySFX(SOUND_OBJ_HEAVEHO_TOSSED);
                 m->faceAngle[1] = o->oMoveAngleYaw;
                 m->vel[1] = 65.f + (o->oBehParams & 0xff);
@@ -3758,8 +3881,8 @@ void boobarrel(void) {
             }
             break;
         case 3:
-            CurObjAnimate(3); // shootup
-            if (IsAnimationFinished()) {
+            cur_obj_init_animation(3); // shootup
+            if (cur_obj_check_if_at_animation_end()) {
                 o->oAction = 0;
             }
             break;
@@ -3786,14 +3909,14 @@ void ThePlank(void) {
         }
         bParam3 = 1;
     }
-    if (IsMarioOnCurObj()) {
+    if (cur_obj_is_mario_on_platform()) {
 #define BASEDEFORM 0.00000566666f
         if (gMarioState->pos[2] < o->oPosZ) {
             o->oAction = 1;
             o->oBobombBuddyPosZCopy = 0.f;
             Multiplier = BASEDEFORM * (gMarioState->pos[2] - o->oPosZ) / -600.f;
             o->oBobombBuddyPosXCopy += Multiplier * (gMarioState->vel[1] - 20.f) / -20.f;
-            if (CurObjWasGroundPoundedByMario()) {
+            if (cur_obj_is_mario_ground_pounding_platform()) {
                 o->oBobombBuddyPosXCopy += Multiplier;
             }
         }
@@ -3833,7 +3956,7 @@ Gfx *geo_render_captain_background(s32 callContext, UNUSED struct GraphNode *nod
     s32 i;
     f32 pos[3];
     if (callContext == GEO_CONTEXT_RENDER && CurrentRoom == 9) {
-        Mtx *mtx = alloc_display_listGRAPH(sizeof(*mtx));
+        Mtx *mtx = alloc_display_list(sizeof(*mtx));
         Gfx *dlist = alloc_display_list(4 * sizeof(Gfx));
         Gfx *Start = dlist;
         for (i = 0; i < 3; i++) {
@@ -3888,7 +4011,7 @@ void shyguymovement() {
     o->oVelZ = coss(moveDir) * o->oForwardVel;
     o->oPosY = approach_f32_symmetric(o->oPosY, o->oBobombBuddyPosYCopy, 11.f);
     o->oVelY = approach_f32_symmetric(o->oVelY, 0, 1.5f);
-    CurObjMoveUsingVel();
+    cur_obj_move_using_vel();
 }
 
 void muteCptInstruments() {
@@ -3902,8 +4025,28 @@ void muteCptInstruments() {
     }
 }
 
+u16 cloakTimer = 0;
+extern Vtx captainVerts[78] __attribute__((section(".data")));
+void animateCloak() {
+    s32 i;
+    Vtx *mod = SegmentedToVirtual(shyguycaptain_BODY_mesh_layer_5_vtx_0);
+    Vtx *read = SegmentedToVirtual(captainVerts);
+    u16 dir;
+    cloakTimer += 0x800;
+    for (i = 0; i < sizeof(shyguycaptain_BODY_mesh_layer_5_vtx_0) / 0x10; i++) {
+        if (!mod[i].v.cn[3]) {
+            dir = atan2s(read[i].v.ob[2], read[i].v.ob[0]);
+#define MINVERT 75.f
+            mod[i].v.ob[0] = read[i].v.ob[0]
+                             + sins(dir) * (MINVERT - read[i].v.ob[1]) * 0.1f
+                                   * sins(cloakTimer + read[i].v.ob[0] * 256 + read[i].v.ob[2] * 128);
+            mod[i].v.ob[2] = read[i].v.ob[2]
+                             + coss(dir) * (MINVERT - read[i].v.ob[1]) * 0.1f
+                                   * sins(cloakTimer + read[i].v.ob[0] * 256 + read[i].v.ob[2] * 128);
+        }
+    }
+}
 #define BGM_FADE_TIME 200
-// todo: quiet the level sequence to 0 when entering the door near the boss instantly
 extern struct CutsceneJump *currentScene;
 void shyguycpt(void) {
     f32 x, y, z;
@@ -3916,12 +4059,12 @@ void shyguycpt(void) {
         if (gAreaUpdateCounter == 0)
             return;
         o->oHiddenBlueCoinSwitch =
-            SpawnActorOffset(0, 0, 0, 295.f, o, MODEL_MAD_PIANO, bhvMadPiano);
+            spawn_object_relative(0, 0, 0, 295.f, o, MODEL_MAD_PIANO, bhvMadPiano);
         o->oHiddenBlueCoinSwitch->oMoveAngleYaw += 0x8000;
         o->oPosY += 65.f;
         // quiet the level sequence immidiately when near the boss
         if ((sqr(o->oDistanceToMario) < sqr(3500.f)) && (gMarioState->pos[1] > o->oPosY - 1000.f)) {
-            PlayEnvironmentalMusic(0, 0x80, 127, 0);//TODO: was SEQ_EVENT_SHYGUYBOSS
+            play_secondary_music(SEQ_EVENT_SHYGUYBOSS, 0x80, 127, 0);
             muteCptInstruments();
             o->oSubAction = 1;
         } else {
@@ -3937,7 +4080,7 @@ void shyguycpt(void) {
                     case 0:
                         if ((sqr(o->oDistanceToMario) < sqr(3500.f))
                             && (gMarioState->pos[1] > o->oPosY - 1000.f)) {
-                            PlayEnvironmentalMusic(0, 0x80, 127, BGM_FADE_TIME);//TODO: was SEQ_EVENT_SHYGUYBOSS
+                            play_secondary_music(SEQ_EVENT_SHYGUYBOSS, 0x80, 127, BGM_FADE_TIME);
                             muteCptInstruments();
                             o->oSubAction = 1;
                             // keep channel 3, delete channel 0, 2, 4, 5, 7, 9
@@ -3946,7 +4089,7 @@ void shyguycpt(void) {
                     case 1:
                         muteCptInstruments();
                         if (sqr(o->oDistanceToMario) > sqr(4000.f)) {
-                            StopEnvironmentalMusic(BGM_FADE_TIME);
+                            func_80321080(BGM_FADE_TIME);
                             o->oSubAction = 0;
                         }
                         break;
@@ -3954,34 +4097,34 @@ void shyguycpt(void) {
                 if ((sqr(o->oDistanceToMario) < sqr(1000.f))) {
                     o->oAction = 1;
                     o->oIntangibleTimer = -1;
-                    FadeOutSeqPlayer(SEQ_PLAYER_ENV, 10);
+                    func_80321080(10);
                 }
             }
-            CurObjAnimate(0);
+            cur_obj_init_animation(0);
             break;
         case 1:
             if (o->oSubAction) {
-                if (!IsAnimationFinished())
+                if (!cur_obj_check_if_at_animation_end())
                     break;
                 o->oAction = 2;
                 o->oFlags &= ~OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW;
                 o->oOpacity = 1;
                 o->oHealth = 0;
-                UncapLevelSeqPlayer(BGM_FADE_TIME);
-                AddBackgroundMusicCandidate(0, 1, 0); // TODO: was SEQ_EVENT_SHYGUYBOSS
+            sequence_player_unlower(SEQ_PLAYER_LEVEL, 60);
+                play_music(SEQ_EVENT_SHYGUYBOSS, 1, 0);
                 break;
             }
             // MuteGhostshipSongExceptRain();
             //  turn around, talk to mario
             if (o->oTimer > 20) {
-                CurObjAnimate(1);
+                cur_obj_init_animation(1);
             } else {
                 o->header.gfx.unk38.animFrame = 0;
             }
             if (o->oTimer > 40) {
                 o->oFlags |= OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW;
                 o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw,
-                                                          AngleFromToActor(o, gMarioObject), 0x240);
+                                                          obj_angle_to_object(o, gMarioObject), 0x240);
             } else {
                 o->oMoveAngleYaw = o->oFaceAngleYaw;
             }
@@ -3998,14 +4141,14 @@ void shyguycpt(void) {
         case 2:
             o->oIntangibleTimer = 0;
             // fight idle, space in front of mario
-            CurObjAnimate(2);
+            cur_obj_init_animation(2);
             o->oBobombBuddyPosXCopy = sins(o->oAngleToMario + 0x8000) * 1200.f + gMarioState->pos[0];
             o->oBobombBuddyPosYCopy = o->oFloorHeight + 100.f;
             o->oBobombBuddyPosZCopy = coss(o->oAngleToMario + 0x8000) * 1200.f + gMarioState->pos[2];
             if (o->oBobombBuddyPosYCopy < o->oHomeY - 100.f) {
                 o->oBobombBuddyPosYCopy = o->oHomeY + 200.f;
             }
-            if (RandomU16() > (0x10000 - (o->oTimer * 4 + o->oHealth * 0x20))) {
+            if (random_u16() > (0x10000 - (o->oTimer * 4 + o->oHealth * 0x20))) {
                 if (o->oOpacity & 1) {
                     o->oAction = 4;
                     // SOUNDFI
@@ -4021,7 +4164,7 @@ void shyguycpt(void) {
             o->oAnimState = approach_s16_symmetric(o->oAnimState, 192, 10);
             switch (o->oSubAction) {
                 case 0:
-                    CurObjAnimate(3);
+                    cur_obj_init_animation(3);
                     if (o->header.gfx.unk38.animFrame > 24) {
                         o->oMoveAngleYaw = o->oAngleToMario;
 #define SHYGUYSPINSPEED 65.f
@@ -4029,7 +4172,7 @@ void shyguycpt(void) {
                         o->oVelZ = SHYGUYSPINSPEED * coss(o->oMoveAngleYaw);
                         o->oTimer = 0;
                         o->oSubAction++;
-                        o->oObjPointer2 = SpawnActor(o, 0, bhvHitbox);
+                        o->oObjPointer2 = spawn_object(o, 0, bhvHitbox);
                         o->oObjPointer2->hitboxHeight = 20.f;
                         o->oObjPointer2->hitboxRadius = 250.f;
                         o->oObjPointer2->oPosY += 60.f;
@@ -4049,7 +4192,7 @@ void shyguycpt(void) {
                     if (!(o->oTimer % 12)) {
                         PlaySFX(SOUND_ACTION_SPIN);
                     }
-                    CopyActorPosAndAngle(o->oObjPointer2, o);
+                    obj_copy_pos_and_angle(o->oObjPointer2, o);
                     o->oObjPointer2->hitboxHeight = 20.f;
                     o->oObjPointer2->hitboxRadius = 250.f;
                     o->oObjPointer2->oPosY += 60.f;
@@ -4072,19 +4215,19 @@ void shyguycpt(void) {
                         o->oObjPointer2 = 0;
                     }
                     o->header.gfx.unk38.animFrame = 27;
-                    CurObjMoveUsingVel();
+                    cur_obj_move_using_vel();
                     break;
                 case 2:
                     o->oAngleVelYaw = approach_s16_symmetric(o->oAngleVelYaw, 0, 0x120);
                     if (!o->oAngleVelYaw) {
                         o->oSubAction++;
                     }
-                    CurObjMoveUsingVel();
+                    cur_obj_move_using_vel();
                     break;
                 case 3:
-                    if (IsAnimationFinished()) {
-                        CurObjMoveUsingVel();
-                        CurObjAnimate(2);
+                    if (cur_obj_check_if_at_animation_end()) {
+                        cur_obj_move_using_vel();
+                        cur_obj_init_animation(2);
                         o->oAction = 2;
                         o->oOpacity = 0;
                     }
@@ -4117,7 +4260,7 @@ void shyguycpt(void) {
                     }
                     break;
                 case 1:
-                    CurObjAnimate(4);
+                    cur_obj_init_animation(4);
                     if (o->header.gfx.unk38.animFrame > 15) {
                         o->oSubAction++;
                         o->oBobombBuddyCannonStatus = 0;
@@ -4127,28 +4270,28 @@ void shyguycpt(void) {
                     if ((o->header.gfx.unk38.animFrame == 45)) {
 #define YOFF 55.f
 #define ZOFF 200.f
-                        struct Object *flame = SpawnActorOffset(
+                        struct Object *flame = spawn_object_relative(
                             0, 0, YOFF, ZOFF, o, MODEL_BLUE_FLAME, bhvBouncingFireballFlame);
-                        SetActorScale(flame, 5.f);
+                        obj_scale(flame, 5.f);
                         PlaySFX(SOUND_OBJ_FLAME_BLOWN);
                     }
                     if ((o->header.gfx.unk38.animFrame == 17)) {
 #define YOFF 55.f
 #define ZOFF 200.f
-                        struct Object *flame = SpawnActorOffset(
+                        struct Object *flame = spawn_object_relative(
                             1, 0, YOFF, ZOFF, o, MODEL_BLUE_FLAME, bhvSmallPiranhaFlame);
                         flame->oForwardVel = 50.f;
                         flame->oMoveAnglePitch =
                             0x4000
-                            - lateral_DistBetweenActors(gMarioState->marioObj, o)
+                            - lateral_dist_between_objects(gMarioState->marioObj, o)
                                   * 6.f; // calc from lateral dist to mario
-                        SetActorScale(flame, 5.f);
+                        obj_scale(flame, 5.f);
                         PlaySFX(SOUND_OBJ_FLAME_BLOWN);
                     }
-                    if (IsAnimationFinished()) {
+                    if (cur_obj_check_if_at_animation_end()) {
                         if ((4 - o->oHealth) < o->oBobombBuddyCannonStatus) {
                             o->oOpacity++;
-                            CurObjAnimate(2);
+                            cur_obj_init_animation(2);
                             o->oAction = 2;
                         } else {
                             o->header.gfx.unk38.animFrame = 0;
@@ -4165,7 +4308,7 @@ void shyguycpt(void) {
             switch (o->oSubAction) {
                 case 0:
                     o->oVelY = 0;
-                    CurObjAnimate(5);
+                    cur_obj_init_animation(5);
                     if (!o->oTimer) {
                         o->oForwardVel = -50.f;
                         o->oAngleVelPitch = 0x1370;
@@ -4201,22 +4344,22 @@ void shyguycpt(void) {
                 case 2:
                     o->oForwardVel = approach_f32_symmetric(o->oForwardVel, 0.f, 1.f);
                     o->oMoveAngleYaw = approach_s16_symmetric(
-                        o->oMoveAngleYaw, AngleFromToActor(o, o->oHiddenBlueCoinSwitch), 0x800);
+                        o->oMoveAngleYaw, obj_angle_to_object(o, o->oHiddenBlueCoinSwitch), 0x800);
                     if (o->oFaceAngleYaw == o->oMoveAngleYaw) {
                         o->oSubAction++;
-                        CurObjAnimate(6);
+                        cur_obj_init_animation(6);
                     }
                     o->oFaceAngleYaw = o->oMoveAngleYaw;
                     break;
                 case 3:
-                    o->oMoveAngleYaw = AngleFromToActor(o, o->oHiddenBlueCoinSwitch);
+                    o->oMoveAngleYaw = obj_angle_to_object(o, o->oHiddenBlueCoinSwitch);
                     if (o->header.gfx.unk38.animFrame > 19)
                         o->oForwardVel = approach_f32_symmetric(
                             o->oForwardVel,
-                            lateral_DistBetweenActors(o, o->oHiddenBlueCoinSwitch) / 8.f, 5.f);
+                            lateral_dist_between_objects(o, o->oHiddenBlueCoinSwitch) / 8.f, 5.f);
                     o->oPosY = approach_f32_asymptotic(o->oPosY,
                                                        o->oHiddenBlueCoinSwitch->oPosY + 350.f, 0.1f);
-                    if (lateral_DistBetweenActors(o, o->oHiddenBlueCoinSwitch) < 40.f) {
+                    if (lateral_dist_between_objects(o, o->oHiddenBlueCoinSwitch) < 40.f) {
                         o->oSubAction++;
                         o->oForwardVel = 0;
                         o->oTimer = 0;
@@ -4226,15 +4369,16 @@ void shyguycpt(void) {
                     o->oHiddenBlueCoinSwitch->oAction = 1;
                     o->oFaceAnglePitch = approach_s16_symmetric(o->oFaceAnglePitch, 0x4000, 0xC00);
                     o->oVelY -= 4.f;
-                    CurObjScale(1.f - 0.08 * o->oTimer);
+                    cur_obj_scale(1.f - 0.08 * o->oTimer);
                     if (o->oTimer > 11) {
                         o->oAction = 7;
-                        CurObjSetModel(0);
+                        cur_obj_set_model(0);
                         o->oHiddenBlueCoinSwitch->oAction = 2;
                     }
                     break;
             }
-            ComputeVelAndMove();
+        cur_obj_compute_vel_xz();
+    cur_obj_move_using_vel();
             break;
         case 7:
             o->oIntangibleTimer = -1;
@@ -4243,14 +4387,14 @@ void shyguycpt(void) {
                 case 0:
                     ObjbParam2(o->oHiddenBlueCoinSwitch) = o->oHealth;
                     if (o->oTimer > o->oHealth * 150 + 300) {
-                        CurObjSetModel(0x4B);
+                        cur_obj_set_model(0x4B);
                         o->oHiddenBlueCoinSwitch->oAction = 0;
                         o->oVelY = 14.f;
                         o->oFaceAnglePitch = 0xC000;
                         o->oTimer = 0;
-                        CurObjAnimate(2);
+                        cur_obj_init_animation(2);
                         o->oSubAction++;
-                        CopyActorPosAndAngle(o, o->oHiddenBlueCoinSwitch);
+                        obj_copy_pos_and_angle(o, o->oHiddenBlueCoinSwitch);
                         o->oPosY += 50.f;
                     }
                     break;
@@ -4258,10 +4402,10 @@ void shyguycpt(void) {
                     o->oFaceAnglePitch = approach_s16_symmetric(o->oFaceAnglePitch, 0, 0xC00);
                     o->oVelY -= 2.f;
                     o->oPosY += o->oVelY;
-                    CurObjScale(0.08 * o->oTimer);
+                    cur_obj_scale(0.08 * o->oTimer);
                     if (o->oTimer > 11) {
                         o->oAction = 2;
-                        CurObjScale(1.f);
+                        cur_obj_scale(1.f);
                     }
                     o->oInteractStatus = 0;
                     break;
@@ -4270,12 +4414,12 @@ void shyguycpt(void) {
         case 8:
             // die and give mario star
             if (!o->oTimer) {
-                CurObjSetModel(0);
-                SpawnMistParticles(20, 0, 46.f);
-                SpawnTriangleParticles(30, MODEL_DIRT_ANIMATION, 3.0f, 4);
+                cur_obj_set_model(0);
+                spawn_mist_particles_variable(20, 0, 46.f);
+                spawn_triangle_break_particles(30, MODEL_DIRT_ANIMATION, 3.0f, 4);
             } else {
-                RemoveBackgroundMusicCandidate(0);// TODO: WAS SEQ_EVENT_SHYGUYBOSS
-                SpawnStarWithSpawnersParam(o->oHomeX, o->oHomeY + 200.f, o->oHomeZ);
+                stop_background_music(SEQ_EVENT_SHYGUYBOSS);
+                cur_obj_spawn_star_at_y_offset(o->oHomeX, o->oHomeY + 200.f, o->oHomeZ, 0.f);
                 mark_obj_for_deletion(o);
             }
             break;
@@ -4307,12 +4451,12 @@ void shyguycpt(void) {
         o->oMoveAngleYaw = 0x8000;
         mark_obj_for_deletion(o->oHiddenBlueCoinSwitch);
         o->oHiddenBlueCoinSwitch = 0;
-        RemoveBackgroundMusicCandidate(0); // TODO: WAS SEQ_EVENT_SHYGUYBOSS
+        stop_background_music(SEQ_EVENT_SHYGUYBOSS);
     }
     o->oFaceAngleYaw += o->oAngleVelYaw;
 }
 Gfx *Geo_CaptainColor(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
-    Gfx *gfx = alloc_display_listGRAPH(sizeof(Gfx) * 2);
+    Gfx *gfx = alloc_display_list(sizeof(Gfx) * 2);
     Gfx *dlStart = gfx;
     if (callContext == GEO_CONTEXT_RENDER) {
         struct Object *obj = (struct Object *) gCurGraphNodeObject;
@@ -4325,6 +4469,7 @@ Gfx *Geo_CaptainColor(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
 }
 // spawn dust and sound too
 #define INCREMENT 0.0035f
+// TODO: implement camRoll via lakitustate
 extern f32 camRoll;
 extern f32 camRollSpeed;
 #define PERCENTAGE 0.001f
@@ -4334,7 +4479,7 @@ extern f32 camRollSpeed;
 extern struct ParticleInfos MistParticle;
 extern struct ParticleInfos SmokeParticle;
 void movecratecode(void) {
-    for (; o->oOpacity < 0x400; o->oOpacity++) {
+    /*for (; o->oOpacity < 0x400; o->oOpacity++) {
         o->oMacroUnk10C = DUSTSPAWN / 2.f;
         camRoll += camRollSpeed;
         camRollSpeed -= camRoll * PERCENTAGE;
@@ -4350,7 +4495,7 @@ void movecratecode(void) {
             o->oVelZ = 0.f;
         }
     }
-    o->oVelZ += camRoll * INCREMENT * 127.f / bParam2;
+    o->oVelZ += camRoll * INCREMENT * 127.f / bParam2;*/
     o->oVelZ *= 0.99f;
     o->oPosZ += o->oVelZ;
     if (o->oPosZ > (o->oHomeZ + ((o->oBehParams >> 24) * 100.f))) {
@@ -4368,20 +4513,20 @@ void movecratecode(void) {
     o->oMacroUnk10C += o->oVelZ;
     if (o->oMacroUnk108 < -DUSTSPAWN) {
         o->oMacroUnk108 += DUSTSPAWN;
-        AddParticleObject(o, 200.f, 200.f, 0, &SmokeParticle);
+        spawn_object_relative(0, 200.f, 200.f, 0, o, 0,bhvMistParticleSpawner);
     }
     if (o->oMacroUnk108 > DUSTSPAWN) {
         o->oMacroUnk108 -= DUSTSPAWN;
-        AddParticleObject(o, 200.f, -200.f, 0, &SmokeParticle);
+        spawn_object_relative(0, 200.f, -200.f, 0, o, 0,bhvMistParticleSpawner);
     }
 
     if (o->oMacroUnk10C < -DUSTSPAWN) {
         o->oMacroUnk10C += DUSTSPAWN;
-        AddParticleObject(o, -200.f, 200.f, 0, &SmokeParticle);
+        spawn_object_relative(0, -200.f, 200.f, 0, o, 0,bhvMistParticleSpawner);
     }
     if (o->oMacroUnk10C > DUSTSPAWN) {
         o->oMacroUnk10C -= DUSTSPAWN;
-        AddParticleObject(o, -200.f, -200.f, 0, &SmokeParticle);
+        spawn_object_relative(0, -200.f, -200.f, 0, o, 0,bhvMistParticleSpawner);
     }
 
     Solidify();
@@ -4394,14 +4539,14 @@ void ghostplatform(void) {
             if (o->oOpacity) {
                 o->oOpacity--;
                 if (o->oOpacity & 2) {
-                    CurObjHide();
+                    cur_obj_hide();
                 } else {
-                    CurObjUnhide();
+                    cur_obj_unhide();
                 }
             } else {
                 o->oAnimState = 0;
             }
-            o->oAction = IsMarioOnCurObj();
+            o->oAction = cur_obj_is_mario_on_platform();
             o->oVelY = 0.f;
             Solidify();
             break;
@@ -4410,7 +4555,7 @@ void ghostplatform(void) {
                 PlaySFX(SOUND_GENERAL_BIG_CLOCK);
             }
             o->oAnimState = 1;
-            /*if (!IsMarioOnCurObj()) {
+            /*if (!cur_obj_is_mario_on_platform()) {
                 o->oAction++;
                 cur_obj_update_floor_height();
             }*/
@@ -4428,16 +4573,16 @@ void ghostplatform(void) {
             o->oPosY += o->oVelY;
             if (o->oPosY < o->oFloorHeight) {
                 o->oAction++;
-                CurObjSetModel(0);
-                SpawnMistParticles(20, 0, 46.f);
-                SpawnTriangleParticles(30, MODEL_DIRT_ANIMATION, 3.0f, 4);
+                cur_obj_set_model(0);
+                spawn_mist_particles_variable(20, 0, 46.f);
+                spawn_triangle_break_particles(30, MODEL_DIRT_ANIMATION, 3.0f, 4);
                 PlaySFX(SOUND_GENERAL_BREAK_BOX);
             }
             Solidify();
             break;
         case 3:
             if (o->oTimer > 240) {
-                CurObjSetModel(0x36);
+                cur_obj_set_model(0x36);
                 o->oPosY = o->oHomeY;
                 o->oAction = 0;
                 o->oOpacity = 40;
@@ -4447,7 +4592,7 @@ void ghostplatform(void) {
 }
 
 Gfx *geo_GhostPlatform(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
-    Gfx *gfx = alloc_display_listGRAPH(sizeof(Gfx) * 2);
+    Gfx *gfx = alloc_display_list(sizeof(Gfx) * 2);
     Gfx *dlStart = gfx;
     if (callContext == GEO_CONTEXT_RENDER) {
         struct Object *obj = (struct Object *) gCurGraphNodeObject;
@@ -4478,9 +4623,8 @@ void ghostLantern(void) {
                  s32 UsedAngleVelPitch;
                  s16 UsedFaceAnglePitch;
     f32 speedScale = 1.f;
-    AddLightSource(800.f, LanternRGB);
     if (!o->oOpacity) {
-        o->oOpacity = RandomU16();
+        o->oOpacity = random_u16();
     }
     if (!(o->oBehParams & 0x01000000)) {
         o->oOpacity += 0x100;
@@ -4559,14 +4703,36 @@ s32 InVision() {
     y = gMarioState->pos[1] - o->oPosY;
     pitchToMario = -atan2s(sqrtf(x * x + z * z), y);
     if (sqr(o->oDistanceToMario) < sqr(1200.f)) {
-        if (DiffBetweenAngles(o->oMoveAngleYaw, o->oAngleToMario) < 0x1800) {
-            if (DiffBetweenAngles(o->oFaceAnglePitch, pitchToMario) < 0x1400) {
+        if (abs_angle_diff(o->oMoveAngleYaw, o->oAngleToMario) < 0x1800) {
+            if (abs_angle_diff(o->oFaceAnglePitch, pitchToMario) < 0x1400) {
                 return 1;
             }
         }
     }
     return 0;
 }
+s32 IsMarioFarFromHome(f32 max) {
+    f32 dx = o->oHomeX - gMarioObject->oPosX;
+    f32 dy = o->oHomeY - gMarioObject->oPosY;
+    f32 dz = o->oHomeZ - gMarioObject->oPosZ;
+    f32 marioDistToHome = sqrtf(dx * dx + dy * dy + dz * dz);
+
+    if (marioDistToHome > max) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+void CurObjSpawnYellowCoins(s32 nCoins) {
+    for (; nCoins > 0; nCoins--) {
+        struct Object *coin = spawn_object(o, MODEL_YELLOW_COIN, bhvMovingYellowCoin);
+        coin->oForwardVel = random_float() * 20;
+        coin->oVelY = random_float() * 40 + 20;
+        coin->oMoveAngleYaw = random_u16();
+    }
+}
+
 // make their model pulsate white to turkoise
 // different idle and attackstart behavior depending on bParam2
 // charge at mario once they see him
@@ -4589,11 +4755,11 @@ void booGuy(void) {
                 case 0:
                     if (!o->oHiddenBlueCoinSwitch) {
                         o->oHiddenBlueCoinSwitch =
-                            SpawnActor(gCurrentObject, MODEL_BUBBLE, bhvYoshiBubble);
+                            spawn_object(gCurrentObject, MODEL_BUBBLE, bhvYoshiBubble);
                         o->oHiddenBlueCoinSwitch->oObjPointer1 = o;
                         ObjbParam2(o->oHiddenBlueCoinSwitch) = 2;
                     }
-                    CurObjAnimate(1);
+                    cur_obj_init_animation(1);
 #define SLEEPTIME 59
                     if (o->header.gfx.unk38.animFrame > SLEEPTIME) {
                         o->header.gfx.unk38.animFrame -= SLEEPTIME;
@@ -4604,7 +4770,7 @@ void booGuy(void) {
                             o->oHiddenBlueCoinSwitch = 0;
                         }
                         if (sqrtf(sqr(gMarioState->forwardVel) + sqr(gMarioState->vel[1]))
-                            > obj_dist_to_mario(o) / 15.f) {
+                            > (o->oDistanceToMario) / 15.f) {
                             o->oAction = 1;
                             o->oHiddenBlueCoinSwitch = 0;
                         }
@@ -4612,21 +4778,21 @@ void booGuy(void) {
                     break;
                 case 1:
                     // keep watch (looks left and right)
-                    CurObjAnimate(0);
+                    cur_obj_init_animation(0);
                     if (InVision()) {
                         o->oAction = 1;
                     }
                     break;
                 case 2:
                     // look at something
-                    CurObjAnimate(2);
+                    cur_obj_init_animation(2);
                     if (InVision()) {
                         o->oAction = 1;
                     }
                     break;
                 case 3:
                     // patrol
-                    CurObjAnimate(3);
+                    cur_obj_init_animation(3);
                     switch (o->oSubAction) {
                         case 0:
                             o->oForwardVel = 10.f;
@@ -4655,7 +4821,7 @@ void booGuy(void) {
             break;
         case 1:
             // charge anim
-            CurObjAnimate(4);
+            cur_obj_init_animation(4);
 #define CHARGETIME 19
             if (o->header.gfx.unk38.animFrame > CHARGETIME) {
                 o->header.gfx.unk38.animFrame -= CHARGETIME;
@@ -4683,15 +4849,15 @@ void booGuy(void) {
             break;
         case 2:
             // looping while charge
-            CurObjAnimate(4);
+            cur_obj_init_animation(4);
             if (o->header.gfx.unk38.animFrame > CHARGETIME) {
                 o->header.gfx.unk38.animFrame -= CHARGETIME;
             }
             break;
         case 3:
             // slowly fly at mario
-            // if (IsAnimationFinished()) {
-            CurObjAnimate(3);
+            // if (cur_obj_check_if_at_animation_end()) {
+            cur_obj_init_animation(3);
             // }
             targetAngle = atan2s(gMarioState->pos[2] - o->oPosZ, gMarioState->pos[0] - o->oPosX);
             o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, targetAngle, 0x400);
@@ -4726,9 +4892,9 @@ void booGuy(void) {
             collisionData.x = (s16) o->oPosX;
             collisionData.y = (s16) o->oPosY;
             collisionData.z = (s16) o->oPosZ;
-            if ((o->oTimer > 23) || (FindWallCollisions(&collisionData))) {
+            if ((o->oTimer > 23) || (find_wall_collisions(&collisionData))) {
                 mark_obj_for_deletion(o);
-                SpawnMistParticles(20, 0, 46.f);
+                spawn_mist_particles_variable(20, 0, 46.f);
                 CurObjSpawnYellowCoins(2);
             }
             break;
@@ -4764,10 +4930,10 @@ void booGuy(void) {
         o->oVelX = coss(-o->oFaceAnglePitch) * sins(o->oMoveAngleYaw) * o->oForwardVel;
         o->oVelZ = coss(-o->oFaceAnglePitch) * coss(o->oMoveAngleYaw) * o->oForwardVel;
     } else {
-        ComputeVelXZ();
+        cur_obj_compute_vel_xz();
     }
     cur_obj_update_floor_height();
-    CurObjMoveUsingVel();
+    cur_obj_move_using_vel();
     o->oInteractStatus = 0;
     // can go through walls, but not above ceilings or OOB
     // kill by GP or dive, drops 2 coins
@@ -4803,7 +4969,7 @@ void SleepBubble(void) {
     s32 i;
     if (!o->oObjPointer1->oAction) {
         // some sleep anims have sleep fadeouts .scale up!
-        f32 Frame = ANIMFRAME(o->oObjPointer1) * BubbleParameters[bParam2][4];
+        f32 Frame = (o->oObjPointer1->header.gfx.unk38.animFrame) * BubbleParameters[bParam2][4];
 #define IDLETIME 8.f
         f32 AnimationCurveTime = LastFrame / 2.f - IDLETIME / 2.f;
         f32 scale = 1.f;
@@ -4815,22 +4981,21 @@ void SleepBubble(void) {
                     * -1.0f
                 + 2.f;
         }
-        CurObjScale(scale * BubbleParameters[bParam2][0]);
+        cur_obj_scale(scale * BubbleParameters[bParam2][0]);
     } else {
         for (i = 0; i < 13; i++) {
-            struct Object *Obj = SpawnActor(o, MODEL_BUBBLE, bhvPiranhaPlantWakingBubbles);
+            struct Object *Obj = spawn_object(o, MODEL_BUBBLE, bhvPiranhaPlantWakingBubbles);
             Obj->oPosY += 5.f * o->header.gfx.scale[1];
         }
-        DestroyActor(o);
+        obj_mark_for_deletion(o);
     }
 }
 Gfx *geo_set_primOpa(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
     struct Object *obj = (struct Object *) gCurGraphNodeObject;
     struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) b;
     if (callContext == GEO_CONTEXT_RENDER) {
-        Gfx *gfx = alloc_display_listGRAPH(sizeof(Gfx) * 2);
+        Gfx *gfx = alloc_display_list(sizeof(Gfx) * 2);
         Gfx *dlStart = gfx;
-        CreateDirtyExclusiveOne(gfx);
         gDPSetPrimColor(dlStart++, 0, 0, 0, (ObjbParam2(obj) - 16) * 20, (ObjbParam2(obj) - 16) * 20,
                         obj->oOpacity);
         gSPEndDisplayList(dlStart++);
@@ -4866,7 +5031,7 @@ Gfx *geo_render_INFBG(s32 callContext, struct GraphNode *node, UNUSED Mat4 b) {
     s32 i;
     struct GraphNodeGenerated *asGenerated = (struct GraphNodeGenerated *) node;
     if (callContext == GEO_CONTEXT_RENDER) {
-        Mtx *mtx = alloc_display_listGRAPH(sizeof(*mtx));
+        Mtx *mtx = alloc_display_list(sizeof(*mtx));
         Gfx *dlist = alloc_display_list(4 * sizeof(Gfx));
         Gfx *Start = dlist;
         for (i = 0; i < 3; i++) {
@@ -4902,6 +5067,12 @@ Gfx *FindFirstMatching(Gfx *DLStart, u32 Word1Flag, u32 Word2Flag, u32 DesiredWo
     return 0;
 }
 
+
+u8 water_texI4[64 * 32];
+
+u32 water_get_srcI4() {
+    return water_texI4;
+}
 Gfx envColor[] = {
     sDPRGBColor(G_SETENVCOLOR, 64, 64, 64, 64),
     gsSPEndDisplayList(),
@@ -4921,7 +5092,7 @@ Gfx *geo_cause_env_lightning(s32 callContext, struct GraphNode *b, UNUSED Mat4 *
         gfx = &envColor[0];
         if (!asGenerated->parameter) {
             brightness = (envColor[0].words.w1 & 0x000000FF);
-            if ((brightness > 30) && ((RandomU16() % 175) == 0)) {
+            if ((brightness > 30) && ((random_u16() % 175) == 0)) {
                 brightness = 0;
                 bolted = 1;
             } else {
@@ -4952,4 +5123,65 @@ Gfx *geo_cause_env_lightning(s32 callContext, struct GraphNode *b, UNUSED Mat4 *
         }
     }
     return gfx;
+}
+s32 CurObjBlinkAfterTimeUntil(s32 TimeUntilBlink, s32 TimeBlinking) {
+    s32 TimeSpent = o->oTimer - TimeUntilBlink;
+    if (o->oTimer >= TimeUntilBlink) {
+        if (!(TimeSpent & 1)) {
+            o->header.gfx.node.flags ^= GRAPH_RENDER_INVISIBLE;
+        }
+    }
+
+    return TimeSpent > TimeBlinking;
+}
+extern const Collision fallplatform1_collision[];
+extern const Collision fallplatform2_collision[];
+void fallplatform(void) {
+    u32 *collisionData;
+    if (bParam2) {
+        collisionData = SegmentedToVirtual(fallplatform2_collision);
+    } else {
+        collisionData = SegmentedToVirtual(fallplatform1_collision);
+    }
+    o->collisionData = collisionData;
+    switch (o->oAction) {
+        case 0:
+            if (cur_obj_is_mario_on_platform()) {
+                o->oAction++;
+                PlaySFX(SOUND_OBJ_UNKNOWN2);
+                // CurObjApplyCameraShakeWithFalloff(&SmallDefaultShake, 5500.f, 2000.f);
+            }
+            Solidify();
+            break;
+        case 1:
+            o->oGraphYOffset = (o->oTimer & 1) * -8.f;
+            if (o->oTimer > 32) {
+                o->oAction++;
+                o->oGraphYOffset = 0;
+            }
+            Solidify();
+            break;
+        case 2:
+            o->oVelY -= 1.f;
+            if (o->oVelY < -75.f) {
+                o->oVelY = -75.f;
+            }
+            if (o->oPosY < -1500.f) {
+                o->oAction++;
+            }
+            Solidify();
+            break;
+        case 3:
+            if (CurObjBlinkAfterTimeUntil(0, 20)) {
+                o->oAction = 0;
+                o->oPosX = o->oHomeX;
+                o->oPosY = o->oHomeY;
+                o->oPosZ = o->oHomeZ;
+                o->oVelY = 0;
+                o->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+            }
+            Solidify();
+            break;
+    }
+    o->oPosY += o->oVelY;
 }

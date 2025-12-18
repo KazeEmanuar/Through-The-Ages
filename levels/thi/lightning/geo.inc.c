@@ -1,6 +1,6 @@
 #include "src/game/envfx_snow.h"
 
-const GeoLayout lightning_geo[] = {
+const GeoLayout lightning_geo2[] = {
 	GEO_CULLING_RADIUS(8500),
 	GEO_OPEN_NODE(),
 		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, lightning_Cube_mesh_layer_5),

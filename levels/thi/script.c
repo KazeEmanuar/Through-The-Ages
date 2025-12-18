@@ -30,7 +30,7 @@ const LevelScript level_thi_entry[] = {
 	JUMP_LINK(script_func_global_1), 
 	LOAD_MODEL_FROM_GEO(0x16, warp_pipe_geo), 
 	LOAD_MODEL_FROM_GEO(MODEL_BBH_HAUNTED_DOOR, GhostshipDoor_geo), 
-	LOAD_MODEL_FROM_GEO(0x35, lightning_geo), 
+	LOAD_MODEL_FROM_GEO(0x35, lightning_geo2), 
 	LOAD_MODEL_FROM_GEO(0x36, ghostplatform_geo), 
 	LOAD_MODEL_FROM_GEO(0x37, ghostlantern_geo), 
 	LOAD_MODEL_FROM_GEO(0x38, destroybarrel_geo), 

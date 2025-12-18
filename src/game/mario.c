@@ -1678,7 +1678,7 @@ u32 update_and_return_cap_flags(struct MarioState *m) {
 
         // This code flickers the cap through a long binary string, increasing in how
         // common it flickers near the end.
-        if ((m->capTimer < 0x40) && ((1ULL << m->capTimer) & sCapFlickerFrames)) {
+        if ((m->capTimer < 0x40) && ((1 << m->capTimer) & sCapFlickerFrames)) {
             flags &= ~(MARIO_VANISH_CAP | MARIO_METAL_CAP | MARIO_WING_CAP);
             if ((flags & (MARIO_NORMAL_CAP | MARIO_VANISH_CAP | MARIO_METAL_CAP | MARIO_WING_CAP))
                 == 0) {
