@@ -829,33 +829,9 @@ void gd_mat4f_mult_vec3f(struct GdVec3f *vec, const Mat4f *mtx) {
     vec->z = out.z;
 }
 
-#define MAT4_DOT_PROD(A, B, R, row, col)                                                               \
-    {                                                                                                  \
-        (R)[(row)][(col)] = (A)[(row)][0] * (B)[0][(col)];                                             \
-        (R)[(row)][(col)] += (A)[(row)][1] * (B)[1][(col)];                                            \
-        (R)[(row)][(col)] += (A)[(row)][2] * (B)[2][(col)];                                            \
-        (R)[(row)][(col)] += (A)[(row)][3] * (B)[3][(col)];                                            \
-    }
+#define MAT4_DOT_PROD(A, B, R, row, col)                                                                   {                                                                                                          (R)[(row)][(col)] = (A)[(row)][0] * (B)[0][(col)];                                                     (R)[(row)][(col)] += (A)[(row)][1] * (B)[1][(col)];                                                    (R)[(row)][(col)] += (A)[(row)][2] * (B)[2][(col)];                                                    (R)[(row)][(col)] += (A)[(row)][3] * (B)[3][(col)];                                                }
 
-#define MAT4_MULTIPLY(A, B, R)                                                                         \
-    {                                                                                                  \
-        MAT4_DOT_PROD((A), (B), (R), 0, 0);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 0, 1);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 0, 2);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 0, 3);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 1, 0);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 1, 1);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 1, 2);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 1, 3);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 2, 0);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 2, 1);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 2, 2);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 2, 3);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 3, 0);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 3, 1);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 3, 2);                                                            \
-        MAT4_DOT_PROD((A), (B), (R), 3, 3);                                                            \
-    }
+#define MAT4_MULTIPLY(A, B, R)                                                                             {                                                                                                          MAT4_DOT_PROD((A), (B), (R), 0, 0);                                                                    MAT4_DOT_PROD((A), (B), (R), 0, 1);                                                                    MAT4_DOT_PROD((A), (B), (R), 0, 2);                                                                    MAT4_DOT_PROD((A), (B), (R), 0, 3);                                                                    MAT4_DOT_PROD((A), (B), (R), 1, 0);                                                                    MAT4_DOT_PROD((A), (B), (R), 1, 1);                                                                    MAT4_DOT_PROD((A), (B), (R), 1, 2);                                                                    MAT4_DOT_PROD((A), (B), (R), 1, 3);                                                                    MAT4_DOT_PROD((A), (B), (R), 2, 0);                                                                    MAT4_DOT_PROD((A), (B), (R), 2, 1);                                                                    MAT4_DOT_PROD((A), (B), (R), 2, 2);                                                                    MAT4_DOT_PROD((A), (B), (R), 2, 3);                                                                    MAT4_DOT_PROD((A), (B), (R), 3, 0);                                                                    MAT4_DOT_PROD((A), (B), (R), 3, 1);                                                                    MAT4_DOT_PROD((A), (B), (R), 3, 2);                                                                    MAT4_DOT_PROD((A), (B), (R), 3, 3);                                                                }
 
 /**
  * Multiplies two Mat4f matrices and puts it in dst.

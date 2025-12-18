@@ -902,30 +902,10 @@ void vec3f_mul(Vec3f add_dir, f32 length) {
 
 #define EPSILON 0.0001f
 #define VEC3_DOT(a, b) ((a)[0] * (b)[0] + (a)[1] * (b)[1] + (a)[2] * (b)[2])
-#define VEC3_COPY(out, a)                                                                              \
-    {                                                                                                  \
-        (out)[0] = (a)[0];                                                                             \
-        (out)[1] = (a)[1];                                                                             \
-        (out)[2] = (a)[2];                                                                             \
-    }
-#define VEC3_SCALE(out, a, scale)                                                                      \
-    {                                                                                                  \
-        (out)[0] = (a)[0] * (scale);                                                                   \
-        (out)[1] = (a)[1] * (scale);                                                                   \
-        (out)[2] = (a)[2] * (scale);                                                                   \
-    }
-#define VEC3_ADD(out, a, b)                                                                            \
-    {                                                                                                  \
-        (out)[0] = (a)[0] + (b)[0];                                                                    \
-        (out)[1] = (a)[1] + (b)[1];                                                                    \
-        (out)[2] = (a)[2] + (b)[2];                                                                    \
-    }
-#define VEC3_DIFF(out, a, b)                                                                           \
-    {                                                                                                  \
-        (out)[0] = (a)[0] - (b)[0];                                                                    \
-        (out)[1] = (a)[1] - (b)[1];                                                                    \
-        (out)[2] = (a)[2] - (b)[2];                                                                    \
-    }
+#define VEC3_COPY(out, a)                                                                                  {                                                                                                          (out)[0] = (a)[0];                                                                                     (out)[1] = (a)[1];                                                                                     (out)[2] = (a)[2];                                                                                 }
+#define VEC3_SCALE(out, a, scale)                                                                          {                                                                                                          (out)[0] = (a)[0] * (scale);                                                                           (out)[1] = (a)[1] * (scale);                                                                           (out)[2] = (a)[2] * (scale);                                                                       }
+#define VEC3_ADD(out, a, b)                                                                                {                                                                                                          (out)[0] = (a)[0] + (b)[0];                                                                            (out)[1] = (a)[1] + (b)[1];                                                                            (out)[2] = (a)[2] + (b)[2];                                                                        }
+#define VEC3_DIFF(out, a, b)                                                                               {                                                                                                          (out)[0] = (a)[0] - (b)[0];                                                                            (out)[1] = (a)[1] - (b)[1];                                                                            (out)[2] = (a)[2] - (b)[2];                                                                        }
 #define ABSI(x) ((x) > 0 ? (x) : -(x))
 #define NORMAL_SCALE 1024
 

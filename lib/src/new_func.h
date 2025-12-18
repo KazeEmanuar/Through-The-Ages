@@ -4,10 +4,7 @@
 #include "libultra_internal.h"
 #include "hardware.h"
 
-#define WAIT_ON_IOBUSY(var)                                                                            \
-    var = HW_REG(PI_STATUS_REG, u32);                                                                  \
-    while (var & PI_STATUS_IOBUSY)                                                                     \
-        var = HW_REG(PI_STATUS_REG, u32);
+#define WAIT_ON_IOBUSY(var)                                                                                var = HW_REG(PI_STATUS_REG, u32);                                                                      while (var & PI_STATUS_IOBUSY)                                                                             var = HW_REG(PI_STATUS_REG, u32);
 
 extern u32 EU_D_80302090;
 

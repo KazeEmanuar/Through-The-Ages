@@ -319,38 +319,19 @@ typedef short ENVMIX_STATE[40];
  * The last 16 samples written to the destination will also be written to
  * the state address in DRAM.
  */
-#define aADPCMdec(pkt, f, s)                                            \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_ADPCM, 24, 8) | _SHIFTL(f, 16, 8);     \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aADPCMdec(pkt, f, s)                                            {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_ADPCM, 24, 8) | _SHIFTL(f, 16, 8);             _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Not used in SM64.
  */
-#define aPoleFilter(pkt, f, g, s)                                       \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_POLEF, 24, 8) | _SHIFTL(f, 16, 8) |   \
-                        _SHIFTL(g, 0, 16));                             \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aPoleFilter(pkt, f, g, s)                                       {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_POLEF, 24, 8) | _SHIFTL(f, 16, 8) |                           _SHIFTL(g, 0, 16));                                     _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Clears DMEM data, where d is address and c is count, by writing zeros.
  *
  * Note: c is rounded up to the nearest multiple of 16 bytes.
  */
-#define aClearBuffer(pkt, d, c)                                         \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_CLEARBUFF, 24, 8) | _SHIFTL(d, 0, 24); \
-        _a->words.w1 = (uintptr_t)(c);                                  \
-}
+#define aClearBuffer(pkt, d, c)                                         {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_CLEARBUFF, 24, 8) | _SHIFTL(d, 0, 24);         _a->words.w1 = (uintptr_t)(c);                                  }
 
 /*
  * Mixes an envelope with mono sound into 2 or 4 channels.
@@ -377,13 +358,7 @@ typedef short ENVMIX_STATE[40];
  * Note: the wet channels are used for reverb.
  *
  */
-#define aEnvMixer(pkt, f, s)                                            \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_ENVMIXER, 24, 8) | _SHIFTL(f, 16, 8);  \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aEnvMixer(pkt, f, s)                                            {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_ENVMIXER, 24, 8) | _SHIFTL(f, 16, 8);          _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Interleaves two mono channels into stereo.
@@ -396,13 +371,7 @@ typedef short ENVMIX_STATE[40];
  *
  * Note: count will be rounded up to the nearest multiple of 16 bytes.
  */
-#define aInterleave(pkt, l, r)                                          \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_INTERLEAVE, 24, 8);                    \
-        _a->words.w1 = _SHIFTL(l, 16, 16) | _SHIFTL(r, 0, 16);          \
-}
+#define aInterleave(pkt, l, r)                                          {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_INTERLEAVE, 24, 8);                            _a->words.w1 = _SHIFTL(l, 16, 16) | _SHIFTL(r, 0, 16);          }
 
 /*
  * Loads a buffer from DRAM to DMEM.
@@ -413,13 +382,7 @@ typedef short ENVMIX_STATE[40];
  * The in parameter to aSetBuffer is the destination in DMEM and the
  * s parameter to this command is the source in DRAM.
  */
-#define aLoadBuffer(pkt, s)                                             \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_LOADBUFF, 24, 8);                      \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aLoadBuffer(pkt, s)                                             {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_LOADBUFF, 24, 8);                              _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Mixes audio.
@@ -435,24 +398,10 @@ typedef short ENVMIX_STATE[40];
  *
  * Note: count will be rounded up to the nearest multiple of 32 bytes.
  */
-#define aMix(pkt, f, g, i, o)                                           \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_MIXER, 24, 8) | _SHIFTL(f, 16, 8) |   \
-                        _SHIFTL(g, 0, 16));                             \
-        _a->words.w1 = _SHIFTL(i,16, 16) | _SHIFTL(o, 0, 16);           \
-}
+#define aMix(pkt, f, g, i, o)                                           {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_MIXER, 24, 8) | _SHIFTL(f, 16, 8) |                           _SHIFTL(g, 0, 16));                                     _a->words.w1 = _SHIFTL(i,16, 16) | _SHIFTL(o, 0, 16);           }
 
 // Not present in the audio microcode.
-#define aPan(pkt, f, d, s)                                              \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_PAN, 24, 8) | _SHIFTL(f, 16, 8) |     \
-                        _SHIFTL(d, 0, 16));                             \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aPan(pkt, f, d, s)                                              {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_PAN, 24, 8) | _SHIFTL(f, 16, 8) |                             _SHIFTL(d, 0, 16));                                     _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Resamples audio.
@@ -487,14 +436,7 @@ typedef short ENVMIX_STATE[40];
  * When "count" bytes have been written, the following four source samples
  * are written to the state in DRAM as well as a fractional position.
  */
-#define aResample(pkt, f, p, s)                                         \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_RESAMPLE, 24, 8) | _SHIFTL(f, 16, 8) |\
-                        _SHIFTL(p, 0, 16));                             \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aResample(pkt, f, p, s)                                         {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_RESAMPLE, 24, 8) | _SHIFTL(f, 16, 8) |                        _SHIFTL(p, 0, 16));                                     _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Stores a buffer in DMEM to DRAM.
@@ -505,13 +447,7 @@ typedef short ENVMIX_STATE[40];
  * The out parameter to aSetBuffer is the source in DMEM and the
  * s parameter to this command is the destination in DRAM.
  */
-#define aSaveBuffer(pkt, s)                                             \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_SAVEBUFF, 24, 8);                      \
-        _a->words.w1 = (uintptr_t)(s);                                  \
-}
+#define aSaveBuffer(pkt, s)                                             {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_SAVEBUFF, 24, 8);                              _a->words.w1 = (uintptr_t)(s);                                  }
 
 /*
  * Sets up an entry in the segment table.
@@ -519,39 +455,19 @@ typedef short ENVMIX_STATE[40];
  * The s parameter is a segment index, 0 to 15.
  * The b parameter is the base offset.
  */
-#define aSegment(pkt, s, b)                                             \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_SEGMENT, 24, 8);                       \
-        _a->words.w1 = _SHIFTL(s, 24, 8) | _SHIFTL(b, 0, 24);           \
-}
+#define aSegment(pkt, s, b)                                             {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_SEGMENT, 24, 8);                               _a->words.w1 = _SHIFTL(s, 24, 8) | _SHIFTL(b, 0, 24);           }
 
 /*
  * Sets internal DMEM buffer addresses used for later commands.
  * See each command for how to use aSetBuffer.
  */
-#define aSetBuffer(pkt, f, i, o, c)                                     \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_SETBUFF, 24, 8) | _SHIFTL(f, 16, 8) | \
-                        _SHIFTL(i, 0, 16));                             \
-        _a->words.w1 = _SHIFTL(o, 16, 16) | _SHIFTL(c, 0, 16);          \
-}
+#define aSetBuffer(pkt, f, i, o, c)                                     {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_SETBUFF, 24, 8) | _SHIFTL(f, 16, 8) |                         _SHIFTL(i, 0, 16));                                     _a->words.w1 = _SHIFTL(o, 16, 16) | _SHIFTL(c, 0, 16);          }
 
 /*
  * Sets internal volume parameters.
  * See aEnvMixer for more info.
  */
-#define aSetVolume(pkt, f, v, t, r)                                     \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_SETVOL, 24, 8) | _SHIFTL(f, 16, 16) | \
-                        _SHIFTL(v, 0, 16));                             \
-        _a->words.w1 = _SHIFTL(t, 16, 16) | _SHIFTL(r, 0, 16);          \
-}
+#define aSetVolume(pkt, f, v, t, r)                                     {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_SETVOL, 24, 8) | _SHIFTL(f, 16, 16) |                         _SHIFTL(v, 0, 16));                                     _a->words.w1 = _SHIFTL(t, 16, 16) | _SHIFTL(r, 0, 16);          }
 
 /*
  * Sets the address to ADPCM loop state.
@@ -559,12 +475,7 @@ typedef short ENVMIX_STATE[40];
  * The a parameter is a DRAM address.
  * See aADPCMdec for more info.
  */
-#define aSetLoop(pkt, a)                                                \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-        _a->words.w0 = _SHIFTL(A_SETLOOP, 24, 8);                       \
-        _a->words.w1 = (uintptr_t)(a);                                  \
-}
+#define aSetLoop(pkt, a)                                                {                                                                               Acmd *_a = (Acmd *)pkt;                                                 _a->words.w0 = _SHIFTL(A_SETLOOP, 24, 8);                               _a->words.w1 = (uintptr_t)(a);                                  }
 
 /*
  * Copies memory in DMEM.
@@ -576,13 +487,7 @@ typedef short ENVMIX_STATE[40];
  * Note: This acts as memcpy where 16 bytes are moved at a time, therefore
  * if input and output overlap, output address should be less than input address.
  */
-#define aDMEMMove(pkt, i, o, c)                                         \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_DMEMMOVE, 24, 8) | _SHIFTL(i, 0, 24);  \
-        _a->words.w1 = _SHIFTL(o, 16, 16) | _SHIFTL(c, 0, 16);          \
-}
+#define aDMEMMove(pkt, i, o, c)                                         {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_DMEMMOVE, 24, 8) | _SHIFTL(i, 0, 24);          _a->words.w1 = _SHIFTL(o, 16, 16) | _SHIFTL(c, 0, 16);          }
 
 /*
  * Loads ADPCM book from DRAM into DMEM.
@@ -592,13 +497,7 @@ typedef short ENVMIX_STATE[40];
  * The count parameter c should be a multiple of 16 bytes.
  * The d parameter is a DRAM address.
  */
-#define aLoadADPCM(pkt, c, d)                                           \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = _SHIFTL(A_LOADADPCM, 24, 8) | _SHIFTL(c, 0, 24); \
-        _a->words.w1 = (uintptr_t) d;                                   \
-}
+#define aLoadADPCM(pkt, c, d)                                           {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = _SHIFTL(A_LOADADPCM, 24, 8) | _SHIFTL(c, 0, 24);         _a->words.w1 = (uintptr_t) d;                                   }
 
 // This is a version of aSetVolume which takes a single 32-bit parameter
 // instead of two 16-bit ones. According to AziAudio, it is used to set
@@ -608,14 +507,7 @@ typedef short ENVMIX_STATE[40];
  * Sets internal volume parameters.
  * See aEnvMixer for more info.
  */
-#define aSetVolume32(pkt, f, v, tr)                                     \
-{                                                                       \
-        Acmd *_a = (Acmd *)pkt;                                         \
-                                                                        \
-        _a->words.w0 = (_SHIFTL(A_SETVOL, 24, 8) | _SHIFTL(f, 16, 16) | \
-                    _SHIFTL(v, 0, 16));                                 \
-        _a->words.w1 = (uintptr_t)(tr);                                 \
-}
+#define aSetVolume32(pkt, f, v, tr)                                     {                                                                               Acmd *_a = (Acmd *)pkt;                                                                                                                         _a->words.w0 = (_SHIFTL(A_SETVOL, 24, 8) | _SHIFTL(f, 16, 16) |                     _SHIFTL(v, 0, 16));                                         _a->words.w1 = (uintptr_t)(tr);                                 }
 
 #endif /* _LANGUAGE_C */
 

@@ -305,28 +305,18 @@ typedef	struct	{
 /*---------------------------------------------------------------------------*
  *	Select Display List
  *---------------------------------------------------------------------------*/
-#define	gSPSelectDL(pkt, mptr, sid, flag, mask)	\
-{	gDma1p((pkt), G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); \
-	gDma1p((pkt), G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_PUSH); }
-#define	gsSPSelectDL(mptr, sid, flag, mask)	\
-{	gsDma1p(G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); \
-	gsDma1p(G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_PUSH); }
-#define	gSPSelectBranchDL(pkt, mptr, sid, flag, mask)	\
-{	gDma1p((pkt), G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); \
-	gDma1p((pkt), G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_NOPUSH); }
-#define	gsSPSelectBranchDL(mptr, sid, flag, mask)	\
-{	gsDma1p(G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); \
-	gsDma1p(G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_NOPUSH); }
+#define	gSPSelectDL(pkt, mptr, sid, flag, mask)	{	gDma1p((pkt), G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); 	gDma1p((pkt), G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_PUSH); }
+#define	gsSPSelectDL(mptr, sid, flag, mask)	{	gsDma1p(G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); 	gsDma1p(G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_PUSH); }
+#define	gSPSelectBranchDL(pkt, mptr, sid, flag, mask)	{	gDma1p((pkt), G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); 	gDma1p((pkt), G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_NOPUSH); }
+#define	gsSPSelectBranchDL(mptr, sid, flag, mask)	{	gsDma1p(G_RDPHALF_0, (flag), (u32)(mptr) & 0xffff, (sid)); 	gsDma1p(G_SELECT_DL, (mask), (u32)(mptr) >> 16, G_DL_NOPUSH); }
 
 /*---------------------------------------------------------------------------*
  *	Set general status
  *---------------------------------------------------------------------------*/
 #define	G_MW_GENSTAT	0x08	/* Note that it is the same value of G_MW_FOG */
 
-#define	gSPSetStatus(pkt, sid, val)	\
-	gMoveWd((pkt), G_MW_GENSTAT, (sid), (val))
-#define	gsSPSetStatus(sid, val)	\
-	gsMoveWd(      G_MW_GENSTAT, (sid), (val))
+#define	gSPSetStatus(pkt, sid, val)		gMoveWd((pkt), G_MW_GENSTAT, (sid), (val))
+#define	gsSPSetStatus(sid, val)		gsMoveWd(      G_MW_GENSTAT, (sid), (val))
 
 /*---------------------------------------------------------------------------*
  *	Set Object Render Mode
@@ -345,10 +335,7 @@ typedef	struct	{
 /*===========================================================================*
  *	Render Mode Macro
  *===========================================================================*/
-#define RM_RA_SPRITE(clk)                                      \
-        AA_EN | CVG_DST_CLAMP |                                \
-        CVG_X_ALPHA | ALPHA_CVG_SEL | ZMODE_OPA | TEX_EDGE |   \
-        GBL_c##clk(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)
+#define RM_RA_SPRITE(clk)                                              AA_EN | CVG_DST_CLAMP |                                        CVG_X_ALPHA | ALPHA_CVG_SEL | ZMODE_OPA | TEX_EDGE |           GBL_c##clk(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)
 
 #define G_RM_SPRITE		G_RM_OPA_SURF
 #define G_RM_SPRITE2		G_RM_OPA_SURF2

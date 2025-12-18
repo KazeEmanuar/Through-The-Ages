@@ -477,12 +477,8 @@ $(BUILD_DIR)/%.aifc: $(BUILD_DIR)/%.table %.aiff
 $(BUILD_DIR)/rsp/%.bin $(BUILD_DIR)/rsp/%_data.bin: rsp/%.s
 	$(RSPASM) -sym $@.sym -definelabel $(VERSION_DEF) 1 -definelabel $(GRUCODE_DEF) 1 -strequ CODE_FILE $(BUILD_DIR)/rsp/$*.bin -strequ DATA_FILE $(BUILD_DIR)/rsp/$*_data.bin $<
 
-$(ENDIAN_BITWIDTH): tools/determine-endian-bitwidth.c
-	$(CC) -c $(CFLAGS) -o $@.dummy2 $< 2>$@.dummy1; true
-	grep -o 'msgbegin --endian .* --bitwidth .* msgend' $@.dummy1 > $@.dummy2
-	head -n1 <$@.dummy2 | cut -d' ' -f2-5 > $@
-	@rm $@.dummy1
-	@rm $@.dummy2
+$(ENDIAN_BITWIDTH):
+	echo "--endian big --bitwidth 32" > $@
 
 $(SOUND_BIN_DIR)/sound_data.ctl: sound/sound_banks/ $(SOUND_BANK_FILES) $(SOUND_SAMPLE_AIFCS) $(ENDIAN_BITWIDTH)
 	$(PYTHON) tools/assemble_sound.py $(BUILD_DIR)/sound/samples/ sound/sound_banks/ $(SOUND_BIN_DIR)/sound_data.ctl $(SOUND_BIN_DIR)/sound_data.tbl $(VERSION_CFLAGS) $$(cat $(ENDIAN_BITWIDTH))

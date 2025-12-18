@@ -2,10 +2,7 @@
 #include "hardware.h"
 #include <macros.h>
 
-#define _osVirtualToPhysical(ptr)                                                                      \
-    if (ptr != NULL) {                                                                                 \
-        ptr = (void *) osVirtualToPhysical(ptr);                                                       \
-    }
+#define _osVirtualToPhysical(ptr)                                                                          if (ptr != NULL) {                                                                                         ptr = (void *) osVirtualToPhysical(ptr);                                                           }
 
 OSTask D_803638B0;
 OSTask *_VirtualToPhysicalTask(OSTask *task) {

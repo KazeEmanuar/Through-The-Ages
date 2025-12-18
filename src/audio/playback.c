@@ -234,15 +234,8 @@ void process_notes(void) {
 
     // Macro versions of audio_list_push_front and audio_list_remove
     // (PREPEND does not actually need to be a macro, but it seems likely.)
-#define PREPEND(item, head_arg)                                                                        \
-    ((it = (item), it->prev != NULL)                                                                   \
-         ? it                                                                                          \
-         : (it->prev = (head_arg), it->next = (head_arg)->next, (head_arg)->next->prev = it,           \
-            (head_arg)->next = it, (head_arg)->u.count++, it->pool = (head_arg)->pool, it))
-#define POP(item)                                                                                      \
-    ((it = (item), it->prev == NULL)                                                                   \
-         ? it                                                                                          \
-         : (it->prev->next = it->next, it->next->prev = it->prev, it->prev = NULL, it))
+#define PREPEND(item, head_arg)                                                                            ((it = (item), it->prev != NULL)                                                                            ? it                                                                                                   : (it->prev = (head_arg), it->next = (head_arg)->next, (head_arg)->next->prev = it,                       (head_arg)->next = it, (head_arg)->u.count++, it->pool = (head_arg)->pool, it))
+#define POP(item)                                                                                          ((it = (item), it->prev == NULL)                                                                            ? it                                                                                                   : (it->prev->next = it->next, it->next->prev = it->prev, it->prev = NULL, it))
 
     for (i = 0; i < gMaxSimultaneousNotes; i++) {
         note = &gNotes[i];

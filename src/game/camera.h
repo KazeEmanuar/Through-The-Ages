@@ -31,16 +31,7 @@
  * Helper macro for defining which areas of a level should zoom out the camera when the game is paused.
  * Because a mask is used by two levels, the pattern will repeat when more than 4 areas are used by a level.
  */
-#define ZOOMOUT_AREA_MASK(level1Area1, level1Area2, level1Area3, level1Area4, \
-                          level2Area1, level2Area2, level2Area3, level2Area4) \
-    ((level2Area4) << 7 |                                                     \
-     (level2Area3) << 6 |                                                     \
-     (level2Area2) << 5 |                                                     \
-     (level2Area1) << 4 |                                                     \
-     (level1Area4) << 3 |                                                     \
-     (level1Area3) << 2 |                                                     \
-     (level1Area2) << 1 |                                                     \
-     (level1Area1) << 0)
+#define ZOOMOUT_AREA_MASK(level1Area1, level1Area2, level1Area3, level1Area4,                           level2Area1, level2Area2, level2Area3, level2Area4)     ((level2Area4) << 7 |                                                          (level2Area3) << 6 |                                                          (level2Area2) << 5 |                                                          (level2Area1) << 4 |                                                          (level1Area4) << 3 |                                                          (level1Area3) << 2 |                                                          (level1Area2) << 1 |                                                          (level1Area1) << 0)
 
 
 #define AREA_BBH                LEVEL_AREA_INDEX(LEVEL_BBH, 1)

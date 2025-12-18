@@ -3326,6 +3326,7 @@ void DynaPolyCollisionInit(Vtx *VisualVTX, s32 VertCount, f32 ImpactSize, f32 Im
                            f32 Snappiness, f32 Resistance, struct DynaPolyInfo *VertSpeedArray) {
     s16 *coll = o->collisionData;
     s32 i, k;
+    s32 runCount;
     for (i = 0; i < VertCount; i++) {
         VertSpeedArray[i].Speed = 0;
         VertSpeedArray[i].InitialCoordinate = VisualVTX[i].v.ob[1];
@@ -3339,7 +3340,7 @@ void DynaPolyCollisionInit(Vtx *VisualVTX, s32 VertCount, f32 ImpactSize, f32 Im
             }
         }
     }
-    s32 runCount = 255;
+    runCount = 255;
     for (; runCount > 0; runCount--) {
         DynaPolyCollisionUpdate(VisualVTX, VertCount, ImpactSize, ImpactStrength, Snappiness,
                                 Resistance, VertSpeedArray);
@@ -4026,7 +4027,7 @@ void muteCptInstruments() {
 }
 
 u16 cloakTimer = 0;
-extern Vtx captainVerts[78] __attribute__((section(".data")));
+extern Vtx captainVerts[78];
 void animateCloak() {
     s32 i;
     Vtx *mod = SegmentedToVirtual(shyguycaptain_BODY_mesh_layer_5_vtx_0);

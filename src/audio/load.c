@@ -424,28 +424,7 @@ void patch_sound(UNUSED struct AudioBankSound *sound, UNUSED u8 *memBase, UNUSED
 }
 
 #ifndef VERSION_EU
-#define PATCH_SOUND(_sound, mem, offset)                                                  \
-{                                                                                         \
-    struct AudioBankSound *sound = _sound;                                                \
-    struct AudioBankSample *sample;                                                       \
-    void *patched;                                                                        \
-    if ((*sound).sample != (void *) 0)                                                    \
-    {                                                                                     \
-        patched = (void *)(((uintptr_t)(*sound).sample) + ((uintptr_t)((u8 *) mem)));     \
-        (*sound).sample = patched;                                                        \
-        sample = (*sound).sample;                                                         \
-        if ((*sample).loaded == 0)                                                        \
-        {                                                                                 \
-            patched = (void *)(((uintptr_t)(*sample).sampleAddr) + ((uintptr_t) offset)); \
-            (*sample).sampleAddr = patched;                                               \
-            patched = (void *)(((uintptr_t)(*sample).loop) + ((uintptr_t)((u8 *) mem)));  \
-            (*sample).loop = patched;                                                     \
-            patched = (void *)(((uintptr_t)(*sample).book) + ((uintptr_t)((u8 *) mem)));  \
-            (*sample).book = patched;                                                     \
-            (*sample).loaded = 1;                                                         \
-        }                                                                                 \
-    }                                                                                     \
-}
+#define PATCH_SOUND(_sound, mem, offset)                                                  {                                                                                             struct AudioBankSound *sound = _sound;                                                    struct AudioBankSample *sample;                                                           void *patched;                                                                            if ((*sound).sample != (void *) 0)                                                        {                                                                                             patched = (void *)(((uintptr_t)(*sound).sample) + ((uintptr_t)((u8 *) mem)));             (*sound).sample = patched;                                                                sample = (*sound).sample;                                                                 if ((*sample).loaded == 0)                                                                {                                                                                             patched = (void *)(((uintptr_t)(*sample).sampleAddr) + ((uintptr_t) offset));             (*sample).sampleAddr = patched;                                                           patched = (void *)(((uintptr_t)(*sample).loop) + ((uintptr_t)((u8 *) mem)));              (*sample).loop = patched;                                                                 patched = (void *)(((uintptr_t)(*sample).book) + ((uintptr_t)((u8 *) mem)));              (*sample).book = patched;                                                                 (*sample).loaded = 1;                                                                 }                                                                                     }                                                                                     }
 #endif
 
 // on US/JP this inlines patch_sound, using some -sopt compiler flag

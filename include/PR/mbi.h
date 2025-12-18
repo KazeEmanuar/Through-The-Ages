@@ -46,10 +46,8 @@
  * (NOTE: _SHIFTL(v, 0, 32) won't work, just use an assignment)
  *
  */
-#define _SHIFTL(v, s, w)	\
-    ((unsigned int) (((unsigned int)(v) & ((0x01 << (w)) - 1)) << (s)))
-#define _SHIFTR(v, s, w)	\
-    ((unsigned int)(((unsigned int)(v) >> (s)) & ((0x01 << (w)) - 1)))
+#define _SHIFTL(v, s, w)	    ((unsigned int) (((unsigned int)(v) & ((0x01 << (w)) - 1)) << (s)))
+#define _SHIFTR(v, s, w)	    ((unsigned int)(((unsigned int)(v) >> (s)) & ((0x01 << (w)) - 1)))
 
 #define _SHIFT _SHIFTL	/* old, for compatibility only */
 

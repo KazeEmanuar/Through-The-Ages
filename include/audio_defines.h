@@ -8,9 +8,7 @@
 // Third Byte: Priority
 // Fourth Byte (Upper Nibble): More bitflags
 // Fourth Byte (Lower Nibble): Sound Status (this is set to SOUND_STATUS_PLAYING when passed to the audio driver.)
-#define SOUND_ARG_LOAD(bank, playFlags, soundID, priority, flags2) (((u32) (bank) << 28)       | \
-                 ((u32) (playFlags) << 24) | ((u32) (soundID) << 16) | ((u32) (priority) << 8) | \
-                 ((u32) (flags2)  << 4)  |  SOUND_STATUS_STARTING)
+#define SOUND_ARG_LOAD(bank, playFlags, soundID, priority, flags2) (((u32) (bank) << 28)       |                  ((u32) (playFlags) << 24) | ((u32) (soundID) << 16) | ((u32) (priority) << 8) |                  ((u32) (flags2)  << 4)  |  SOUND_STATUS_STARTING)
 
 #define SOUNDARGS_MASK_BANK         0xF0000000
 #define SOUNDARGS_MASK_SOUNDID      0x00FF0000

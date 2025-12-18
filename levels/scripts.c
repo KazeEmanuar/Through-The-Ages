@@ -173,11 +173,7 @@ static const LevelScript script_exec_level_table[] = {
 };
 #undef DEFINE_LEVEL
 
-#define DEFINE_LEVEL(_0, _1, _2, folder, _4, _5, _6, _7, _8, _9, _10) \
-static const LevelScript script_exec_ ## folder [] = { \
-    EXECUTE(0x0E, _ ## folder ## SegmentRomStart, _ ## folder ## SegmentRomEnd, level_ ## folder ## _entry), \
-    RETURN(), \
-};
+#define DEFINE_LEVEL(_0, _1, _2, folder, _4, _5, _6, _7, _8, _9, _10) static const LevelScript script_exec_ ## folder [] = {     EXECUTE(0x0E, _ ## folder ## SegmentRomStart, _ ## folder ## SegmentRomEnd, level_ ## folder ## _entry),     RETURN(), };
 
 #include "levels/level_defines.h"
 #undef STUB_LEVEL

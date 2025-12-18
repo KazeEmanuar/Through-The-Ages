@@ -33,16 +33,11 @@
 #define INT_HIT_FROM_ABOVE (1 << 6)        // 0x40
 #define INT_HIT_FROM_BELOW (1 << 7)        // 0x80
 
-#define INT_ATTACK_NOT_FROM_BELOW                                                                      \
-    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK                      \
-     | INT_FAST_ATTACK_OR_SHELL | INT_HIT_FROM_ABOVE)
+#define INT_ATTACK_NOT_FROM_BELOW                                                                          (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK                           | INT_FAST_ATTACK_OR_SHELL | INT_HIT_FROM_ABOVE)
 
-#define INT_ANY_ATTACK                                                                                 \
-    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK                      \
-     | INT_FAST_ATTACK_OR_SHELL | INT_HIT_FROM_ABOVE | INT_HIT_FROM_BELOW)
+#define INT_ANY_ATTACK                                                                                     (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_SLIDE_KICK                           | INT_FAST_ATTACK_OR_SHELL | INT_HIT_FROM_ABOVE | INT_HIT_FROM_BELOW)
 
-#define INT_ATTACK_NOT_WEAK_FROM_ABOVE                                                                 \
-    (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_HIT_FROM_BELOW)
+#define INT_ATTACK_NOT_WEAK_FROM_ABOVE                                                                     (INT_GROUND_POUND_OR_TWIRL | INT_PUNCH | INT_KICK | INT_TRIP | INT_HIT_FROM_BELOW)
 
 u8 sDelayInvincTimer;
 s16 sInvulnerable;

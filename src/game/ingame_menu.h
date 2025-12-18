@@ -3,10 +3,7 @@
 
 #include <PR/ultratypes.h>
 
-#define ASCII_TO_DIALOG(asc)                                       \
-    (((asc) >= '0' && (asc) <= '9') ? ((asc) - '0') :              \
-     ((asc) >= 'A' && (asc) <= 'Z') ? ((asc) - 'A' + 0x0A) :       \
-     ((asc) >= 'a' && (asc) <= 'z') ? ((asc) - 'a' + 0x24) : 0x00)
+#define ASCII_TO_DIALOG(asc)                                           (((asc) >= '0' && (asc) <= '9') ? ((asc) - '0') :                   ((asc) >= 'A' && (asc) <= 'Z') ? ((asc) - 'A' + 0x0A) :            ((asc) >= 'a' && (asc) <= 'z') ? ((asc) - 'a' + 0x24) : 0x00)
 
 
 #define MENU_MTX_PUSH   1

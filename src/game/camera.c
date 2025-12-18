@@ -1725,8 +1725,7 @@ void stop_transitional_movement(void) {
 /**
  * Terminates a list of CameraTriggers.
  */
-#define NULL_TRIGGER                                                                                   \
-    { 0, NULL, 0, 0, 0, 0, 0, 0, 0 }
+#define NULL_TRIGGER                                                                                       { 0, NULL, 0, 0, 0, 0, 0, 0, 0 }
 
 #define _ NULL
 #define STUB_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, cameratable) 0,
@@ -3823,8 +3822,7 @@ struct Cutscene sCutsceneReadMessage[] = { { cutscene_read_message, CUTSCENE_LOO
  * Converts the u32 given in DEFINE_COURSE to a u8 with the odd and even digits rotated into the right
  * order for sDanceCutsceneIndexTable
  */
-#define DROT(value, index)                                                                             \
-    ((value >> (32 - (index + 1) * 8)) & 0xF0) >> 4 | ((value >> (32 - (index + 1) * 8)) & 0x0F) << 4
+#define DROT(value, index)                                                                                 ((value >> (32 - (index + 1) * 8)) & 0xF0) >> 4 | ((value >> (32 - (index + 1) * 8)) & 0x0F) << 4
 
 #define DANCE_ENTRY(c) { DROT(c, 0), DROT(c, 1), DROT(c, 2), DROT(c, 3) },
 
@@ -3889,11 +3887,7 @@ void play_cutscene(struct Camera *c) {
     sStatusFlags &= ~CAM_FLAG_SMOOTH_MOVEMENT;
     gCameraMovementFlags &= ~CAM_MOVING_INTO_MODE;
 
-#define CUTSCENE(id, cutscene)                                                                         \
-    case id:                                                                                           \
-        cutsceneDuration = cutscene[sCutsceneShot].duration;                                           \
-        cutscene[sCutsceneShot].shot(c);                                                               \
-        break;
+#define CUTSCENE(id, cutscene)                                                                             case id:                                                                                                   cutsceneDuration = cutscene[sCutsceneShot].duration;                                                   cutscene[sCutsceneShot].shot(c);                                                                       break;
 
     switch (c->cutscene) {
         CUTSCENE(CUTSCENE_STAR_SPAWN, sCutsceneStarSpawn)

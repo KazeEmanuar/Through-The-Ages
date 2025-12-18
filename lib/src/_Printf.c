@@ -3,27 +3,9 @@
 #include <string.h>
 #include "printf.h"
 
-#define ATOI(i, a)                                                                                     \
-    for (i = 0; *a >= '0' && *a <= '9'; a++)                                                           \
-        if (i < 999)                                                                                   \
-            i = *a + i * 10 - '0';
-#define _PROUT(dst, fmt, _size)                                                                        \
-    if (_size > 0) {                                                                                   \
-        dst = prout(dst, fmt, _size);                                                                  \
-        if (dst != 0)                                                                                  \
-            sp78.size += _size;                                                                        \
-        else                                                                                           \
-            return sp78.size;                                                                          \
-    }
-#define _PAD(i, m, c, src, extracond)                                                                  \
-    if (extracond && m > 0)                                                                            \
-        for (i = m; i > 0; i -= c) {                                                                   \
-            if ((u32) i > 32)                                                                          \
-                c = 32;                                                                                \
-            else                                                                                       \
-                c = i;                                                                                 \
-            _PROUT(dst, src, c);                                                                       \
-        }
+#define ATOI(i, a)                                                                                         for (i = 0; *a >= '0' && *a <= '9'; a++)                                                                   if (i < 999)                                                                                               i = *a + i * 10 - '0';
+#define _PROUT(dst, fmt, _size)                                                                            if (_size > 0) {                                                                                           dst = prout(dst, fmt, _size);                                                                          if (dst != 0)                                                                                              sp78.size += _size;                                                                                else                                                                                                       return sp78.size;                                                                              }
+#define _PAD(i, m, c, src, extracond)                                                                      if (extracond && m > 0)                                                                                    for (i = m; i > 0; i -= c) {                                                                               if ((u32) i > 32)                                                                                          c = 32;                                                                                            else                                                                                                       c = i;                                                                                             _PROUT(dst, src, c);                                                                               }
 
 const char length_str[] = "hlL";
 const char flags_str[] = " +-#0";

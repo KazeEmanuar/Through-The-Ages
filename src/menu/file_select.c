@@ -2652,16 +2652,10 @@ void print_score_file_star_score(s8 fileIndex, s16 courseIndex, s16 x, s16 y) {
 //  JP and US when the course number is only one digit.
 #if defined(VERSION_JP) || defined(VERSION_SH)
     #define PADCHAR 0
-    #define PRINT_COURSE_SCORES(courseIndex, pad)                                                               \
-        print_menu_generic_string(23 + (pad * 3), 23 + 12 * courseIndex, segmented_to_virtual(levelNameTable[courseIndex - 1]));  \
-        print_score_file_star_score(fileIndex, courseIndex - 1, 152, 23 + 12 * courseIndex);                        \
-        print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
+    #define PRINT_COURSE_SCORES(courseIndex, pad)                                                                       print_menu_generic_string(23 + (pad * 3), 23 + 12 * courseIndex, segmented_to_virtual(levelNameTable[courseIndex - 1]));          print_score_file_star_score(fileIndex, courseIndex - 1, 152, 23 + 12 * courseIndex);                                print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
 #else
     #define PADCHAR 1
-    #define PRINT_COURSE_SCORES(courseIndex, pad)                                                               \
-        print_menu_generic_string(23 + (pad * 3), 23 + 12 * courseIndex, segmented_to_virtual(levelNameTable[courseIndex - 1]));  \
-        print_score_file_star_score(fileIndex, courseIndex - 1, 171, 23 + 12 * courseIndex);                        \
-        print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
+    #define PRINT_COURSE_SCORES(courseIndex, pad)                                                                       print_menu_generic_string(23 + (pad * 3), 23 + 12 * courseIndex, segmented_to_virtual(levelNameTable[courseIndex - 1]));          print_score_file_star_score(fileIndex, courseIndex - 1, 171, 23 + 12 * courseIndex);                                print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
 #endif
     // Course values are indexed, from Bob-omb Battlefield to Rainbow Ride
     PRINT_COURSE_SCORES(COURSE_BOB, PADCHAR) // BOB

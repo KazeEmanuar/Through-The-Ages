@@ -284,8 +284,7 @@ static void newcam_update_values(void) { // For tilt, this just limits it so it 
                     goDefaultPitch();
                     break;
                 case 3:
-#define SWIMVEL                                                                                        \
-    sqrtf(gMarioState->forwardVel * gMarioState->forwardVel + gMarioState->vel[1] * gMarioState->vel[1])
+#define SWIMVEL                                                                                            sqrtf(gMarioState->forwardVel * gMarioState->forwardVel + gMarioState->vel[1] * gMarioState->vel[1])
                     if (gMarioState->pos[1] >= gMarioState->waterLevel - 130) {
                         newcam_pitch = (approach_s16_symmetric(newcam_pitch, tiltbackup, 0x100));
                     } else {
