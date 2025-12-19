@@ -964,24 +964,28 @@ If you're handy, you can\n\
 grab on to trees or poles\n\
 to land."))
 
-DEFINE_DIALOG(DIALOG_106, 1, 2, 95, 200, _("\
-Ready for blastoff! Come\n\
-on, hop into the cannon!"))
+DEFINE_DIALOG(DIALOG_106, 1, 3, 95, 200, _("\
+Who arrrre you?!\n\
+Arrrrre you after me\n\
+booty?\n\
+You shalt perrrrish\n\
+by my sworrrrrd!"))
 
 DEFINE_DIALOG(DIALOG_107, 1, 3, 95, 200, _("\
-Ghosts...\n\
-...don't...\n\
-...DIE!\n\
-Heh, heh, heh!\n\
-Can you get out of here...\n\
-...alive?"))
+Hey Landlubber, aren't\n\
+you afraid of ghosts?\n\
+There's a game we\n\
+pirates love to play.\n\
+It's called\n\
+Shyguy - Says.\n\
+Follow my lead,\n\
+if you fall, you lose!"))
 
-DEFINE_DIALOG(DIALOG_108, 1, 2, 95, 200, _("\
-Boooooo-m! Here comes\n\
-the master of mischief,\n\
-the tower of terror,\n\
-the Big Boo!\n\
-Ka ha ha ha..."))
+DEFINE_DIALOG(DIALOG_108, 1, 3, 95, 200, _("\
+Great job, matey!\n\
+You'd make for a\n\
+great pirate.\n\
+Take your prize!"))
 //namek elder intro
 DEFINE_DIALOG(DIALOG_109, 1, 6, 95, 200, _("\
 You are a good guy,\n\

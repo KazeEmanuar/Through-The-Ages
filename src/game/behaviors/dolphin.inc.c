@@ -2463,12 +2463,12 @@ u16 waterphase = 0;
 void AnimateGalleonMainArea(void) {
     s32 i;
     Vtx *verts;
-    if (newcam_pos[1] < o->oPosY + 600.f) {
+    /*if (newcam_pos[1] < o->oPosY + 600.f) {
         newcam_pos[1] = o->oPosY + 600.f;
         gLakituState.pos[1] = newcam_pos[1];
         gLakituState.posHSpeed = 0;
         gLakituState.focHSpeed = 0;
-    }
+    }*/
     animateSails();
     water_renderI4();
     pulsateBooGuy();
@@ -2579,7 +2579,7 @@ void YIRetroArea() {
         NightskyInit();
     generateNightSky(SegmentedToVirtual(thi_dl_NightskyAnimpng_i4));
     if (o->oTimer == 20) {
-        play_music(SEQ_LEVEL_YI_NIGHT_RETRO, 1, 0);
+        play_music(SEQ_PLAYER_LEVEL, SEQ_LEVEL_YI_NIGHT_RETRO, 0);
     }
 }
 void (*AnimFunctions[])() = {
@@ -3649,8 +3649,9 @@ void wallsword(void) {
     }
     o->oInteractStatus = 0;
     o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, o->oAngleToMario, 0x100);
-    if (o->oMoveFlags & (OBJ_MOVE_HIT_WALL | OBJ_MOVE_HIT_OOB)) {
+    if (o->oMoveFlags & (OBJ_MOVE_HIT_WALL | OBJ_MOVE_HIT_OOB) || o->oTimer > 200) {
         spawn_mist_particles_with_sound(SOUND_OBJ_DEFAULT_DEATH);
+        mark_obj_for_deletion(o);
     }
     PerformActorMove(1);
 }
@@ -4374,11 +4375,6 @@ void Catchnet(void) {
 }
 
 void breakabletile(void) {
-    if (cur_obj_is_mario_ground_pounding_platform()) {
-        mark_obj_for_deletion(o);
-        spawn_mist_particles_variable(20, 0, 46.f);
-        spawn_triangle_break_particles(15, MODEL_DIRT_ANIMATION, 3.0f, 4);
-    }
     Solidify();
 }
 
@@ -4469,6 +4465,11 @@ void boobarrel(void) {
     }
     Solidify();
 }
+void ScaleDoor(void){
+    if (gCurrLevelNum == LEVEL_THI){
+        cur_obj_scale(1.f);
+    }
+}
 void ThePlank(void) {
     f32 Multiplier;
     s16 *coll = o->collisionData;
@@ -4478,9 +4479,9 @@ void ThePlank(void) {
     if (!bParam3) {
         for (i = 0; i < PLANKVERTS; i++) {
             for (k = 0; k < PLANKVERTS; k++) {
-                if (coll[k * 3 + 3] == VisualVTX[i].v.ob[0]) {
-                    if (coll[k * 3 + 4] == VisualVTX[i].v.ob[1]) {
-                        if (coll[k * 3 + 5] == VisualVTX[i].v.ob[2]) {
+                if (coll[k * 3 + 2] == VisualVTX[i].v.ob[0]) {
+                    if (coll[k * 3 + 3] == VisualVTX[i].v.ob[1]) {
+                        if (coll[k * 3 + 4] == VisualVTX[i].v.ob[2]) {
                             VisualVTX[i].v.flag = k + (VisualVTX[i].v.ob[1] << 8);
                         }
                     }
@@ -4524,7 +4525,7 @@ void ThePlank(void) {
             VisualVTX[i].v.ob[1] = (VisualVTX[i].v.flag >> 8)
                                    - (o->oBobombBuddyPosYCopy * sqr(((f32) VisualVTX[i].v.ob[2])));
 
-            coll[(VisualVTX[i].v.flag & 0xff) * 3 + 4] = VisualVTX[i].v.ob[1];
+            coll[(VisualVTX[i].v.flag & 0xff) * 3 + 3] = VisualVTX[i].v.ob[1];
         }
     }
     Solidify();
@@ -4680,7 +4681,7 @@ void shyguycpt(void) {
                 o->oOpacity = 1;
                 o->oHealth = 0;
             sequence_player_unlower(SEQ_PLAYER_LEVEL, 60);
-                play_music(SEQ_EVENT_SHYGUYBOSS, 1, 0);
+                play_music(SEQ_PLAYER_LEVEL, SEQ_EVENT_SHYGUYBOSS, 0);
                 break;
             }
             // MuteGhostshipSongExceptRain();
@@ -4703,7 +4704,7 @@ void shyguycpt(void) {
             if (o->header.gfx.unk38.animFrame > 67) {
                 o->header.gfx.unk38.animFrame -= 16;
             }
-            if (talkToMarioNoRotation2(111, 4)) {
+            if (talkToMarioNoRotation2(106, 4)) {
                 o->oSubAction = 1;
             }
             break;
@@ -4850,6 +4851,8 @@ void shyguycpt(void) {
                         struct Object *flame = spawn_object_relative(
                             1, 0, YOFF, ZOFF, o, MODEL_BLUE_FLAME, bhvSmallPiranhaFlame);
                         flame->oForwardVel = 50.f;
+        flame->oSmallPiranhaFlameUnkF4 = 40;
+        flame->oSmallPiranhaFlameUnkF8 = 20;
                         flame->oMoveAnglePitch =
                             0x4000
                             - lateral_dist_between_objects(gMarioState->marioObj, o)
@@ -5038,7 +5041,6 @@ Gfx *Geo_CaptainColor(s32 callContext, struct GraphNode *b, UNUSED Mat4 *mtx) {
 }
 // spawn dust and sound too
 #define INCREMENT 0.0035f
-// TODO: implement camRoll via lakitustate
 extern f32 camRoll;
 extern f32 camRollSpeed;
 #define PERCENTAGE 0.001f
@@ -5048,7 +5050,7 @@ extern f32 camRollSpeed;
 extern struct ParticleInfos MistParticle;
 extern struct ParticleInfos SmokeParticle;
 void movecratecode(void) {
-    /*for (; o->oOpacity < 0x400; o->oOpacity++) {
+    for (; o->oOpacity < 0x400; o->oOpacity++) {
         o->oMacroUnk10C = DUSTSPAWN / 2.f;
         camRoll += camRollSpeed;
         camRollSpeed -= camRoll * PERCENTAGE;
@@ -5064,7 +5066,7 @@ void movecratecode(void) {
             o->oVelZ = 0.f;
         }
     }
-    o->oVelZ += camRoll * INCREMENT * 127.f / bParam2;*/
+    o->oVelZ += camRoll * INCREMENT * 127.f / bParam2;
     o->oVelZ *= 0.99f;
     o->oPosZ += o->oVelZ;
     if (o->oPosZ > (o->oHomeZ + ((o->oBehParams >> 24) * 100.f))) {
@@ -5229,7 +5231,7 @@ void ghostLantern(void) {
             o->oAngleVelPitch -= coss(gMarioState->intendedYaw - o->oFaceAngleYaw)
                                  * gMarioState->intendedMag * speedScale;
             o->oAngleVelPitch *= .95f;
-            if (gMarioState->controller->buttonPressed & A_BUTTON) {
+            if (1) {
                 o->oAction = 0;
                 gMarioState->action = ACT_TRIPLE_JUMP;
 #define UNITS_PER_ANGLE 0.01581917687f
@@ -5840,5 +5842,70 @@ void cptPiano(void) {
     if (o->oFloorHeight < 1200.f) {
         o->oPosY = y;
         o->oVelY = 0;
+    }
+}
+#define CurObjAnimate cur_obj_init_animation
+#define IsAnimationFinished cur_obj_check_if_at_animation_end
+#define DestroyActor obj_mark_for_deletion
+void FlyingBookend(void) {
+    switch (o->oAction) {
+        case 0:
+            // wait
+            if (o->oDistanceToMario < (500.f)) {
+                PlaySFX(SOUND_OBJ_DEFAULT_DEATH);
+                o->oAction = 1;
+            }
+            break;
+        case 1:
+            // come out, turn to mario
+            o->oForwardVel = approach_f32_symmetric(o->oForwardVel, 3.f, 1.f);
+            CurObjAnimate(2);
+            if (IsAnimationFinished()) {
+                o->oAction = 2;
+                o->oForwardVel = 0.0f;
+                CurObjAnimate(1);
+            } else {
+                o->oForwardVel = 3.0f;
+                if (o->oTimer >= 5) {
+                    o->oFaceAnglePitch = approach_s16_symmetric(o->oFaceAnglePitch, 0x8000, 0x800);
+                    o->oFaceAngleRoll = approach_s16_symmetric(o->oFaceAngleRoll, 0x8000, 0x800);
+                }
+            }
+    cur_obj_compute_vel_xz();
+    cur_obj_move_using_vel();
+            break;
+        case 2:
+            // attack
+            if (o->oTimer < 30) {
+                f32 LateralDist = lateral_dist_between_objects(o, gMarioObject);
+                s16 targetAngle =
+                    atan2s(LateralDist, o->oPosY - (gMarioObject->oPosY + 166.f / 2.f));
+                o->oMoveAnglePitch = approach_s16_symmetric(o->oMoveAnglePitch, targetAngle, 0x400);
+                o->oFaceAnglePitch = o->oMoveAnglePitch + 0x7FFF;
+                o->oMoveAngleYaw = approach_s16_symmetric(o->oMoveAngleYaw, o->oAngleToMario, 0x400);
+
+                o->oDamageOrCoinValue = 2;
+            } else {
+#define BOOK_VELOCITY 48.f
+                o->oForwardVel = BOOK_VELOCITY * coss(o->oMoveAnglePitch);
+                o->oVelY = BOOK_VELOCITY * -sins(o->oMoveAnglePitch);
+                o->oAction = 3;
+            }
+            break;
+        case 3:
+            PerformActorMove(0);
+            break;
+    }
+
+    if ((o->oInteractStatus & (INT_STATUS_INTERACTED | INT_STATUS_WAS_ATTACKED))
+        == (INT_STATUS_INTERACTED | INT_STATUS_WAS_ATTACKED)) {
+        PlaySFX(SOUND_OBJ_POUNDING1);
+        spawn_object(o, MODEL_BLUE_COIN, bhvMrIBlueCoin);
+        spawn_mist_particles_variable(20, 0, 46.0f);
+        DestroyActor(o);
+    }
+    if (o->oMoveFlags & (OBJ_MOVE_HIT_WALL | OBJ_MOVE_MASK_ON_GROUND)) {
+        PlaySFX(SOUND_OBJ_POUNDING1);
+        DestroyActor(o);
     }
 }

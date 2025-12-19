@@ -216,7 +216,7 @@ void spawn_macro_objects_hardcoded(s16 areaIndex, s16 *macroObjList) {
                                              macroObjX, macroObjY, macroObjZ, macroObjRY, 0);
                 break;
             case 3:
-                spawn_macro_abs_yrot_2params(MODEL_BBH_MOVING_BOOKSHELF, bhvHauntedBookshelf, macroObjX,
+                spawn_macro_abs_yrot_2params(MODEL_BBH_MOVING_BOOKSHELF, 0, macroObjX,
                                              macroObjY, macroObjZ, macroObjRY, 0);
                 break;
             case 4:

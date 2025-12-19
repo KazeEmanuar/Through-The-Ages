@@ -1344,6 +1344,7 @@ u32 ensure_nonnegative(s16 value) {
     return value;
 }
 
+u16 gCutsceneMsgFade = 0;
 #if defined(VERSION_JP) || defined(VERSION_SH)
 void handle_dialog_text_and_pages(s8 colorMode, struct DialogEntry *dialog)
 #else
@@ -1400,6 +1401,7 @@ void handle_dialog_text_and_pages(s8 colorMode, struct DialogEntry *dialog, s8 l
     create_dl_translation_matrix(MENU_MTX_PUSH, X_VAL3, 2 - lineNum * Y_VAL3, 0);
 #endif
 
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
     while (pageState == DIALOG_PAGE_STATE_NONE) {
         change_and_flash_dialog_text_color_lines(colorMode, lineNum);
         strChar = str[strIdx];
@@ -1794,7 +1796,6 @@ u8 *gEndCutsceneStringsDe[] = {
 };
 #endif
 
-u16 gCutsceneMsgFade = 0;
 s16 gCutsceneMsgIndex = -1;
 s16 gCutsceneMsgDuration = -1;
 s16 gCutsceneMsgTimer = 0;
