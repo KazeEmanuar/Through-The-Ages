@@ -526,6 +526,7 @@ extern const BehaviorScript bhvDorrie[];
 extern const BehaviorScript bhvHauntedChair[];
 extern const BehaviorScript bhvMadPiano[];
 extern const BehaviorScript bhvFlyingBookend[];
+extern const BehaviorScript bhvAircruiseWarp[];
 extern const BehaviorScript bhvBookendSpawn[];
 extern const BehaviorScript bhvHauntedBookshelfManager[];
 extern const BehaviorScript bhvBookSwitch[];

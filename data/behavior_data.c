@@ -7296,6 +7296,7 @@ const ConstructionScript bhvTunnelShip[] = {
     LOAD_COLLISION_DATA(tunnel_collision),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
     SET_GRAPH_PARAMETERS(1376, 0, 0, 0), 
+    SET_FLOAT(oCollisionDistance, 2300),
     TICK(rotatetunnel),
 };
 const ConstructionScript bhvTunnelShip2[] = {
@@ -7623,4 +7624,16 @@ const ConstructionScript bhvFlyingBookend[] = {
     SET_INT(oIntangibleTimer, 0),
     SET_GRAPH_PARAMETERS(120, SHADOW_CIRCLE_4_VERTS, 0x6b, 180), 
     TICK(FlyingBookend),
+};
+
+extern void AirCruise(void);
+const ConstructionScript bhvAircruiseWarp[] = {
+    BEGIN(OBJ_LIST_SURFACE),
+    OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_DIST_TO_MARIO)),
+        LOAD_ANIMATIONS(oAnimations, aircruise_anims),
+        ANIMATE(0),
+
+    SET_FLOAT(oCollisionDistance, 11000),
+    LOAD_COLLISION_DATA(aircruise_collision),
+    TICK(AirCruise),
 };

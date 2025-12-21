@@ -1,0 +1,3 @@
+enum AircruiseAnims {
+	AIRCRUISE_ANIM_ARMATUREACTION_001,
+};

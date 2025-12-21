@@ -33,3 +33,7 @@
 #include "levels/castle_grounds/treasuredoor/model.inc.c"
 #include "levels/castle_grounds/treasuredoor/collision.inc.c"
 #include "levels/castle_grounds/pipecolor/model.inc.c"
+#include "aircruise/collision.inc.c"
+#include "aircruise/model.inc.c"
+#include "aircruise/anims/data.inc.c"
+#include "aircruise/anims/table.inc.c"

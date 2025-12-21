@@ -36,4 +36,7 @@ extern const LevelScript level_castle_grounds_entry[];
 
 #include "levels/castle_grounds/pipecolor/geo_header.h"
 
+#include "aircruise/collision_header.h"
+#include "aircruise/geo_header.h"
+#include "aircruise/anim_header.h"
 #endif

@@ -50,6 +50,7 @@ const LevelScript level_castle_grounds_entry[] = {
 	LOAD_MODEL_FROM_GEO(0x3D, toadlawyer_geo), 
 	LOAD_MODEL_FROM_GEO(0x3F, treasuredoor_geo), 
 	LOAD_MODEL_FROM_GEO(0x40, pipecolor_geo), 
+	LOAD_MODEL_FROM_GEO(0x41, aircruise_geo), 
 
 	/* Fast64 begin persistent block [level commands] */
 	/* Fast64 end persistent block [level commands] */
@@ -108,9 +109,14 @@ const LevelScript level_castle_grounds_entry[] = {
 		WARP_NODE(0xf1, LEVEL_CASTLE_GROUNDS, 0x01, 0xf1, WARP_NO_CHECKPOINT),
 		WARP_NODE(0xE6, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 
+		WARP_NODE(0xED, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
+		WARP_NODE(0xCD, LEVEL_BITFS, 0x06, 0x0A, WARP_NO_CHECKPOINT),
+		OBJECT(0, -193, -723, 6346, 0, 177, 0, 0x00ED0000, bhvAirborneDeathWarp),
+		OBJECT(0, -193, -723, 6346, 0, 177, 0, 0x00CD0000, bhvAirborneStarCollectWarp),
+		OBJECT(0x41, 693, -650, 6346, 0, 177, 0, 0x001C0000, bhvAircruiseWarp),
 
 		WARP_NODE(0x1C, LEVEL_THI, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		OBJECT(0x16, -1002, -644, 4000, 0, -93, 0, 0x001C0000, bhvWarpPipe),
+		//OBJECT(0x16, -1002, -644, 4000, 0, -93, 0, 0x001C0000, bhvWarpPipe),
 
 		OBJECT(MODEL_DL_CANNON_LID, -1828, -224, 1985, 0, 0, 0, 0x00010000, bhvCannonClosed),
 		OBJECT(MODEL_YELLOW_COIN, -189, -923, 5528, 0, -93, 0, 0x00000000, bhvOneCoin),

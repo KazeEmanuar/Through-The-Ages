@@ -928,10 +928,10 @@ u32 interact_warp_door(struct MarioState *m, UNUSED u32 interactType, struct Obj
             if (doorAction == 0) {
                 if (actionArg & 0x00000001) {
                     doorAction = ACT_PULLING_DOOR;
-                    CurrentRoom = o->oBehParams & 0xff;
+                    //CurrentRoom = o->oBehParams & 0xff;
                 } else {
                     doorAction = ACT_PUSHING_DOOR;
-                    CurrentRoom = (o->oBehParams >> 8) & 0xff;
+                    //CurrentRoom = (o->oBehParams >> 8) & 0xff;
                 }
             }
 

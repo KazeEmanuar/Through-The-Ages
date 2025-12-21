@@ -64703,7 +64703,7 @@ Gfx thi_dl_AAAPlane_mesh_layer_1[] = {
 	gsSP2Triangles(21, 22, 20, 0, 23, 22, 21, 0),
 	gsSP2Triangles(23, 24, 22, 0, 25, 24, 23, 0),
 	gsSP1Triangle(25, 26, 24, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPSetGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, ENVIRONMENT, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, SHADE_ALPHA, 0, 0, 0, 0, 1),
 	gsDPSetCycleType(G_CYC_2CYCLE),
@@ -64860,7 +64860,7 @@ Gfx thi_dl_AAAPlane_mesh_layer_6[] = {
 };
 
 Gfx thi_dl_AAAPlane_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -65031,7 +65031,7 @@ Gfx thi_dl_AAAPlane_mesh_layer_4[] = {
 Gfx thi_dl_OCEAN_mesh_layer_1[] = {
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
-	gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPClearGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPSetCombineLERP(TEXEL0, ENVIRONMENT, SHADE, SHADE, 0, 0, 0, 0, TEXEL0, 0, SHADE_ALPHA, COMBINED, 0, 0, 0, 1),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsDPSetTextureImage(G_IM_FMT_I, G_IM_SIZ_16b, 1, thi_dl_tiki1_i4),
@@ -65294,7 +65294,7 @@ Gfx thi_dl_Zail_005_mesh_layer_4[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsDPSetCycleType(G_CYC_1CYCLE),
 	gsDPSetRenderMode(G_RM_AA_ZB_TEX_EDGE, G_RM_AA_ZB_TEX_EDGE2),
@@ -65478,7 +65478,7 @@ Gfx thi_dl_Room1_mesh_layer_1[] = {
 	gsSP2Triangles(12, 13, 2, 0, 13, 0, 2, 0),
 	gsSP2Triangles(14, 15, 16, 0, 15, 17, 16, 0),
 	gsSP2Triangles(17, 18, 16, 0, 18, 14, 16, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPSetGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsSPLightColor(LIGHT_1, 0xFFFFFFFF),
 	gsSPLightColor(LIGHT_2, 0x7F7F7FFF),
 	gsDPPipeSync(),
@@ -65564,7 +65564,7 @@ Gfx thi_dl_Room1_mesh_layer_1[] = {
 	gsSP2Triangles(1, 5, 8, 0, 9, 10, 11, 0),
 	gsSP2Triangles(2, 1, 12, 0, 10, 2, 13, 0),
 	gsSP2Triangles(14, 9, 15, 0, 15, 9, 16, 0),
-	gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPClearGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, TEXEL0, 0, SHADE, 0, 0, 0, 0, 1),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -66075,7 +66075,7 @@ Gfx thi_dl_Room1_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room1_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -67425,7 +67425,7 @@ Gfx thi_dl_Room2_mesh_layer_1[] = {
 	gsSP2Triangles(13, 7, 15, 0, 7, 8, 15, 0),
 	gsSP2Triangles(13, 15, 16, 0, 10, 13, 16, 0),
 	gsSP1Triangle(10, 16, 9, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPSetGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, 0, SHADE_ALPHA, 0, 0, 0, 0, 1),
 	gsSPTexture(1984, 1984, 0, 0, 1),
@@ -67470,7 +67470,7 @@ Gfx thi_dl_Room2_mesh_layer_1[] = {
 	gsSP2Triangles(4, 3, 0, 0, 4, 0, 2, 0),
 	gsSP2Triangles(5, 4, 2, 0, 1, 5, 2, 0),
 	gsSP2Triangles(1, 3, 5, 0, 5, 3, 4, 0),
-	gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPClearGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, PRIMITIVE, SHADE_ALPHA, PRIMITIVE, 0, 0, 0, 1),
 	gsSPTexture(65535, 65535, 0, 0, 1),
@@ -67986,7 +67986,7 @@ Gfx thi_dl_Room2_mesh_layer_2[] = {
 };
 
 Gfx thi_dl_Room2_mesh_layer_5[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -68034,14 +68034,14 @@ Gfx thi_dl_Room2_mesh_layer_5[] = {
 	gsSP2Triangles(27, 28, 17, 0, 28, 15, 17, 0),
 	gsSP2Triangles(15, 28, 13, 0, 28, 12, 13, 0),
 	gsSP2Triangles(28, 29, 12, 0, 29, 9, 12, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
 };
 
 Gfx thi_dl_Room2_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -68188,7 +68188,7 @@ Gfx thi_dl_Room2_mesh_layer_4[] = {
 	gsSP2Triangles(24, 22, 23, 0, 24, 23, 25, 0),
 	gsSP2Triangles(26, 24, 25, 0, 26, 25, 27, 0),
 	gsSP2Triangles(26, 27, 28, 0, 26, 28, 29, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -69044,7 +69044,7 @@ Gfx thi_dl_Room3_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room3_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 1, 0, TEXEL0, 0, TEXEL0, 0, SHADE, 0, 1, 0, TEXEL0, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -69202,7 +69202,7 @@ Gfx thi_dl_Room3_mesh_layer_4[] = {
 	gsSP2Triangles(4, 3, 0, 0, 4, 0, 2, 0),
 	gsSP2Triangles(5, 6, 7, 0, 5, 8, 6, 0),
 	gsSP2Triangles(9, 8, 5, 0, 9, 5, 7, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -69359,7 +69359,7 @@ Gfx thi_dl_Room3_mesh_layer_6[] = {
 };
 
 Gfx thi_dl_Room3_mesh_layer_5[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -69404,7 +69404,7 @@ Gfx thi_dl_Room3_mesh_layer_5[] = {
 	gsSP2Triangles(5, 6, 4, 0, 5, 7, 6, 0),
 	gsSP2Triangles(7, 8, 6, 0, 7, 9, 8, 0),
 	gsSP2Triangles(9, 10, 8, 0, 9, 11, 10, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -69730,7 +69730,7 @@ Gfx thi_dl_Room4_mesh_layer_1[] = {
 	gsSP2Triangles(12, 13, 14, 0, 12, 14, 15, 0),
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPSetGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPSetCombineLERP(0, 0, 0, TEXEL0, 0, 0, 0, 1, COMBINED, PRIMITIVE, SHADE_ALPHA, PRIMITIVE, 0, 0, 0, 1),
 	gsSPTexture(192, 448, 0, 0, 1),
 	gsDPSetPrimColor(0, 0, 255, 60, 0, 255),
@@ -69813,7 +69813,7 @@ Gfx thi_dl_Room4_mesh_layer_1[] = {
 	gsSP2Triangles(16, 17, 18, 0, 16, 18, 19, 0),
 	gsSP2Triangles(20, 21, 22, 0, 20, 22, 23, 0),
 	gsSP2Triangles(24, 25, 26, 0, 24, 26, 27, 0),
-	gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPClearGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, 1, COMBINED, PRIMITIVE, SHADE_ALPHA, PRIMITIVE, 0, 0, 0, 1),
 	gsDPSetTextureLUT(G_TT_RGBA16),
@@ -69902,7 +69902,7 @@ Gfx thi_dl_Room4_mesh_layer_1[] = {
 	gsSP2Triangles(4, 3, 0, 0, 4, 5, 3, 0),
 	gsSP2Triangles(6, 5, 4, 0, 6, 7, 5, 0),
 	gsSP2Triangles(5, 7, 1, 0, 5, 1, 3, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPSetGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(0, 0, 0, TEXEL0, TEXEL0, 0, PRIMITIVE, 0, COMBINED, PRIMITIVE, SHADE_ALPHA, PRIMITIVE, TEXEL1, 0, PRIMITIVE, 0),
 	gsSPTexture(192, 448, 0, 0, 1),
@@ -69943,7 +69943,7 @@ Gfx thi_dl_Room4_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room4_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, 0, TEXEL0, COMBINED, PRIMITIVE, SHADE_ALPHA, PRIMITIVE, 0, 0, 0, COMBINED),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -70014,7 +70014,7 @@ Gfx thi_dl_Room4_mesh_layer_4[] = {
 	gsSP2Triangles(18, 19, 17, 0, 19, 15, 17, 0),
 	gsSP2Triangles(20, 21, 22, 0, 21, 23, 22, 0),
 	gsSP2Triangles(23, 24, 22, 0, 24, 20, 22, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -70703,7 +70703,7 @@ Gfx thi_dl_Room5_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room5_mesh_layer_5[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -70737,13 +70737,13 @@ Gfx thi_dl_Room5_mesh_layer_5[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
 };
 
 Gfx thi_dl_Room5_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -70836,7 +70836,7 @@ Gfx thi_dl_Room5_mesh_layer_4[] = {
 	gsSPVertex(thi_dl_Room5_mesh_layer_4_vtx_3 + 91, 5, 0),
 	gsSP2Triangles(0, 1, 2, 0, 0, 3, 1, 0),
 	gsSP1Triangle(1, 3, 4, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsDPSetTextureLUT(G_TT_NONE),
@@ -71033,7 +71033,7 @@ Gfx thi_dl_Room6_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room6_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -71054,7 +71054,7 @@ Gfx thi_dl_Room6_mesh_layer_4[] = {
 	gsSPVertex(thi_dl_Room6_mesh_layer_4_vtx_1 + 0, 5, 0),
 	gsSP2Triangles(0, 1, 2, 0, 1, 3, 2, 0),
 	gsSP2Triangles(3, 4, 2, 0, 4, 0, 2, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -71248,7 +71248,7 @@ Gfx thi_dl_Room7_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room7_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -71262,7 +71262,7 @@ Gfx thi_dl_Room7_mesh_layer_4[] = {
 	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	gsSP2Triangles(4, 5, 6, 0, 4, 6, 7, 0),
 	gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -71457,7 +71457,7 @@ Gfx thi_dl_Room8_mesh_layer_1[] = {
 };
 
 Gfx thi_dl_Room8_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -71473,7 +71473,7 @@ Gfx thi_dl_Room8_mesh_layer_4[] = {
 	gsSP2Triangles(8, 9, 10, 0, 8, 10, 11, 0),
 	gsSP2Triangles(12, 13, 14, 0, 15, 12, 14, 0),
 	gsSP2Triangles(14, 16, 15, 0, 17, 12, 15, 0),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
@@ -72960,7 +72960,7 @@ Gfx thi_dl_Room9_mesh_layer_4[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsSPEndDisplayList(),
 };
@@ -73867,14 +73867,14 @@ Gfx thi_dl_Plane_026_mesh_layer_5[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
 Gfx thi_dl_Plane_026_mesh_layer_4[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -73976,7 +73976,7 @@ Gfx thi_dl_Plane_026_mesh_layer_4[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
@@ -74044,7 +74044,7 @@ Gfx thi_dl_BGBMoon_mesh_layer_0[] = {
 };
 
 Gfx thi_dl_BGCMountain_mesh_layer_0[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_ZBUFFER),
+	gsSPClearGeometryMode(G_ZBUFFER | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0),
 	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, thi_dl_BG1_pal_rgba16),
@@ -74119,7 +74119,7 @@ Gfx thi_dl_BGCMountain_mesh_layer_0[] = {
 	gsSPTexture(65535, 65535, 0, 0, 0),
 	gsDPSetEnvColor(255, 255, 255, 255),
 	gsDPSetAlphaCompare(G_AC_NONE),
-	gsSPSetGeometryMode(G_LIGHTING | G_ZBUFFER),
+	gsSPSetGeometryMode(G_ZBUFFER | G_LIGHTING),
 	gsDPSetAlphaDither(G_AD_DISABLE),
 	gsDPSetTextureFilter(G_TF_BILERP),
 	gsDPSetRenderMode(G_RM_ZB_OPA_SURF, G_RM_ZB_OPA_SURF2),
@@ -75352,7 +75352,7 @@ Gfx thi_dl_Plane_127_mesh_layer_4[] = {
 };
 
 Gfx thi_dl_Plane_128_mesh_layer_1[] = {
-	gsSPClearGeometryMode(G_LIGHTING | G_CULL_BACK),
+	gsSPClearGeometryMode(G_CULL_BACK | G_LIGHTING),
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, TEXEL1, TEXEL0_ALPHA, TEXEL1, 0, 0, 0, 0, COMBINED, 0, SHADE, 0, 0, 0, 0, 1),
 	gsDPSetAlphaDither(G_AD_NOISE),
@@ -75712,7 +75712,7 @@ Gfx thi_dl_Plane_128_mesh_layer_1[] = {
 	gsDPSetRenderMode(G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2),
 	gsDPSetCycleType(G_CYC_1CYCLE),
 	gsDPSetTextureFilter(G_TF_BILERP),
-	gsSPSetGeometryMode(G_LIGHTING | G_TEXTURE_GEN | G_CULL_BACK),
+	gsSPSetGeometryMode(G_TEXTURE_GEN | G_CULL_BACK | G_LIGHTING),
 	gsSPLightColor(LIGHT_1, 0xFFFFFFFF),
 	gsSPLightColor(LIGHT_2, 0x7F7F7FFF),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
@@ -75790,7 +75790,7 @@ Gfx thi_dl_Plane_128_mesh_layer_1[] = {
 	gsSP2Triangles(0, 1, 2, 0, 0, 2, 3, 0),
 	gsDPPipeSync(),
 	gsDPSetTextureLUT(G_TT_NONE),
-	gsSPClearGeometryMode(G_LIGHTING | G_TEXTURE_GEN),
+	gsSPClearGeometryMode(G_TEXTURE_GEN | G_LIGHTING),
 	gsDPSetCombineLERP(0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT, 0, 0, 0, SHADE, 0, 0, 0, ENVIRONMENT),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsSPVertex(thi_dl_Plane_128_mesh_layer_1_vtx_2 + 0, 32, 0),

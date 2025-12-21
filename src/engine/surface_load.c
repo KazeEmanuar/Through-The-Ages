@@ -768,11 +768,6 @@ void load_object_collision_model(void) {
         marioDist = dist_between_objects(gCurrentObject, gMarioObject);
     }
 
-    // If the object collision is supposed to be loaded more than the
-    // drawing distance of 4000, extend the drawing range.
-    if (gCurrentObject->oCollisionDistance > 4000.0f) {
-        gCurrentObject->oDrawingDistance = gCurrentObject->oCollisionDistance;
-    }
 
     // Update if no Time Stop, in range, and in the current room.
     if (!(gTimeStopState & TIME_STOP_ACTIVE) && marioDist < tangibleDist

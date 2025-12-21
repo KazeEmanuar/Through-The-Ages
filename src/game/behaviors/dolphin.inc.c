@@ -2190,9 +2190,9 @@ void cullBBHRooms() {
     }
 #define ROOM5HEIGHT -4930.f
     if (gMarioState->pos[1] < ROOM5HEIGHT - 50.f) {
-        CurrentRoom = 5;
+       // CurrentRoom = 5;
     } else if (CurrentRoom == 5 && gMarioState->pos[1] > ROOM5HEIGHT + 50.f) {
-        CurrentRoom = 2;
+      //  CurrentRoom = 2;
     }
 }
 
@@ -2750,20 +2750,13 @@ void textureanim(void) {
             pulsateBooGuy();
             cullBBHRooms();
             cptlabyrinth();
-            EffectiveRoom = CurrentRoom;
-            if (CurrentRoom == 2 && gMarioState->pos[1] > 1077.f) {
-                EffectiveRoom = 10;
-            }
-            if (o->oAnimState != EffectiveRoom) {
-                o->oAnimState = EffectiveRoom;
-            }
             break;
         case 12:
             generateLightBeamTexture(lightTexture);
             if ((absf(gMarioState->pos[0] - o->oPosX) + absf(gMarioState->pos[1] - o->oPosY)
                  + absf(gMarioState->pos[2] - o->oPosZ))
                 < 500.f) {
-                CurrentRoom = 2;
+             //   CurrentRoom = 2;
             }
             break;
     }
@@ -3682,7 +3675,7 @@ void shyguysays(void) {
         case 0:
             // wait for mario to approach
             cur_obj_init_animation(0);
-            if (CurrentRoom == 5) {
+            if (absf(gMarioState->pos[2] - o->oPosZ) < 1500.f && absf(gMarioState->pos[1] - o->oPosY) < 1000.f) {
                 if (gMarioState->pos[0] > -8650.f) {
                     o->oAction = 1;
                 }
@@ -3776,24 +3769,15 @@ void shyguysays(void) {
             if (gMarioState->pos[0] > 14786.f) {
                 o->oAction = 3;
             }
-            if (CurrentRoom != 5) {
-                o->oVelX = 0;
-                o->oVelZ = 0;
-                o->oPosX = o->oHomeX;
-                o->oPosZ = o->oHomeZ;
-                o->oAction = 0;
-            }
             break;
         case 3:
             cur_obj_init_animation(0);
             o->oPosX = approach_f32_asymptotic(o->oPosX, 16200.f, 0.05f);
             o->oPosZ = approach_f32_asymptotic(o->oPosZ, -1368.f, 0.05f);
             // wait at end
-            if (CurrentRoom == 5) {
                 if (gMarioState->pos[0] > 15086.f) {
                     o->oAction = 4;
                 }
-            }
             break;
         case 4:
             // talk at end
@@ -3894,9 +3878,9 @@ void DynaPolyCollisionUpdate(Vtx *VisualVTX, s32 VertCount, f32 ImpactSize, f32 
                    * ((sqrtf(absi(VisualVTX[i].v.ob[0]) + absi(VisualVTX[i].v.ob[2]))) / 14.f));
             VertSpeedArray[i].Speed -= 1.f;
             VertSpeedArray[i].Speed *= Resistance;
-            coll[VisualVTX[i].v.flag * 3 + 3] = VisualVTX[i].v.ob[0];
-            coll[VisualVTX[i].v.flag * 3 + 4] = VisualVTX[i].v.ob[1];
-            coll[VisualVTX[i].v.flag * 3 + 5] = VisualVTX[i].v.ob[2];
+            coll[VisualVTX[i].v.flag * 3 + 2] = VisualVTX[i].v.ob[0];
+            coll[VisualVTX[i].v.flag * 3 + 3] = VisualVTX[i].v.ob[1];
+            coll[VisualVTX[i].v.flag * 3 + 4] = VisualVTX[i].v.ob[2];
         }
     }
     Solidify();
@@ -3911,9 +3895,9 @@ void DynaPolyCollisionInit(Vtx *VisualVTX, s32 VertCount, f32 ImpactSize, f32 Im
         VertSpeedArray[i].Speed = 0;
         VertSpeedArray[i].InitialCoordinate = VisualVTX[i].v.ob[1];
         for (k = 0; k < VertCount; k++) {
-            if (coll[k * 3 + 3] == VisualVTX[i].v.ob[0]) {
-                if (coll[k * 3 + 4] == VisualVTX[i].v.ob[1]) {
-                    if (coll[k * 3 + 5] == VisualVTX[i].v.ob[2]) {
+            if (coll[k * 3 + 2] == VisualVTX[i].v.ob[0]) {
+                if (coll[k * 3 + 3] == VisualVTX[i].v.ob[1]) {
+                    if (coll[k * 3 + 4] == VisualVTX[i].v.ob[2]) {
                         VisualVTX[i].v.flag = k;
                     }
                 }
@@ -5908,4 +5892,23 @@ void FlyingBookend(void) {
         PlaySFX(SOUND_OBJ_POUNDING1);
         DestroyActor(o);
     }
+}
+
+void AirCruise(void){
+    switch (o->oAction){
+        case 0:
+    if (cur_obj_is_mario_on_platform()){
+        o->oAction = 1;
+                gMarioState->action = ACT_WAITING_FOR_DIALOG;
+                gMarioState->usedObj = o;
+    }
+        break;
+        case 1:
+
+          if (level_trigger_warp(m, WARP_OP_WARP_OBJECT) == 20 && !(m->flags & MARIO_UNKNOWN_18)) {
+              play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
+          }
+        break;
+    }
+    load_object_collision_model();
 }
